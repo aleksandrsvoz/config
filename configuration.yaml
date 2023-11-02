@@ -1,0 +1,31 @@
+homeassistant:
+  packages: !include_dir_merge_named packages
+
+default_config:
+
+frontend:
+  themes: !include_dir_merge_named themes
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+panel_custom:
+  - name: server_state
+    sidebar_title: "System"
+    sidebar_icon: mdi:server
+    js_url: /api/hassio/app/entrypoint.js
+    url_path: "hassio/system"
+    embed_iframe: true
+    require_admin: true
+    config:
+      ingress: core_configurator
+
+http:
+  ip_ban_enabled: true
+  login_attempts_threshold: 10
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 192.168.86.0/24
+    - 172.30.232.0/24
+    - 172.30.32.0/24

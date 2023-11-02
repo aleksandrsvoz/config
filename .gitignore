@@ -1,0 +1,16 @@
+!*.yaml
+!.gitignore
+!*.md
+!*.sh
+!*.js*
+notebooks/
+esphome/
+deps/
+custom_components/
+secrets.yaml
+*.log
+*.log.txt
+.storage
+.cloud
+.google.token
+home-assistant.log*
