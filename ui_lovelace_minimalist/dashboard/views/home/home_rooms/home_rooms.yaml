@@ -26,35 +26,11 @@ cards:
 
   - !include home_room_door_way.yaml
 
-  ## Bedroom
-  - type: "custom:button-card"
-    template:
-      - card_room
-      - yellow_no_state
-    name: Спальня
-    entity: lock.front_dore
-    icon: mdi:bed-king
-    tap_action:
-      action: navigate
-      navigation_path: "/ui-lovelace-minimalist/bathroom"
-    variables:
-      label_use_temperature: false
-      label_use_brightness: true
+  - !include room_door_way.yaml
 
-  ## Toilet
-  - type: "custom:button-card"
-    template:
-      - card_room
-      - green_no_state
-    name: Туалет
-    entity: lock.front_dore
-    icon: mdi:toilet
-    tap_action:
-      action: navigate
-      navigation_path: "/ui-lovelace-minimalist/bathroom"
-    variables:
-      label_use_temperature: false
-      label_use_brightness: true
+  - !include room_bedroom.yaml
+
+  - !include room_toilet.yaml
 
   ## Office
   - type: "custom:button-card"

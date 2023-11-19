@@ -1,0 +1,19 @@
+## Bedroom
+type: "custom:button-card"
+template:
+  - card_room
+name: Спальня
+icon: mdi:bed-king
+styles:
+  icon:
+    - color: "#395144"
+  card:
+    - --mdc-ripple-color: "#395144"
+    - --mdc-ripple-press-opacity: 0.3
+    - background: "#BDE5D8"
+    - color: "#395144"
+  img_cell:
+    - background-color: "#65AB94"
+tap_action:
+  action: navigate
+  navigation_path: "/ui-lovelace-minimalist/bathroom"

@@ -1,0 +1,43 @@
+# tv_remote.yaml
+type: vertical-stack
+cards:
+  - type: custom:bubble-card
+    card_type: pop-up
+    hash: "#tv_remote"
+    name: Пульт
+    card_mod:
+      style: |
+        ha-card {
+          color: #FAFAFA;
+        }
+        :host {
+          --card-mod-icon-color: black;
+        }
+    icon: mdi:remote
+    state: remote.android_tv
+    bg_color: "#999999"
+    bg_opacity: 35
+    bg_blur: 50
+    shadow_opacity: 10
+    margin: "13px"
+  - type: custom:android-tv-card
+    remote_id: remote.android_tv
+    slider_id: media_player.android_tv
+    enable_button_feedback: false
+    enable_slider_feedback: false
+    title: Android TV
+    button_style:
+      "--size": 32px
+      color: var(--secondary-text-color)
+    slider_style:
+      "--color": "#AAF0B4"
+    rows:
+      - - back
+        - home
+        - power
+      - - touchpad
+      - - vol_buttons
+      - - volume_slider
+      - - rewind
+        - play_pause
+        - fast_forward

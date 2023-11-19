@@ -1,0 +1,19 @@
+## Toilet
+type: "custom:button-card"
+template:
+  - card_room
+name: Туалет
+icon: mdi:toilet
+styles:
+  icon:
+    - color: "#164863"
+  card:
+    - --mdc-ripple-color: "#164863"
+    - --mdc-ripple-press-opacity: 0.3
+    - background: "#B7E4FF"
+    - color: "#164863"
+  img_cell:
+    - background-color: "#5CD2E6"
+tap_action:
+  action: navigate
+  navigation_path: "/ui-lovelace-minimalist/bathroom"
