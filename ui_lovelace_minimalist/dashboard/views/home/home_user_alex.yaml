@@ -1,0 +1,75 @@
+# home_user_alex.yaml
+type: vertical-stack
+cards:
+  - type: custom:bubble-card
+    card_type: pop-up
+    hash: "#home_user_alex"
+    name: Саша
+    card_mod:
+      style: |
+        ha-card {
+          color: #FAFAFA;
+        }
+        :host {
+          --card-mod-icon-color: black;
+        }
+    icon: mdi:face-man
+    state: person.alexvoz
+    bg_color: "#999999"
+    bg_opacity: 35
+    bg_blur: 50
+    shadow_opacity: 10
+    margin: "13px"
+  - type: map
+    entities:
+      - entity: zone.home
+      - entity: person.alexvoz
+      - entity: person.lenavoz
+    aspect_ratio: "1.5"
+    default_zoom: 13
+    hours_to_show: 0
+
+  - type: horizontal-stack
+    cards:
+      - type: custom:mushroom-template-card
+        primary: Alarm
+        secondary: ""
+        icon: mdi:alarm-bell
+        badge_icon: ""
+        multiline_secondary: true
+        icon_color: "#AE322A"
+        badge_color: ""
+        tap_action:
+          action: call-service
+          service: notify.mobile_app_pixel_7_pro
+          data:
+            title: Поиск
+            message: Происходит поиск телефона
+            data:
+              ttl: 0
+              priority: high
+              channel: alarm_stream
+              critical: 1
+              volume: 1
+
+      - type: custom:mushroom-template-card
+        primary: Notification
+        secondary: ""
+        icon: mdi:message-badge-outline
+        icon_color: "#64AF9E"
+        tap_action:
+          action: call-service
+          service: notify.mobile_app_pixel_7_pro
+          target: {}
+          data:
+            message: Можешь пожалуйста ответить Лене
+            title: Сообщение
+            data: {}
+
+  - type: custom:bubble-card
+    card_type: separator
+    name: Задачи
+    icon: mdi:bookmark-multiple-outline
+
+  - type: todo-list
+    entity: todo.alex_tasks

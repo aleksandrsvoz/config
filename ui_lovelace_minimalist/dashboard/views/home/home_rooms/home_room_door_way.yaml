@@ -1,0 +1,80 @@
+## Door Way
+type: "custom:button-card"
+template:
+  - card_room
+name: Парадная
+entity: lock.front_dore
+icon: mdi:door-closed
+styles:
+  icon:
+    - color: "#AB2E00"
+  card:
+    - --mdc-ripple-color: "#FFC6AC"
+    - --mdc-ripple-press-opacity: 0.3
+  img_cell:
+    - background-color: "#FFC6AC"
+tap_action:
+  action: navigate
+  navigation_path: "/ui-lovelace-minimalist/bathroom"
+variables:
+  label_use_temperature: false
+  label_use_brightness: true
+  entity_1:
+    entity_id: lock.front_dore
+    templates:
+      - red_on
+      - green_off
+    tap_action:
+      action: toggle
+custom_fields:
+  i1:
+    card:
+      type: "custom:button-card"
+      template: >
+        [[[
+          let templates = [ 'widget_icon_room' ];
+          if (variables?.entity_1?.templates?.length) {
+            templates.push(...variables.entity_1.templates);
+          }
+          return templates;
+        ]]]
+      variables: "[[[ return variables?.entity_1; ]]]"
+      state:
+        - operator: "template"
+          value: "[[[ return !variables.entity_1; ]]]"
+          styles:
+            card:
+              - display: "none"
+
+        - value: "unlocked"
+          icon: "[[[ return states['binary_sensor.front_dore_door'].state === 'on' ? 'mdi:door-open' : 'mdi:lock-open-variant'; ]]]"
+          styles:
+            card:
+              - background-color: "#FFA4A4"
+            icon:
+              - color: "#B60021"
+
+        - value: "locked"
+          icon: "[[[ return states['binary_sensor.front_dore_door'].state === 'on' ? 'mdi:lock-alert' : 'mdi:lock'; ]]]"
+          styles:
+            card:
+              - background-color: "[[[ return states['binary_sensor.front_dore_door'].state === 'on' ? '#FFA4A4' : '#9ADE7B'; ]]]"
+            icon:
+              - color: "[[[ return states['binary_sensor.front_dore_door'].state === 'on' ? '#B60021' : '#007217'; ]]]"
+
+        - value: "unlocking"
+          icon: mdi:lock-clock
+          styles:
+            card:
+              - background-color: "#F8CDB7"
+            icon:
+              - color: "#DA5C22"
+
+        - value: "locking"
+          icon: mdi:lock-clock
+          styles:
+            card:
+              - background-color: "#F8CDB7"
+            icon:
+              - color: "#DA5C22"
+      entity: "[[[ return variables?.entity_1?.entity_id; ]]]"

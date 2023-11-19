@@ -1,0 +1,87 @@
+type: grid
+columns: 2
+cards:
+  ## Living Room
+  - type: "custom:button-card"
+    template:
+      - card_room
+      - blue_no_state
+    name: Гостиная
+    entity: remote.android_tv
+    icon: mdi:sofa
+    tap_action:
+      action: navigate
+      navigation_path: "/ui-lovelace-minimalist/bathroom"
+    variables:
+      label_use_temperature: false
+      label_use_brightness: true
+      entity_1:
+        entity_id: remote.android_tv
+        templates:
+          - blue_on
+          - red_off
+        tap_action:
+          action: navigate
+          navigation_path: "#tv_remote"
+
+  - !include home_room_door_way.yaml
+
+  ## Bedroom
+  - type: "custom:button-card"
+    template:
+      - card_room
+      - yellow_no_state
+    name: Спальня
+    entity: lock.front_dore
+    icon: mdi:bed-king
+    tap_action:
+      action: navigate
+      navigation_path: "/ui-lovelace-minimalist/bathroom"
+    variables:
+      label_use_temperature: false
+      label_use_brightness: true
+
+  ## Toilet
+  - type: "custom:button-card"
+    template:
+      - card_room
+      - green_no_state
+    name: Туалет
+    entity: lock.front_dore
+    icon: mdi:toilet
+    tap_action:
+      action: navigate
+      navigation_path: "/ui-lovelace-minimalist/bathroom"
+    variables:
+      label_use_temperature: false
+      label_use_brightness: true
+
+  ## Office
+  - type: "custom:button-card"
+    template:
+      - card_room
+      - purple_no_state
+    name: Офис
+    entity: lock.front_dore
+    icon: mdi:briefcase
+    tap_action:
+      action: navigate
+      navigation_path: "/ui-lovelace-minimalist/bathroom"
+    variables:
+      label_use_temperature: false
+      label_use_brightness: true
+
+  ## Kitchen
+  - type: "custom:button-card"
+    template:
+      - card_room
+      - pink_no_state
+    name: Кухня
+    entity: lock.front_dore
+    icon: mdi:silverware-fork-knife
+    tap_action:
+      action: navigate
+      navigation_path: "/ui-lovelace-minimalist/bathroom"
+    variables:
+      label_use_temperature: false
+      label_use_brightness: true
