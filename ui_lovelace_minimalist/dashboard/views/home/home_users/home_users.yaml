@@ -6,6 +6,16 @@ cards:
     tap_action:
       action: navigate
       navigation_path: "#user_alex"
+    styles:
+      card:
+        # Click Ripple color
+        - --mdc-ripple-color: "#595755"
+        - --mdc-ripple-press-opacity: 0.3
+        # Card bacground color
+        - background: "#FAF5F0"
+        # Card text color
+        - color: "#595755"
+
     variables:
       ulm_card_person_entity: person.alexvoz
       ulm_card_person_use_entity_picture: true
@@ -21,6 +31,15 @@ cards:
     tap_action:
       action: navigate
       navigation_path: "#user_lena"
+    styles:
+      card:
+        # Click Ripple color
+        - --mdc-ripple-color: "#595755"
+        - --mdc-ripple-press-opacity: 0.3
+        # Card bacground color
+        - background: "#FAF5F0"
+        # Card text color
+        - color: "#595755"
     variables:
       ulm_card_person_entity: person.lenavoz
       ulm_card_person_use_entity_picture: true

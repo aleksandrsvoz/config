@@ -1,14 +1,13 @@
 # tv_remote.yaml
 type: vertical-stack
 cards:
-  - type: custom:bubble-card
-    card_type: pop-up
+  - type: custom:bubble-pop-up
     hash: "#tv_remote"
     name: Пульт
     card_mod:
       style: |
         ha-card {
-          color: white;
+          color: #7E4400;
         }
         :host {
           --card-mod-icon-color: #4F2B00;

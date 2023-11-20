@@ -58,7 +58,7 @@ custom_fields:
             icon:
               - color: "#7E4400"
 
-        - value: "off"
+        - value: "unavailable"
           icon: mdi:remote-off
           styles:
             card:

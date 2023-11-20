@@ -1,14 +1,13 @@
 # home_user_alex.yaml
 type: vertical-stack
 cards:
-  - type: custom:bubble-card
-    card_type: pop-up
+  - type: custom:bubble-pop-up
     hash: "#user_alex"
     name: Саша
     card_mod:
       style: |
         ha-card {
-          color: #FAFAFA;
+          color: #595959;
         }
         :host {
           --card-mod-icon-color: black;
@@ -70,6 +69,14 @@ cards:
     card_type: separator
     name: Задачи
     icon: mdi:bookmark-multiple-outline
+    card_mod:
+      style: |
+        ha-card {
+          color: #FAFAFA;
+        }
+        :host {
+          --card-mod-icon-color: #FAFAFA;
+        }
 
   - type: todo-list
     entity: todo.alex_tasks
