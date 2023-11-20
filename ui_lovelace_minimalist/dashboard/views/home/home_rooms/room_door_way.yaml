@@ -7,13 +7,18 @@ entity: lock.front_dore
 icon: mdi:door-closed
 styles:
   icon:
+    # Icon color
     - color: "#AB2E00"
   card:
+    # Click Ripple color
     - --mdc-ripple-color: "#AB2E00"
     - --mdc-ripple-press-opacity: 0.3
+    # Card bacground color
     - background: "#FDE6E1"
+    # Card text color
     - color: "#AB2E00"
   img_cell:
+    # Card icon circle color
     - background-color: "#FFC6AC"
 tap_action:
   action: navigate
@@ -23,9 +28,6 @@ variables:
   label_use_brightness: true
   entity_1:
     entity_id: lock.front_dore
-    templates:
-      - red_on
-      - green_off
     tap_action:
       action: toggle
 custom_fields:
@@ -60,9 +62,9 @@ custom_fields:
           icon: "[[[ return states['binary_sensor.front_dore_door'].state === 'on' ? 'mdi:lock-alert' : 'mdi:lock'; ]]]"
           styles:
             card:
-              - background-color: "[[[ return states['binary_sensor.front_dore_door'].state === 'on' ? '#FFA4A4' : '#9ADE7B'; ]]]"
+              - background-color: "[[[ return states['binary_sensor.front_dore_door'].state === 'on' ? '#FFA4A4' : '#FFC6AC'; ]]]"
             icon:
-              - color: "[[[ return states['binary_sensor.front_dore_door'].state === 'on' ? '#B60021' : '#007217'; ]]]"
+              - color: "[[[ return states['binary_sensor.front_dore_door'].state === 'on' ? '#B60021' : '#AB2E00'; ]]]"
 
         - value: "unlocking"
           icon: mdi:lock-clock

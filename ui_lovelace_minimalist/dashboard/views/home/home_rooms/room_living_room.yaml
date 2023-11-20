@@ -1,0 +1,68 @@
+## Living Room
+type: "custom:button-card"
+template:
+  - card_room
+name: Гостиная
+icon: mdi:sofa
+styles:
+  icon:
+    # Icon color
+    - color: "#7E4400"
+  card:
+    # Click Ripple color
+    - --mdc-ripple-color: "#7E4400"
+    - --mdc-ripple-press-opacity: 0.3
+    # Card bacground color
+    - background: "#FFE7C6"
+    # Card text color
+    - color: "#7E4400"
+  img_cell:
+    # Card icon circle color
+    - background-color: "#EEC690"
+tap_action:
+  action: navigate
+  navigation_path: "/ui-lovelace-minimalist/bathroom"
+variables:
+  label_use_temperature: false
+  label_use_brightness: true
+  entity_1:
+    entity_id: remote.android_tv
+    tap_action:
+      action: navigate
+      navigation_path: "#tv_remote"
+custom_fields:
+  i1:
+    card:
+      type: "custom:button-card"
+      template: >
+        [[[
+          let templates = [ 'widget_icon_room' ];
+          if (variables?.entity_1?.templates?.length) {
+            templates.push(...variables.entity_1.templates);
+          }
+          return templates;
+        ]]]
+      variables: "[[[ return variables?.entity_1; ]]]"
+      state:
+        - operator: "template"
+          value: "[[[ return !variables.entity_1; ]]]"
+          styles:
+            card:
+              - display: "none"
+
+        - value: "on"
+          icon: mdi:remote
+          styles:
+            card:
+              - background-color: "#EEC690"
+            icon:
+              - color: "#7E4400"
+
+        - value: "off"
+          icon: mdi:remote-off
+          styles:
+            card:
+              - background-color: "#EEC690"
+            icon:
+              - color: "#7E4400"
+      entity: "[[[ return variables?.entity_1?.entity_id; ]]]"

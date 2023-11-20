@@ -6,14 +6,19 @@ name: Туалет
 icon: mdi:toilet
 styles:
   icon:
-    - color: "#164863"
+    # Icon color
+    - color: "#645510"
   card:
-    - --mdc-ripple-color: "#164863"
+    # Click Ripple color
+    - --mdc-ripple-color: "#645510"
     - --mdc-ripple-press-opacity: 0.3
-    - background: "#B7E4FF"
-    - color: "#164863"
+    # Card bacground color
+    - background: "#F3F4B6"
+    # Card text color
+    - color: "#645510"
   img_cell:
-    - background-color: "#5CD2E6"
+    # Card icon circle color
+    - background-color: "#D3D342"
 tap_action:
   action: navigate
   navigation_path: "/ui-lovelace-minimalist/bathroom"

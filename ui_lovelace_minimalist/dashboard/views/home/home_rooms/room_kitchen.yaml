@@ -1,24 +1,24 @@
-## Bedroom
+## Kitchen
 type: "custom:button-card"
 template:
   - card_room
-name: Спальня
-icon: mdi:bed-king
+name: Кухня
+icon: mdi:silverware-fork-knife
 styles:
   icon:
     # Icon color
-    - color: "#395144"
+    - color: "#424289"
   card:
     # Click Ripple color
-    - --mdc-ripple-color: "#395144"
+    - --mdc-ripple-color: "#424289"
     - --mdc-ripple-press-opacity: 0.3
     # Card bacground color
-    - background: "#BDE5D8"
+    - background: "#D5D6FF"
     # Card text color
-    - color: "#395144"
+    - color: "#424289"
   img_cell:
     # Card icon circle color
-    - background-color: "#75C7AC"
+    - background-color: "#A3A4FF"
 tap_action:
   action: navigate
   navigation_path: "/ui-lovelace-minimalist/bathroom"

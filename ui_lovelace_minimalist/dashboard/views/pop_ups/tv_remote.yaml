@@ -8,15 +8,15 @@ cards:
     card_mod:
       style: |
         ha-card {
-          color: #FAFAFA;
+          color: white;
         }
         :host {
-          --card-mod-icon-color: black;
+          --card-mod-icon-color: #4F2B00;
         }
     icon: mdi:remote
     state: remote.android_tv
-    bg_color: "#999999"
-    bg_opacity: 35
+    bg_color: "#7E4400"
+    bg_opacity: 40
     bg_blur: 50
     shadow_opacity: 10
     margin: "13px"
@@ -25,12 +25,11 @@ cards:
     slider_id: media_player.android_tv
     enable_button_feedback: false
     enable_slider_feedback: false
-    title: Android TV
     button_style:
       "--size": 32px
       color: var(--secondary-text-color)
     slider_style:
-      "--color": "#AAF0B4"
+      "--color": "#FFE7C6"
     rows:
       - - back
         - home

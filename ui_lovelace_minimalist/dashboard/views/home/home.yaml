@@ -25,12 +25,17 @@ cards:
 
   - type: "custom:button-card"
     template: card_title
+    styles:
+      card:
+        - color: white
     name: Пользователи
-
   - !include home_users/home_users.yaml
 
   - type: "custom:button-card"
     template: card_title
+    styles:
+      card:
+        - color: white
     name: Комнаты
   - !include home_rooms/home_rooms.yaml
 
