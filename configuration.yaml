@@ -69,11 +69,13 @@ lovelace:
       type: module
     - url: /hacsfiles/lovelace-layout-card/layout-card.js
       type: module
-    - url: /hacsfiles/android-tv-card/android-tv-card.js
-      type: module
     - url: /hacsfiles/lovelace-hourly-weather/hourly-weather.js
       type: module
     - url: /hacsfiles/clock-weather-card/clock-weather-card.js
       type: module
     - url: /hacsfiles/Bubble-Card/bubble-pop-up.js
+      type: module
+    - url: /hacsfiles/better-thermostat-ui-card/better-thermostat-ui-card.js
+      type: module
+    - url: /hacsfiles/android-tv-card/android-tv-card.min.js
       type: module

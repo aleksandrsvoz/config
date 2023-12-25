@@ -1,0 +1,74 @@
+title: "TV Remote"
+path: "tv_remote"
+background: left / cover no-repeat url('/local/images/bg.png')
+
+cards:
+  - type: custom:layout-card
+    layout_type: custom:grid-layout
+    layout:
+      grid-template-columns: 85% 10%
+      grid-template-areas: |
+        "left right"
+    cards:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: entity
+            entity: media_player.android_tv
+            tap_action:
+              action: none
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            icon: mdi:remote
+            icon_color: brown
+            name: "Пульт\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_"
+            content_info: name
+            card_mod:
+              style: |
+                ::slotted(span) {
+                  font-size:20px !important;
+                }
+                ha-card {
+                  justify-content: center;
+                  --chip-icon-size: 25px;
+                  --chip-height: 50px;
+                }
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: entity
+            entity: remote.android_tv
+            card_mod:
+              style: |
+                ha-card {
+                  --chip-icon-size: 25px;
+                  --chip-height: 50px;
+                  --chip-width: 50px;
+                  border-radius: 100% !important;
+                }
+            tap_action:
+              action: navigate
+              navigation_path: /ui-lovelace-minimalist/home
+            icon: mdi:close
+            content_info: none
+
+  - type: custom:android-tv-card
+    remote_id: remote.android_tv
+    slider_id: media_player.android_tv
+    enable_button_feedback: false
+    enable_slider_feedback: false
+    button_style:
+      "--size": 32px
+      color: var(--secondary-text-color)
+    slider_style:
+      "--color": "#FFE7C6"
+    rows:
+      - - back
+        - home
+        - power
+      - - touchpad
+      - - vol_buttons
+      - - volume_slider
+      - - rewind
+        - play_pause
+        - fast_forward

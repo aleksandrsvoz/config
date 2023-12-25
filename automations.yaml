@@ -1,1 +1,522 @@
-[]
+- id: '1703098072400'
+  alias: TRV Calibrator Bedroom
+  description: ''
+  use_blueprint:
+    path: rotilho/trv_calibrator.yaml
+    input:
+      trv: climate.radiator_bedroom
+      temperature_sensor: sensor.temperature_bedroom_temperature
+      trv_calibration_number: number.radiator_bedroom_local_temperature_calibration
+- id: '1703156526754'
+  alias: TRV Calibrator Office
+  description: ''
+  use_blueprint:
+    path: rotilho/trv_calibrator.yaml
+    input:
+      trv: climate.radiator_office
+      temperature_sensor: sensor.temperature_office_temperature
+      trv_calibration_number: number.radiator_office_local_temperature_calibration
+- id: '1703279396096'
+  alias: Light bulb turn off Light Kitchen Switch
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - light.light_kitchen
+    from: 'on'
+    to: 'off'
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 71f5d3918bce9ed4109a151edd75457e
+    entity_id: 463e6d64bff6bdc80b849faa2e975904
+    domain: switch
+  mode: single
+- id: '1703279502612'
+  alias: Light bulb turn off Light Office Switch
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - light.light_office
+    from: 'on'
+    to: 'off'
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 635d67e70eb7055a7e8e41306c8f8897
+    entity_id: f8081fc62b272afe73eb40c950e7a2d0
+    domain: switch
+  mode: single
+- id: '1703279690277'
+  alias: Light bulb turn off Light Living Room Switch
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - light.light_living_room
+    from: 'on'
+    to: 'off'
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 5194faa91def9215b7d5fb5c79fbe422
+    entity_id: e61a8091e3b55f1b77b1eac83f33fc17
+    domain: switch
+  mode: single
+- id: '1703323733462'
+  alias: Light bulb restore on turned on in Office
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: 61b83c69693b8014d4924c78d8d76a60
+    entity_id: 2b46d7d2c8aeb8981640add088abc223
+    domain: light
+  - platform: device
+    type: turned_on
+    device_id: 635d67e70eb7055a7e8e41306c8f8897
+    entity_id: f8081fc62b272afe73eb40c950e7a2d0
+    domain: switch
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: and
+        conditions:
+        - condition: state
+          entity_id: sun.sun
+          state: below_horizon
+        - condition: state
+          entity_id: input_boolean.is_night_mode
+          state: 'on'
+      sequence:
+      - service: light.turn_on
+        target:
+          entity_id: light.light_office
+        data:
+          brightness: 60
+          transition: 0
+          rgb_color:
+          - 116
+          - 74
+          - 1
+    default:
+    - service: light.turn_on
+      target:
+        entity_id: light.light_office
+      data:
+        transition: 1
+        color_temp: 500
+        brightness: 130
+  mode: single
+- id: '1703412927557'
+  alias: Light bulb restore on turned on in Living Room
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: 47ee0b7fb4afbedc48c4f642ab6af90a
+    entity_id: 12249e83778f9e83b01367e3101e05b5
+    domain: light
+  - platform: device
+    type: turned_on
+    device_id: 5194faa91def9215b7d5fb5c79fbe422
+    entity_id: e61a8091e3b55f1b77b1eac83f33fc17
+    domain: switch
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: and
+        conditions:
+        - condition: state
+          entity_id: sun.sun
+          state: below_horizon
+        - condition: state
+          entity_id: input_boolean.is_night_mode
+          state: 'on'
+      sequence:
+      - service: light.turn_on
+        target:
+          entity_id:
+          - light.light_living_room
+        data:
+          brightness: 60
+          transition: 0
+          rgb_color:
+          - 116
+          - 74
+          - 1
+    default:
+    - service: light.turn_on
+      target:
+        entity_id: light.light_living_room
+      data:
+        transition: 0
+        color_temp: 500
+        brightness: 130
+  mode: single
+- id: '1703499610744'
+  alias: Door Way sync two buttons left to right
+  description: ''
+  trigger:
+  - platform: device
+    type: changed_states
+    device_id: 7b9ef4e1b57fd30160f9287a3d9ff8b4
+    entity_id: b9696d7957547e1d5021cadb61a4cde2
+    domain: switch
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: and
+        conditions:
+        - condition: device
+          type: is_on
+          device_id: 7b9ef4e1b57fd30160f9287a3d9ff8b4
+          entity_id: b9696d7957547e1d5021cadb61a4cde2
+          domain: switch
+        - condition: device
+          type: is_off
+          device_id: 7b9ef4e1b57fd30160f9287a3d9ff8b4
+          entity_id: b73c699ba20e6b7efd6685f510c11879
+          domain: switch
+      sequence:
+      - type: turn_on
+        device_id: 7b9ef4e1b57fd30160f9287a3d9ff8b4
+        entity_id: b73c699ba20e6b7efd6685f510c11879
+        domain: switch
+    - conditions:
+      - condition: and
+        conditions:
+        - condition: device
+          type: is_off
+          device_id: 7b9ef4e1b57fd30160f9287a3d9ff8b4
+          entity_id: b9696d7957547e1d5021cadb61a4cde2
+          domain: switch
+        - condition: device
+          type: is_on
+          device_id: 7b9ef4e1b57fd30160f9287a3d9ff8b4
+          entity_id: b73c699ba20e6b7efd6685f510c11879
+          domain: switch
+      sequence:
+      - type: turn_off
+        device_id: 7b9ef4e1b57fd30160f9287a3d9ff8b4
+        entity_id: b73c699ba20e6b7efd6685f510c11879
+        domain: switch
+  mode: single
+- id: '1703502740668'
+  alias: Light bulb restore on turned on in Kitchen
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: f0d7af3c0df1f8dfd2a113dfa9d17491
+    entity_id: 60f486fc53315469662c284ca9f8e9be
+    domain: light
+  - platform: device
+    type: turned_on
+    device_id: 71f5d3918bce9ed4109a151edd75457e
+    entity_id: 463e6d64bff6bdc80b849faa2e975904
+    domain: switch
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 1
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: and
+        conditions:
+        - condition: state
+          entity_id: sun.sun
+          state: below_horizon
+        - condition: state
+          entity_id: input_boolean.is_night_mode
+          state: 'on'
+      sequence:
+      - service: light.turn_on
+        target:
+          entity_id:
+          - light.light_kitchen
+        data:
+          brightness: 60
+          transition: 0
+          rgb_color:
+          - 116
+          - 74
+          - 1
+    default:
+    - service: light.turn_on
+      target:
+        entity_id:
+        - light.light_kitchen
+      data:
+        transition: 0
+        color_temp: 500
+        brightness: 130
+  mode: single
+- id: '1703503884465'
+  alias: Light bulb restore on turned on in Bedroom
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: 4e53e381628e10ad30c5bcde381b7d81
+    entity_id: 88cb1f3ca7233ba5749b3098c84241a9
+    domain: light
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 1
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: and
+        conditions:
+        - condition: state
+          entity_id: sun.sun
+          state: below_horizon
+        - condition: state
+          entity_id: input_boolean.is_night_mode
+          state: 'on'
+      sequence:
+      - service: light.turn_on
+        target:
+          entity_id:
+          - light.bedroom_lights
+        data:
+          brightness: 60
+          transition: 0
+          rgb_color:
+          - 116
+          - 74
+          - 1
+    default:
+    - service: light.turn_on
+      target:
+        entity_id:
+        - light.bedroom_lights
+      data:
+        transition: 1
+        color_temp: 500
+        brightness: 130
+  mode: single
+- id: '1703506200819'
+  alias: Scene TV On
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - remote.android_tv
+    from:
+    to: 'on'
+  condition: []
+  action:
+  - service: scene.turn_on
+    target:
+      entity_id: scene.tv_scene
+    metadata: {}
+  - delay:
+      hours: 0
+      minutes: 3
+      seconds: 0
+      milliseconds: 0
+  - service: light.turn_on
+    target:
+      entity_id:
+      - light.light_kitchen
+    data:
+      rgb_color:
+      - 255
+      - 213
+      - 0
+      brightness_pct: 50
+  mode: single
+- id: '1703506966884'
+  alias: Scene TV Off
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - remote.android_tv
+    from: 'on'
+    to: unavailable
+  condition: []
+  action:
+  - service: scene.turn_on
+    target:
+      entity_id: scene.guest_scene
+    metadata: {}
+  mode: single
+- id: '1703509721556'
+  alias: Power Plug 1Turn on at 16:00
+  description: ''
+  trigger:
+  - platform: time_pattern
+    hours: '16'
+  condition: []
+  action:
+  - type: turn_on
+    device_id: fd4f21f6ddec80b91491cb78d79dc226
+    entity_id: 190bb6c68ec5cbcf11fc16c177e0b1d0
+    domain: switch
+  mode: single
+- id: '1703509824718'
+  alias: Power Plug 1Turn off at 00:00
+  description: ''
+  trigger:
+  - platform: time_pattern
+    hours: '00'
+  condition: []
+  action:
+  - type: turn_off
+    device_id: fd4f21f6ddec80b91491cb78d79dc226
+    entity_id: 190bb6c68ec5cbcf11fc16c177e0b1d0
+    domain: switch
+  mode: single
+- id: '1703514397437'
+  alias: Scene Night On
+  description: ''
+  trigger:
+  - platform: time
+    at: 01:00:00
+  - platform: state
+    entity_id:
+    - binary_sensor.alex_phone_is_charging
+    from:
+    to: 'on'
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: binary_sensor.alex_phone_is_charging
+      state: 'on'
+    - condition: time
+      after: 01:00:00
+      before: '20:00:00'
+    - condition: state
+      entity_id: input_boolean.is_night_mode
+      state: 'off'
+  action:
+  - service: scene.turn_on
+    target:
+      entity_id: scene.night_scene
+    metadata: {}
+  - if:
+    - condition: device
+      device_id: 89a3c1d78b55aab1312ca62de5dc4f36
+      domain: media_player
+      entity_id: b88dc1699ce77f3d4ca01838ca9e0c9c
+      type: is_on
+    then:
+    - service: script.tv_turn_off_confirmable_notification
+      data: {}
+  - service: script.slowly_could_down_the_living_room_light
+    data: {}
+  mode: single
+- id: '1703517954260'
+  alias: Scene Night Off
+  description: ''
+  trigger:
+  - platform: time
+    at: 09:00:00
+  condition: []
+  action:
+  - service: homeassistant.turn_off
+    target:
+      entity_id: input_boolean.is_night_mode
+    data: {}
+  mode: single
+- id: '1703532855855'
+  alias: TRV Calibrator Living Room
+  description: ''
+  use_blueprint:
+    path: rotilho/trv_calibrator.yaml
+    input:
+      trv: climate.radiator_living_room
+      temperature_sensor: sensor.temperature_living_room_temperature
+      trv_calibration_number: number.radiator_living_room_local_temperature_calibration
+- id: '1703533961152'
+  alias: Scene Out of Home
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - device_tracker.alex_phone
+    from: home
+    to: not_home
+  - platform: state
+    entity_id:
+    - device_tracker.lena_phone
+    from: home
+    to: not_home
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: device_tracker.alex_phone
+      state: not_home
+    - condition: state
+      entity_id: device_tracker.lena_phone
+      state: not_home
+  action:
+  - service: scene.turn_on
+    target:
+      entity_id: scene.out_off_home
+    metadata: {}
+  mode: single
+- id: '1703534667532'
+  alias: Scene Come Back Home
+  description: ''
+  trigger:
+  - type: opened
+    platform: device
+    device_id: 4491a48c7d623f8065437eb7b0ca2705
+    entity_id: 10520ab450d713aa6a0560cdefa0025d
+    domain: binary_sensor
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: device_tracker.alex_phone
+      state: home
+    - condition: state
+      entity_id: device_tracker.lena_phone
+      state: home
+  action:
+  - type: turn_on
+    device_id: 7b9ef4e1b57fd30160f9287a3d9ff8b4
+    entity_id: b73c699ba20e6b7efd6685f510c11879
+    domain: switch
+  - type: turn_on
+    device_id: 71f5d3918bce9ed4109a151edd75457e
+    entity_id: 463e6d64bff6bdc80b849faa2e975904
+    domain: switch
+  - if:
+    - condition: and
+      conditions:
+      - condition: state
+        entity_id: input_boolean.is_night_mode
+        state: 'off'
+      - condition: time
+        after: '16:00:00'
+        before: 00:00:00
+    then:
+    - type: turn_on
+      device_id: fd4f21f6ddec80b91491cb78d79dc226
+      entity_id: 190bb6c68ec5cbcf11fc16c177e0b1d0
+      domain: switch
+  - delay:
+      hours: 0
+      minutes: 3
+      seconds: 0
+      milliseconds: 0
+  - type: turn_off
+    device_id: 7b9ef4e1b57fd30160f9287a3d9ff8b4
+    entity_id: b73c699ba20e6b7efd6685f510c11879
+    domain: switch
+  mode: single

@@ -1,35 +1,38 @@
-## Living Room
+## Office
 type: "custom:button-card"
 template:
   - card_room
-name: Гостиная
-icon: mdi:sofa
+name: Офис
+entity: sensor.temperature_office_temperature
+icon: mdi:laptop
 styles:
   icon:
     # Icon color
-    - color: "#7E4400"
+    - color: "#645510"
   card:
     # Click Ripple color
-    - --mdc-ripple-color: "#7E4400"
+    - --mdc-ripple-color: "#645510"
     - --mdc-ripple-press-opacity: 0.3
     # Card bacground color
-    - background: "#FFE7C6"
+    - background: "#F3F4B6"
     # Card text color
-    - color: "#7E4400"
+    - color: "#645510"
   img_cell:
     # Card icon circle color
-    - background-color: "#EEC690"
+    - background-color: "#D3D342"
 tap_action:
   action: navigate
-  navigation_path: "/ui-lovelace-minimalist/bathroom"
+  navigation_path: office
 variables:
   label_use_temperature: false
   label_use_brightness: true
   entity_1:
-    entity_id: remote.android_tv
+    entity_id: switch.light_switch_office
     tap_action:
+      action: toggle
+    hold_action:
       action: navigate
-      navigation_path: "#tv_remote"
+      navigation_path: "#light_office_pop_up"
 custom_fields:
   i1:
     card:
@@ -51,18 +54,18 @@ custom_fields:
               - display: "none"
 
         - value: "on"
-          icon: mdi:remote
+          icon: mdi:lightbulb-on
           styles:
             card:
-              - background-color: "#EEC690"
+              - background-color: "#D3D342"
             icon:
-              - color: "#7E4400"
+              - color: "#645510"
 
-        - value: "unavailable"
-          icon: mdi:remote-off
+        - value: "off"
+          icon: mdi:lightbulb-outline
           styles:
             card:
-              - background-color: "#EEC690"
+              - background-color: "#D3D342"
             icon:
-              - color: "#7E4400"
+              - color: "#645510"
       entity: "[[[ return variables?.entity_1?.entity_id; ]]]"

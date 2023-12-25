@@ -3,30 +3,32 @@ type: "custom:button-card"
 template:
   - card_room
 name: Парадная
-entity: lock.front_dore
+entity: sensor.temperature_living_room_temperature
 icon: mdi:door-closed
 styles:
   icon:
     # Icon color
-    - color: "#AB2E00"
+    - color: "#424289"
   card:
     # Click Ripple color
-    - --mdc-ripple-color: "#AB2E00"
-    - --mdc-ripple-press-opacity: 0.3
+    - --mdc-ripple-color: "#D5D6FF"
     # Card bacground color
-    - background: "#FDE6E1"
+    - background: "#D5D6FF"
     # Card text color
-    - color: "#AB2E00"
+    - color: "#424289"
   img_cell:
     # Card icon circle color
-    - background-color: "#FFC6AC"
+    - background-color: "#A3A4FF"
 tap_action:
-  action: navigate
-  navigation_path: "/ui-lovelace-minimalist/bathroom"
+  action: none
 variables:
   label_use_temperature: false
   label_use_brightness: true
   entity_1:
+    entity_id: switch.light_switch_door_way_right
+    tap_action:
+      action: toggle
+  entity_2:
     entity_id: lock.front_dore
     tap_action:
       action: toggle
@@ -50,6 +52,41 @@ custom_fields:
             card:
               - display: "none"
 
+        - value: "on"
+          icon: mdi:lightbulb-on
+          styles:
+            card:
+              - background-color: "#A3A4FF"
+            icon:
+              - color: "#424289"
+
+        - value: "off"
+          icon: mdi:lightbulb-outline
+          styles:
+            card:
+              - background-color: "#A3A4FF"
+            icon:
+              - color: "#424289"
+      entity: "[[[ return variables?.entity_1?.entity_id; ]]]"
+  i2:
+    card:
+      type: "custom:button-card"
+      template: >
+        [[[
+          let templates = [ 'widget_icon_room' ];
+          if (variables?.entity_2?.templates?.length) {
+            templates.push(...variables.entity_2.templates);
+          }
+          return templates;
+        ]]]
+      variables: "[[[ return variables?.entity_2; ]]]"
+      state:
+        - operator: "template"
+          value: "[[[ return !variables.entity_2; ]]]"
+          styles:
+            card:
+              - display: "none"
+
         - value: "unlocked"
           icon: "[[[ return states['binary_sensor.front_dore_door'].state === 'on' ? 'mdi:door-open' : 'mdi:lock-open-variant'; ]]]"
           styles:
@@ -62,9 +99,9 @@ custom_fields:
           icon: "[[[ return states['binary_sensor.front_dore_door'].state === 'on' ? 'mdi:lock-alert' : 'mdi:lock'; ]]]"
           styles:
             card:
-              - background-color: "[[[ return states['binary_sensor.front_dore_door'].state === 'on' ? '#FFA4A4' : '#FFC6AC'; ]]]"
+              - background-color: "[[[ return states['binary_sensor.front_dore_door'].state === 'on' ? '#FFA4A4' : '#A3A4FF'; ]]]"
             icon:
-              - color: "[[[ return states['binary_sensor.front_dore_door'].state === 'on' ? '#B60021' : '#AB2E00'; ]]]"
+              - color: "[[[ return states['binary_sensor.front_dore_door'].state === 'on' ? '#B60021' : '#424289'; ]]]"
 
         - value: "unlocking"
           icon: mdi:lock-clock
@@ -81,4 +118,4 @@ custom_fields:
               - background-color: "#F8CDB7"
             icon:
               - color: "#DA5C22"
-      entity: "[[[ return variables?.entity_1?.entity_id; ]]]"
+      entity: "[[[ return variables?.entity_2?.entity_id; ]]]"

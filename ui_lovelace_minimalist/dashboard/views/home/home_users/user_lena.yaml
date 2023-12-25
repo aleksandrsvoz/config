@@ -3,20 +3,23 @@ type: vertical-stack
 cards:
   - type: custom:bubble-pop-up
     hash: "#user_lena"
-    name: Лена
+    name: "\_\_\_\_Лена"
     card_mod:
       style: |
         ha-card {
           color: #595959;
         }
         :host {
-          --card-mod-icon-color: black;
+          --background-color: rgb(255, 255, 255);
         }
-    icon: mdi:face-woman
-    state: person.lenavoz
+        .header-icon {
+          display: none;
+        }
+    style:
+      ".card-header": "margin-left: 200px;" # Adjust margin as needed
     bg_color: "#999999"
-    bg_opacity: 35
-    bg_blur: 50
+    bg_opacity: 90
+    bg_blur: 100
     shadow_opacity: 10
     margin: "13px"
 
@@ -38,6 +41,11 @@ cards:
         badge_icon: ""
         multiline_secondary: true
         icon_color: "#AE322A"
+        card_mod:
+          style: |
+            ha-card {
+              background-color: rgb(255, 255, 255);
+            }
         badge_color: ""
         tap_action:
           action: call-service
@@ -57,6 +65,11 @@ cards:
         secondary: ""
         icon: mdi:message-badge-outline
         icon_color: "#64AF9E"
+        card_mod:
+          style: |
+            ha-card {
+              background-color: rgb(255, 255, 255);
+            }
         tap_action:
           action: call-service
           service: notify.mobile_app_lenok
@@ -76,8 +89,14 @@ cards:
           color: #FAFAFA;
         }
         :host {
-          --card-mod-icon-color: #FAFAFA;
+          --card-mod-icon-color: #595959;
         }
 
   - type: todo-list
     entity: todo.lena_tasks
+    card_mod:
+      style: |
+        ha-card {
+          color: #595959;
+          background-color: rgb(255, 255, 255);
+        }

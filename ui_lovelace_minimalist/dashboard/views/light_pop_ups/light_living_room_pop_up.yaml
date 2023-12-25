@@ -1,0 +1,63 @@
+type: vertical-stack
+cards:
+  - type: custom:bubble-pop-up
+    hash: "#light_living_room_pop_up"
+    name: "\_\_\_\_Свет в Гостиной"
+    card_mod:
+      style: |
+        ha-card {
+          color: #7E4400;
+        }
+        :host {
+          --background-color: rgb(255, 255, 255);
+        }
+        .header-icon {
+          display: none;
+        }
+    icon: mdi:lightbulb
+    bg_color: "#7E5C34"
+    bg_opacity: 90
+    bg_blur: 70
+    shadow_opacity: 10
+    margin: "13px"
+    margin_top_mobile: 350px
+
+  - type: horizontal-stack
+    cards:
+      - type: "custom:button-card"
+        template: card_light
+        entity: switch.light_switch_living_room_left
+        variables:
+          ulm_card_light_name: " "
+          ulm_card_light_icon: mdi:chandelier
+
+      - type: conditional
+        conditions:
+          - entity: switch.light_switch_living_room_right
+            state: "off"
+        card:
+          type: custom:button-card
+          template: card_light_color
+          entity: switch.light_switch_living_room_right
+          variables:
+            ulm_card_light_name: " "
+            ulm_card_light_icon: mdi:globe-light-outline
+
+  - type: conditional
+    conditions:
+      - entity: switch.light_switch_living_room_right
+        state: "on"
+    card:
+      type: custom:mushroom-light-card
+      entity: light.light_living_room
+      primary_info: name
+      name: Лампа
+      icon: mdi:globe-light-outline
+      fill_container: false
+      use_light_color: true
+      show_brightness_control: true
+      show_color_control: true
+      show_color_temp_control: true
+      collapsible_controls: true
+      secondary_info: state
+      icon_type: icon

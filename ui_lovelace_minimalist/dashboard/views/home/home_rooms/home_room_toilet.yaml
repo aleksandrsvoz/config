@@ -1,9 +1,10 @@
-## Office
+## Toilet
 type: "custom:button-card"
 template:
   - card_room
-name: Офис
-icon: mdi:briefcase
+name: Туалет
+entity: sensor.temperature_toilet_temperature
+icon: mdi:toilet
 styles:
   icon:
     # Icon color

@@ -3,20 +3,21 @@ type: vertical-stack
 cards:
   - type: custom:bubble-pop-up
     hash: "#user_alex"
-    name: Саша
+    name: "\_\_\_\_Саша"
     card_mod:
       style: |
         ha-card {
           color: #595959;
         }
         :host {
-          --card-mod-icon-color: black;
+          --background-color: rgb(255, 255, 255);
         }
-    icon: mdi:face-man
-    state: person.alexvoz
+        .header-icon {
+          display: none;
+        }
     bg_color: "#999999"
-    bg_opacity: 35
-    bg_blur: 50
+    bg_opacity: 90
+    bg_blur: 100
     shadow_opacity: 10
     margin: "13px"
   - type: map
@@ -36,8 +37,13 @@ cards:
         icon: mdi:alarm-bell
         badge_icon: ""
         multiline_secondary: true
-        icon_color: "#AE322A"
+        icon_color: "#595959"
         badge_color: ""
+        card_mod:
+          style: |
+            ha-card {
+              background-color: rgb(255, 255, 255);
+            }
         tap_action:
           action: call-service
           service: notify.mobile_app_pixel_7_pro
@@ -55,7 +61,12 @@ cards:
         primary: Notification
         secondary: ""
         icon: mdi:message-badge-outline
-        icon_color: "#64AF9E"
+        icon_color: "#595959"
+        card_mod:
+          style: |
+            ha-card {
+              background-color: rgb(255, 255, 255);
+            }
         tap_action:
           action: call-service
           service: notify.mobile_app_pixel_7_pro
@@ -72,11 +83,17 @@ cards:
     card_mod:
       style: |
         ha-card {
-          color: #FAFAFA;
+          color: #fff;
         }
         :host {
-          --card-mod-icon-color: #FAFAFA;
+          --card-mod-icon-color: #595959;
         }
 
   - type: todo-list
     entity: todo.alex_tasks
+    card_mod:
+      style: |
+        ha-card {
+          color: #595959;
+          background-color: rgb(255, 255, 255);
+        }

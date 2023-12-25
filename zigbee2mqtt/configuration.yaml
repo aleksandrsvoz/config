@@ -1,0 +1,101 @@
+homeassistant: true
+advanced:
+  network_key:
+    - 158
+    - 246
+    - 214
+    - 65
+    - 21
+    - 239
+    - 177
+    - 25
+    - 1
+    - 68
+    - 32
+    - 252
+    - 167
+    - 8
+    - 140
+    - 13
+  pan_id: 47604
+  ext_pan_id:
+    - 7
+    - 212
+    - 121
+    - 58
+    - 200
+    - 39
+    - 134
+    - 233
+  homeassistant_legacy_entity_attributes: false
+  legacy_api: false
+  legacy_availability_payload: false
+mqtt:
+  server: mqtt://core-mosquitto:1883
+  user: addons
+  password: aephoh5ab4ooc2fohSebiejiekua1hai8TohJe1Biphohgeiloo9hooyah6eitie
+frontend:
+  port: 8099
+serial:
+  port: tcp://192.168.86.221:6638
+  baudrate: 115200
+  disable_led: false
+  transmit_power: 20
+devices:
+  '0x00124b00292c1c80':
+    friendly_name: temperature_toilet
+    description: Temperature  Sensor in Bethroom
+  '0xa4c138f3a678c27c':
+    friendly_name: light_office
+    description: Light Bulb in Office
+    transition: 2
+    color_sync: true
+  '0x3c2ef5fffed68dd3':
+    friendly_name: temperature_bedroom
+  '0x9035eafffe1000e3':
+    friendly_name: temperature_office
+  '0x84ba20fffecf3174':
+    friendly_name: temperature_living_room
+  '0xa4c13884f58f65d2':
+    friendly_name: light_living_room
+    transition: 2
+    state_action: false
+    color_sync: false
+  '0xa4c13873d12d6958':
+    friendly_name: light_kitchen
+    transition: 2
+  '0xa4c1384cf7a440e3':
+    friendly_name: light_bedroom_1
+    transition: 2
+  '0xa4c13823eb1d2ff0':
+    friendly_name: light_bedroom_2
+    transition: 2
+  '0xa4c138a7a35bf2f6':
+    friendly_name: radiator_office
+  '0xa4c138dc609dd4e2':
+    friendly_name: radiator_bedroom
+  '0xa4c1389328fbc285':
+    friendly_name: power_plug_1
+  '0x54ef441000ae9d9b':
+    friendly_name: light_switch_office
+  '0x54ef4410008c011d':
+    friendly_name: light_switch_kitchen
+  '0x54ef441000a4e641':
+    friendly_name: light_switch_living_room
+  '0xa4c13862621b0122':
+    friendly_name: power_plug_2
+  '0x54ef441000a4efc3':
+    friendly_name: light_switch_door_way
+  '0xa4c13845107dd4de':
+    friendly_name: radiator_living_room
+groups:
+  '1':
+    friendly_name: bedroom_lights
+    devices:
+      - 0xa4c1384cf7a440e3/1
+      - 0xa4c13823eb1d2ff0/1
+  '2':
+    friendly_name: living_room_lights
+    devices:
+      - 0xa4c13884f58f65d2/1
+      - 0xa4c13873d12d6958/1

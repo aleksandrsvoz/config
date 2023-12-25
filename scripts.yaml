@@ -1,0 +1,67 @@
+tv_turn_off_confirmable_notification:
+  alias: TV turn off Confirmable Notification
+  use_blueprint:
+    path: homeassistant/confirmable_notification.yaml
+    input:
+      notify_device: 38800d05e076153b488af0cb1ec0ea49
+      confirm_text: Нет
+      confirm_action: []
+      dismiss_text: Да
+      dismiss_action:
+      - type: turn_off
+        device_id: 89a3c1d78b55aab1312ca62de5dc4f36
+        entity_id: fae5edbba297bd2d856f7ace4abb91b5
+        domain: remote
+      message: Выключить телевизор?
+  icon: mdi:television-off
+slowly_could_down_the_living_room_light:
+  alias: Slowly could down the living room light
+  variables:
+    delay_duration: 00:04:00
+  sequence:
+  - delay: '{{ delay_duration }}'
+  - service: light.turn_on
+    target:
+      entity_id:
+      - light.bedroom_lights
+    data:
+      rgb_color:
+      - 200
+      - 130
+      - 0
+      brightness: 130
+  - delay: '{{ delay_duration }}'
+  - service: light.turn_on
+    target:
+      entity_id:
+      - light.bedroom_lights
+    data:
+      brightness: 100
+  - delay: '{{ delay_duration }}'
+  - service: light.turn_on
+    target:
+      entity_id:
+      - light.bedroom_lights
+    data:
+      brightness: 70
+  - delay: '{{ delay_duration }}'
+  - service: light.turn_on
+    target:
+      entity_id:
+      - light.bedroom_lights
+    data:
+      brightness: 40
+  - delay: '{{ delay_duration }}'
+  - service: light.turn_on
+    target:
+      entity_id:
+      - light.bedroom_lights
+    data:
+      brightness: 10
+  - delay: '{{ delay_duration }}'
+  - type: turn_off
+    device_id: 4e53e381628e10ad30c5bcde381b7d81
+    entity_id: 88cb1f3ca7233ba5749b3098c84241a9
+    domain: light
+  mode: single
+  icon: mdi:lightbulb-night

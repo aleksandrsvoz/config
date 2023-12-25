@@ -1,0 +1,71 @@
+## Bedroom
+type: "custom:button-card"
+template:
+  - card_room
+name: Спальня
+entity: sensor.temperature_bedroom_temperature
+icon: mdi:bed-king
+styles:
+  icon:
+    # Icon color
+    - color: "#395144"
+  card:
+    # Click Ripple color
+    - --mdc-ripple-color: "#395144"
+    - --mdc-ripple-press-opacity: 0.3
+    # Card bacground color
+    - background: "#BDE5D8"
+    # Card text color
+    - color: "#395144"
+  img_cell:
+    # Card icon circle color
+    - background-color: "#75C7AC"
+tap_action:
+  action: navigate
+  navigation_path: bedroom
+variables:
+  label_use_temperature: false
+  label_use_brightness: true
+  entity_1:
+    entity_id: light.bedroom_lights
+    tap_action:
+      action: toggle
+    hold_action:
+      action: navigate
+      navigation_path: "#light_bedroom_pop_up"
+custom_fields:
+  i1:
+    card:
+      type: "custom:button-card"
+      template: >
+        [[[
+          let templates = [ 'widget_icon_room' ];
+          if (variables?.entity_1?.templates?.length) {
+            templates.push(...variables.entity_1.templates);
+          }
+          return templates;
+        ]]]
+      variables: "[[[ return variables?.entity_1; ]]]"
+      state:
+        - operator: "template"
+          value: "[[[ return !variables.entity_1; ]]]"
+          styles:
+            card:
+              - display: "none"
+
+        - value: "on"
+          icon: mdi:lightbulb-on
+          styles:
+            card:
+              - background-color: "#75C7AC"
+            icon:
+              - color: "#395144"
+
+        - value: "off"
+          icon: mdi:lightbulb-outline
+          styles:
+            card:
+              - background-color: "#75C7AC"
+            icon:
+              - color: "#395144"
+      entity: "[[[ return variables?.entity_1?.entity_id; ]]]"

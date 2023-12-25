@@ -3,3 +3,7 @@ button_card_templates: !include_dir_merge_named "../../custom_components/ui_love
 title: "Minimalist"
 views:
   - !include views/home/home.yaml
+  - !include views/tv_remote/tv_remote.yaml
+  - !include views/rooms/living_room.yaml
+  - !include views/rooms/bedroom.yaml
+  - !include views/rooms/office.yaml

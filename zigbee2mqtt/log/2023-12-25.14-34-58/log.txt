@@ -1,0 +1,11 @@
+info  2023-12-25 14:34:58: Logging to console and directory: '/config/zigbee2mqtt/log/2023-12-25.14-34-58' filename: log.txt
+info  2023-12-25 14:34:58: Starting Zigbee2MQTT version 1.34.0 (commit #unknown)
+info  2023-12-25 14:34:58: Starting zigbee-herdsman (0.25.0)
+error 2023-12-25 14:35:06: Error while starting zigbee-herdsman
+error 2023-12-25 14:35:06: Failed to start zigbee
+error 2023-12-25 14:35:06: Check https://www.zigbee2mqtt.io/guide/installation/20_zigbee2mqtt-fails-to-start.html for possible solutions
+error 2023-12-25 14:35:06: Exiting...
+error 2023-12-25 14:35:06: Error: SRSP - ZDO - simpleDescReq after 6000ms
+    at Timeout._onTimeout (/app/node_modules/zigbee-herdsman/src/utils/waitress.ts:64:35)
+    at listOnTimeout (node:internal/timers:559:17)
+    at processTimers (node:internal/timers:502:7)

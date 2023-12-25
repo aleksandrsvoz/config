@@ -2,8 +2,9 @@
 type: vertical-stack
 cards:
   - type: custom:bubble-pop-up
-    hash: "#tv_remote"
+    hash: "#tv_remote_pop_up"
     name: Пульт
+    margin_top_mobile: 170px
     card_mod:
       style: |
         ha-card {
@@ -11,14 +12,13 @@ cards:
         }
         :host {
           --card-mod-icon-color: #4F2B00;
-        }
     icon: mdi:remote
-    state: remote.android_tv
-    bg_color: "#7E4400"
-    bg_opacity: 40
-    bg_blur: 50
+    bg_color: "#7E5C34"
+    bg_opacity: 90
+    bg_blur: 70
     shadow_opacity: 10
     margin: "13px"
+
   - type: custom:android-tv-card
     remote_id: remote.android_tv
     slider_id: media_player.android_tv

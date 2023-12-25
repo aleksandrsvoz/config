@@ -1,0 +1,68 @@
+type: vertical-stack
+cards:
+  - type: custom:bubble-pop-up
+    hash: "#light_bedroom_pop_up"
+    name: "\_\_\_\_Свет в Спальне"
+    card_mod:
+      style: |
+        ha-card {
+          color: #395144;
+        }
+        :host {
+          --background-color: rgb(255, 255, 255);
+        }
+        .header-icon {
+          display: none;
+        }
+    icon: mdi:lightbulb
+    bg_color: "#75C7AC"
+    bg_opacity: 90
+    bg_blur: 70
+    shadow_opacity: 10
+    margin: "13px"
+    margin_top_mobile: 300px
+
+  - type: custom:mushroom-light-card
+    entity: light.bedroom_lights
+    primary_info: name
+    name: Оба
+    fill_container: false
+    use_light_color: true
+    show_brightness_control: true
+    show_color_control: true
+    show_color_temp_control: true
+    collapsible_controls: true
+    secondary_info: state
+    icon_type: icon
+    layout: vertical
+
+  - type: grid
+    columns: 2
+    cards:
+      - type: custom:mushroom-light-card
+        entity: light.light_bedroom_2
+        primary_info: name
+        name: Левый Свет
+        fill_container: false
+        use_light_color: true
+        show_brightness_control: true
+        show_color_control: true
+        show_color_temp_control: true
+        collapsible_controls: true
+        secondary_info: state
+        icon_type: icon
+        layout: vertical
+
+      - type: custom:mushroom-light-card
+        entity: light.light_bedroom_1
+        primary_info: name
+        name: Правый Свет
+        fill_container: false
+        use_light_color: true
+        show_brightness_control: true
+        show_color_control: true
+        show_color_temp_control: true
+        collapsible_controls: true
+        secondary_info: state
+        icon_type: icon
+        layout: vertical

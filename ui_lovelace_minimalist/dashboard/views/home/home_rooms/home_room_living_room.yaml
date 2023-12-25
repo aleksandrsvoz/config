@@ -1,0 +1,156 @@
+## Living Room
+type: "custom:button-card"
+template:
+  - card_room
+name: Гостиная
+entity: sensor.temperature_living_room_temperature
+icon: mdi:sofa
+styles:
+  icon:
+    # Icon color
+    - color: "#7E4400"
+  card:
+    # Click Ripple color
+    - --mdc-ripple-color: "#7E4400"
+    - --mdc-ripple-press-opacity: 0.3
+    # Card bacground color
+    - background: "#FFE7C6"
+    # Card text color
+    - color: "#7E4400"
+  img_cell:
+    # Card icon circle color
+    - background-color: "#EEC690"
+tap_action:
+  action: navigate
+  navigation_path: living_room
+variables:
+  label_use_temperature: false
+  label_use_brightness: true
+  entity_1:
+    entity_id: switch.light_switch_living_room_right
+    tap_action:
+      action: toggle
+    hold_action:
+      action: navigate
+      navigation_path: "#light_living_room_pop_up"
+  entity_2:
+    entity_id: switch.light_switch_living_room_left
+    tap_action:
+      action: toggle
+    hold_action:
+      action: navigate
+      navigation_path: "#light_living_room_pop_up"
+  entity_3:
+    entity_id: remote.android_tv
+    tap_action:
+      action: navigate
+      navigation_path: "#tv_remote_pop_up"
+    hold_action:
+      action: navigate
+      navigation_path: "tv_remote"
+custom_fields:
+  i1:
+    card:
+      type: "custom:button-card"
+      template: >
+        [[[
+          let templates = [ 'widget_icon_room' ];
+          if (variables?.entity_1?.templates?.length) {
+            templates.push(...variables.entity_1.templates);
+          }
+          return templates;
+        ]]]
+      variables: "[[[ return variables?.entity_1; ]]]"
+      state:
+        - operator: "template"
+          value: "[[[ return !variables.entity_1; ]]]"
+          styles:
+            card:
+              - display: "none"
+
+        - value: "on"
+          icon: mdi:lightbulb-on
+          styles:
+            card:
+              - background-color: "#EEC690"
+            icon:
+              - color: "#7E4400"
+
+        - value: "off"
+          icon: mdi:lightbulb-outline
+          styles:
+            card:
+              - background-color: "#EEC690"
+            icon:
+              - color: "#7E4400"
+      entity: "[[[ return variables?.entity_1?.entity_id; ]]]"
+  i2:
+    card:
+      type: "custom:button-card"
+      template: >
+        [[[
+          let templates = [ 'widget_icon_room' ];
+          if (variables?.entity_2?.templates?.length) {
+            templates.push(...variables.entity_2.templates);
+          }
+          return templates;
+        ]]]
+      variables: "[[[ return variables?.entity_2; ]]]"
+      state:
+        - operator: "template"
+          value: "[[[ return !variables.entity_2; ]]]"
+          styles:
+            card:
+              - display: "none"
+
+        - value: "on"
+          icon: mdi:ceiling-light
+          styles:
+            card:
+              - background-color: "#EEC690"
+            icon:
+              - color: "#7E4400"
+
+        - value: "off"
+          icon: mdi:ceiling-light-outline
+          styles:
+            card:
+              - background-color: "#EEC690"
+            icon:
+              - color: "#7E4400"
+      entity: "[[[ return variables?.entity_2?.entity_id; ]]]"
+  i3:
+    card:
+      type: "custom:button-card"
+      template: >
+        [[[
+          let templates = [ 'widget_icon_room' ];
+          if (variables?.entity_3?.templates?.length) {
+            templates.push(...variables.entity_3.templates);
+          }
+          return templates;
+        ]]]
+      variables: "[[[ return variables?.entity_3; ]]]"
+      state:
+        - operator: "template"
+          value: "[[[ return !variables.entity_3; ]]]"
+          styles:
+            card:
+              - display: "none"
+
+        - value: "on"
+          icon: mdi:remote
+          styles:
+            card:
+              - background-color: "#EEC690"
+            icon:
+              - color: "#7E4400"
+
+        - value: "unavailable"
+          icon: mdi:remote-off
+          styles:
+            card:
+              - background-color: "#EEC690"
+            icon:
+              - color: "#7E4400"
+      entity: "[[[ return variables?.entity_3?.entity_id; ]]]"

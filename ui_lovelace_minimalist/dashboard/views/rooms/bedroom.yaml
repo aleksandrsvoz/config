@@ -1,0 +1,169 @@
+title: "Bedroom"
+path: "bedroom"
+background: bottom / cover no-repeat url('/local/images/bg.png')
+cards:
+  - type: custom:layout-card
+    layout_type: custom:grid-layout
+    layout:
+      grid-template-columns: 85% 10%
+      grid-template-areas: |
+        "left right"
+    cards:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: entity
+            entity: sensor.temperature_bedroom_temperature
+            tap_action:
+              action: none
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            icon: mdi:bed-king
+            icon_color: green
+            name: "Спальня\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_"
+            content_info: name
+            card_mod:
+              style: |
+                ::slotted(span) {
+                  font-size:20px !important;
+                }
+                ha-card {
+                  justify-content: center;
+                  --chip-icon-size: 25px;
+                  --chip-height: 50px;
+                }
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: entity
+            entity: sensor.temperature_bedroom_temperature
+            card_mod:
+              style: |
+                ha-card {
+                  --chip-icon-size: 25px;
+                  --chip-height: 50px;
+                  --chip-width: 50px;
+                  border-radius: 100% !important;
+                }
+            tap_action:
+              action: navigate
+              navigation_path: /ui-lovelace-minimalist/home
+            icon: mdi:close
+            content_info: none
+
+  - type: custom:bubble-card
+    card_type: separator
+    name: Температура и влажность
+    icon: mdi:water-thermometer
+    card_mod:
+      style: |
+        ha-card {
+          color: #FAFAFA;
+        }
+
+  - type: horizontal-stack
+    cards:
+      - type: "custom:button-card"
+        template: card_graph
+        card_mod:
+        style: |
+          :host {
+            --card-mod-icon-color: #FB8B24;
+        entity: sensor.temperature_bedroom_temperature
+        variables:
+          ulm_card_graph_color: "#FB8B24"
+          ulm_card_graph_name: Температура
+          ulm_card_graph_entity: sensor.temperature_bedroom_temperature
+          ulm_card_graph_type: fill
+          ulm_card_graph_hours: 24
+          ulm_card_graph_group_by: interval
+          ulm_card_graph_line_width: 5
+
+      - type: "custom:button-card"
+        template: card_graph
+        card_mod:
+        style: |
+          :host {
+            --card-mod-icon-color: #39A7FF;
+        entity: sensor.temperature_bedroom_humidity
+        variables:
+          ulm_card_graph_color: "#39A7FF"
+          ulm_card_graph_name: Влажность
+          ulm_card_graph_entity: sensor.temperature_bedroom_humidity
+          ulm_card_graph_type: fill
+          ulm_card_graph_hours: 24
+          ulm_card_graph_group_by: interval
+          ulm_card_graph_line_width: 5
+
+  - type: custom:bubble-card
+    card_type: separator
+    name: Свет
+    icon: mdi:lightbulb
+    card_mod:
+      style: |
+        ha-card {
+          color: #FAFAFA;
+        }
+
+  - type: custom:mushroom-light-card
+    entity: light.bedroom_lights
+    primary_info: name
+    name: Оба
+    fill_container: false
+    use_light_color: true
+    show_brightness_control: true
+    show_color_control: true
+    show_color_temp_control: true
+    collapsible_controls: true
+    secondary_info: state
+    icon_type: icon
+
+  - type: horizontal-stack
+    cards:
+      - type: custom:mushroom-light-card
+        entity: light.light_bedroom_2
+        primary_info: name
+        name: Левый Свет
+        fill_container: false
+        use_light_color: true
+        show_brightness_control: true
+        show_color_control: true
+        show_color_temp_control: true
+        collapsible_controls: true
+        secondary_info: state
+        icon_type: icon
+
+      - type: custom:mushroom-light-card
+        entity: light.light_bedroom_1
+        primary_info: name
+        name: Правый Свет
+        fill_container: false
+        use_light_color: true
+        show_brightness_control: true
+        show_color_control: true
+        show_color_temp_control: true
+        collapsible_controls: true
+        secondary_info: state
+        icon_type: icon
+
+  - type: custom:bubble-card
+    card_type: separator
+    name: Термостат
+    icon: mdi:heating-coil
+    card_mod:
+      style: |
+        ha-card {
+          color: #FAFAFA;
+        }
+
+  - type: "custom:button-card"
+    template: card_thermostat
+    entity: climate.radiator_bedroom
+    variables:
+      ulm_card_thermostat_enable_collapse: true
+      ulm_card_thermostat_enable_controls: true
+      ulm_card_thermostat_enable_popup: true
+      ulm_card_thermostat_enable_background_color: true
+      ulm_card_thermostat_enable_display_temperature: true
+      ulm_card_thermostat_enable_horizontal: true
+      ulm_card_thermostat_name: "Температура"
