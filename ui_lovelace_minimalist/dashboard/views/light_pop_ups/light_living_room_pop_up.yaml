@@ -52,6 +52,11 @@ cards:
       entity: light.light_living_room
       primary_info: name
       name: Лампа
+      tap_action:
+        action: call-service
+        service: switch.toggle
+        service_data:
+          entity_id: switch.light_switch_living_room_right
       icon: mdi:globe-light-outline
       fill_container: false
       use_light_color: true

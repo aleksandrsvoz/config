@@ -4,6 +4,33 @@ background: center / cover no-repeat url('/local/images/bg.png')
 
 cards:
   - type: "custom:button-card"
+    template: "card_welcome_scenes"
+    triggers_update: input_boolean.is_scene_menu_opened
+    entity: input_boolean.is_scene_menu_opened
+    variables:
+      ulm_card_welcome_scenes_collapse: input_boolean.is_scene_menu_opened
+      ulm_weather: "weather.forecast_home_assistant"
+      entity_1:
+        entity_id: input_boolean.is_scene_enabled_night_mode
+        name: "Night"
+        color: "yellow"
+      entity_2:
+        entity_id: input_boolean.is_scene_enabled_tv_mode
+        name: "TV"
+        color: "yellow"
+      entity_3:
+        entity_id: input_boolean.is_scene_enabled_out_of_home
+        name: "Away"
+        color: "yellow"
+
+  - type: "custom:button-card"
+    template: chip_mdi_icon_state
+    variables:
+      ulm_chip_mdi_icon_state_icon: mdi:lightbulb
+      ulm_chip_mdi_icon_state_entity: sensor.count_lights_on
+      ulm_chip_mdi_icon_state_icon_color: orange
+
+  - type: "custom:button-card"
     template: card_title
     styles:
       card:
@@ -18,6 +45,14 @@ cards:
         - color: white
     name: Комнаты
   - !include home_rooms/home_rooms.yaml
+
+  - type: "custom:button-card"
+    template: card_title
+    styles:
+      card:
+        - color: white
+    name: Сцены
+  - !include home_scenes.yaml
 
   ## Pop-ups
   - !include home_users/user_alex.yaml

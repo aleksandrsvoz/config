@@ -88,6 +88,10 @@ devices:
     friendly_name: light_switch_door_way
   '0xa4c13845107dd4de':
     friendly_name: radiator_living_room
+  '0x048727fffe7b656b':
+    friendly_name: light_switch_kitchen_line
+  '0xa49e69fffecd3541':
+    friendly_name: ir_remote
 groups:
   '1':
     friendly_name: bedroom_lights

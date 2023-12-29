@@ -1,0 +1,56 @@
+type: horizontal-stack
+cards:
+  - type: "custom:button-card"
+    template: chip_mdi_icon_state
+    variables:
+      ulm_chip_mdi_icon_state_entity: input_boolean.is_night_mode
+      ulm_chip_mdi_icon_state_icon_color: orange
+    tap_action:
+      action: call-service
+      service: script.night_scene_script
+    hold_action:
+      action: call-service
+      service: input_boolean.turn_off
+      service_data:
+        entity_id: input_boolean.is_night_mode
+
+  - type: "custom:button-card"
+    template: chip_mdi_icon_state
+    variables:
+      ulm_chip_mdi_icon_state_entity: input_boolean.is_out_of_home
+      ulm_chip_mdi_icon_state_icon_color: orange
+    tap_action:
+      action: call-service
+      service: script.out_of_home_scene
+    hold_action:
+      action: call-service
+      service: input_boolean.turn_off
+      service_data:
+        entity_id: input_boolean.is_out_of_home
+
+  - type: "custom:button-card"
+    template: chip_mdi_icon_state
+    variables:
+      ulm_chip_mdi_icon_state_entity: input_boolean.is_tv_mode
+      ulm_chip_mdi_icon_state_icon_color: orange
+    tap_action:
+      action: call-service
+      service: script.tv_scene
+    hold_action:
+      action: call-service
+      service: input_boolean.turn_off
+      service_data:
+        entity_id: input_boolean.is_tv_mode
+
+  - type: "custom:button-card"
+    template: chip_icon_label
+    label: Default Mode
+    icon: "mdi:home-circle-outline"
+    card_mod:
+      style: |
+        :host {
+          --card-mod-icon-color: orange;
+        }
+    tap_action:
+      action: call-service
+      service: script.default_scene

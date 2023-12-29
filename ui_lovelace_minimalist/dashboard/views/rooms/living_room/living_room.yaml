@@ -113,14 +113,20 @@ cards:
         variables:
           ulm_card_light_name: " "
           ulm_card_light_icon: mdi:chandelier
+      - type: conditional
+        conditions:
+          - entity: switch.light_switch_living_room_right
+            state: "off"
+        card:
+          type: "custom:button-card"
+          template: card_light_color
+          entity: switch.light_switch_living_room_right
+          variables:
+            ulm_card_light_name: " "
+            ulm_card_light_icon: mdi:globe-light-outline
 
-      - type: "custom:button-card"
-        template: card_light_color
-        entity: switch.light_switch_living_room_right
-        variables:
-          ulm_card_light_name: " "
-          ulm_card_light_icon: mdi:globe-light-outline
-
+  - type: horizontal-stack
+    cards:
       - type: "custom:button-card"
         template: card_light_color
         entity: switch.power_plug_1
@@ -128,6 +134,18 @@ cards:
           ulm_card_light_name: " "
           ulm_card_light_icon: mdi:pine-tree
           ulm_card_light_color: green
+
+      - type: custom:mushroom-entity-card
+        entity: switch.power_plug_2
+        primary_info: state
+        secondary_info: none
+        icon: mdi:led-strip
+        icon_color: accent
+        tap_action:
+          action: toggle
+        hold_action:
+          action: navigate
+          navigation_path: "#strip_line_pop_up"
 
   - type: conditional
     conditions:
@@ -138,6 +156,11 @@ cards:
       entity: light.light_living_room
       primary_info: name
       name: Лампа
+      tap_action:
+        action: call-service
+        service: switch.toggle
+        service_data:
+          entity_id: switch.light_switch_living_room_right
       icon: mdi:globe-light-outline
       fill_container: false
       use_light_color: true
@@ -158,14 +181,13 @@ cards:
           color: #FAFAFA;
         }
 
-  - type: "custom:button-card"
-    template: card_thermostat
+  - type: thermostat
     entity: climate.radiator_living_room
-    variables:
-      ulm_card_thermostat_enable_collapse: true
-      ulm_card_thermostat_enable_controls: true
-      ulm_card_thermostat_enable_popup: true
-      ulm_card_thermostat_enable_background_color: true
-      ulm_card_thermostat_enable_display_temperature: true
-      ulm_card_thermostat_enable_horizontal: true
-      ulm_card_thermostat_name: "Температура"
+    features:
+      - type: climate-hvac-modes
+        hvac_modes:
+          - heat
+    theme: minimalist-mobile
+    name: " "
+
+  - !include strip_line_pop_up.yaml

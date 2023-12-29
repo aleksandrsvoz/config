@@ -1,0 +1,16 @@
+- platform: template
+  sensors:
+    count_lights_on:
+      friendly_name: "Total Lights Count"
+      icon_template: mdi:lightbulb
+      value_template: >
+        {{ [
+            states('switch.light_switch_office') == 'on',
+            states('switch.light_switch_kitchen') == 'on',
+            states('switch.light_switch_living_room_left') == 'on',
+            states('switch.light_switch_living_room_right') == 'on',
+            states('switch.light_switch_kitchen_line') == 'on',
+            states('switch.light_switch_door_way_right') == 'on',
+            states('light.light_bedroom_1') == 'on',
+            states('light.light_bedroom_2') == 'on',
+          ] | select('==', true) | list | count }}

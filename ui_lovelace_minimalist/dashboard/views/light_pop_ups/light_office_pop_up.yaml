@@ -43,6 +43,11 @@ cards:
       entity: light.light_office
       primary_info: name
       name: Лампа
+      tap_action:
+        action: call-service
+        service: switch.toggle
+        service_data:
+          entity_id: switch.light_switch_office
       icon: mdi:ceiling-light
       fill_container: false
       use_light_color: true

@@ -1,25 +1,9 @@
-tv_turn_off_confirmable_notification:
-  alias: TV turn off Confirmable Notification
-  use_blueprint:
-    path: homeassistant/confirmable_notification.yaml
-    input:
-      notify_device: 38800d05e076153b488af0cb1ec0ea49
-      confirm_text: Нет
-      confirm_action: []
-      dismiss_text: Да
-      dismiss_action:
-      - type: turn_off
-        device_id: 89a3c1d78b55aab1312ca62de5dc4f36
-        entity_id: fae5edbba297bd2d856f7ace4abb91b5
-        domain: remote
-      message: Выключить телевизор?
-  icon: mdi:television-off
 slowly_could_down_the_living_room_light:
   alias: Slowly could down the living room light
   variables:
-    delay_duration: 00:04:00
+    delay_duration: 00:01:00
   sequence:
-  - delay: '{{ delay_duration }}'
+  - delay: 00:07:00
   - service: light.turn_on
     target:
       entity_id:
@@ -29,7 +13,49 @@ slowly_could_down_the_living_room_light:
       - 200
       - 130
       - 0
+      brightness: 170
+  - delay: '{{ delay_duration }}'
+  - service: light.turn_on
+    target:
+      entity_id:
+      - light.bedroom_lights
+    data:
+      brightness: 160
+  - delay: '{{ delay_duration }}'
+  - service: light.turn_on
+    target:
+      entity_id:
+      - light.bedroom_lights
+    data:
+      brightness: 150
+  - delay: '{{ delay_duration }}'
+  - service: light.turn_on
+    target:
+      entity_id:
+      - light.bedroom_lights
+    data:
+      brightness: 140
+  - delay: '{{ delay_duration }}'
+  - service: light.turn_on
+    target:
+      entity_id:
+      - light.bedroom_lights
+    data:
       brightness: 130
+  - delay: '{{ delay_duration }}'
+  - service: light.turn_on
+    target:
+      entity_id:
+      - light.bedroom_lights
+    data:
+      brightness: 120
+  - delay: '{{ delay_duration }}'
+  - service: light.turn_on
+    target:
+      entity_id:
+      - light.bedroom_lights
+    data:
+      brightness: 110
   - delay: '{{ delay_duration }}'
   - service: light.turn_on
     target:
@@ -43,7 +69,35 @@ slowly_could_down_the_living_room_light:
       entity_id:
       - light.bedroom_lights
     data:
+      brightness: 90
+  - delay: '{{ delay_duration }}'
+  - service: light.turn_on
+    target:
+      entity_id:
+      - light.bedroom_lights
+    data:
+      brightness: 80
+  - delay: '{{ delay_duration }}'
+  - service: light.turn_on
+    target:
+      entity_id:
+      - light.bedroom_lights
+    data:
       brightness: 70
+  - delay: '{{ delay_duration }}'
+  - service: light.turn_on
+    target:
+      entity_id:
+      - light.bedroom_lights
+    data:
+      brightness: 60
+  - delay: '{{ delay_duration }}'
+  - service: light.turn_on
+    target:
+      entity_id:
+      - light.bedroom_lights
+    data:
+      brightness: 50
   - delay: '{{ delay_duration }}'
   - service: light.turn_on
     target:
@@ -57,11 +111,175 @@ slowly_could_down_the_living_room_light:
       entity_id:
       - light.bedroom_lights
     data:
+      brightness: 30
+  - delay: '{{ delay_duration }}'
+  - service: light.turn_on
+    target:
+      entity_id:
+      - light.bedroom_lights
+    data:
+      brightness: 20
+  - delay: '{{ delay_duration }}'
+  - service: light.turn_on
+    target:
+      entity_id:
+      - light.bedroom_lights
+    data:
       brightness: 10
   - delay: '{{ delay_duration }}'
   - type: turn_off
     device_id: 4e53e381628e10ad30c5bcde381b7d81
     entity_id: 88cb1f3ca7233ba5749b3098c84241a9
     domain: light
-  mode: single
+  mode: restart
   icon: mdi:lightbulb-night
+turn_off_tv_notification:
+  alias: 'Turn Off TV notification '
+  use_blueprint:
+    path: samuelthng/notifications.yaml
+    input:
+      notify_device: 38800d05e076153b488af0cb1ec0ea49
+      title: Подтвердите
+      icon: mdi:youtube-tv
+      enable_icon_color: true
+      confirm_text: Да
+      confirm_option_mode: action
+      dismiss_text: 'Нет '
+      dismiss_option_mode: action
+      confirm_action:
+      - type: turn_off
+        device_id: 89a3c1d78b55aab1312ca62de5dc4f36
+        entity_id: fae5edbba297bd2d856f7ace4abb91b5
+        domain: remote
+      timeout:
+        hours: 0
+        minutes: 1
+        seconds: 0
+      timeout_action:
+      - type: turn_off
+        device_id: 89a3c1d78b55aab1312ca62de5dc4f36
+        entity_id: fae5edbba297bd2d856f7ace4abb91b5
+        domain: remote
+      swipe_away_as_timeout: true
+      clear_on_timeout: true
+      message: Выключить проектор?
+  icon: mdi:television-classic-off
+night_scene_script:
+  alias: Night Scene
+  sequence:
+  - if:
+    - condition: state
+      entity_id: input_boolean.is_scene_enabled_night_mode
+      state: 'on'
+    then:
+    - service: scene.turn_on
+      target:
+        entity_id: scene.night_scene
+      metadata: {}
+    - if:
+      - condition: device
+        device_id: 89a3c1d78b55aab1312ca62de5dc4f36
+        domain: media_player
+        entity_id: b88dc1699ce77f3d4ca01838ca9e0c9c
+        type: is_on
+      then:
+      - service: script.turn_off_tv_notification
+        data:
+          field_notify_device: 38800d05e076153b488af0cb1ec0ea49
+          field_title: Подтвердите
+          field_message: Выключить проектор?
+          field_subtitle: ''
+          field_attachment_type: none
+          field_attachment_camera_entity: ''
+          field_timeout:
+            hours: 0
+            minutes: 1
+            seconds: 0
+          field_option_two_enabled: true
+          field_option_one_enabled: true
+          field_enable_timeout: true
+          field_run_timeout_actions: true
+    - service: script.slowly_could_down_the_living_room_light
+      data: {}
+  mode: restart
+  icon: mdi:weather-night
+out_of_home_scene:
+  alias: Out Of Home Scene
+  sequence:
+  - if:
+    - condition: state
+      entity_id: input_boolean.is_scene_enabled_out_of_home
+      state: 'on'
+    then:
+    - service: scene.turn_on
+      target:
+        entity_id: scene.out_off_home
+      metadata: {}
+  mode: restart
+  icon: mdi:home-clock
+tv_scene:
+  alias: TV Scene
+  sequence:
+  - if:
+    - condition: state
+      entity_id: input_boolean.is_scene_enabled_tv_mode
+      state: 'on'
+    then:
+    - service: scene.turn_on
+      target:
+        entity_id: scene.tv_scene
+      metadata: {}
+    - delay:
+        hours: 0
+        minutes: 3
+        seconds: 0
+        milliseconds: 0
+    - if:
+      - condition: device
+        device_id: 89a3c1d78b55aab1312ca62de5dc4f36
+        domain: media_player
+        entity_id: b88dc1699ce77f3d4ca01838ca9e0c9c
+        type: is_on
+      then:
+      - service: light.turn_on
+        target:
+          entity_id:
+          - light.light_kitchen
+        data:
+          rgb_color:
+          - 255
+          - 213
+          - 0
+          brightness_pct: 60
+      - type: turn_off
+        device_id: 14eed61f8508ee688ac4a30f62057d6c
+        entity_id: 39f4ae7ecd84b65cfdaa7124a4678870
+        domain: switch
+  mode: restart
+  icon: mdi:youtube-tv
+default_scene:
+  alias: Default Scene
+  sequence:
+  - service: scene.turn_on
+    target:
+      entity_id: scene.guest_scene
+    metadata: {}
+  - if:
+    - condition: and
+      conditions:
+      - condition: state
+        entity_id: input_boolean.is_out_of_home
+        state: 'off'
+      - condition: state
+        entity_id: input_boolean.is_night_mode
+        state: 'off'
+      - condition: time
+        after: '16:00:00'
+        before: 00:00:00
+    then:
+    - type: turn_on
+      device_id: fd4f21f6ddec80b91491cb78d79dc226
+      entity_id: 190bb6c68ec5cbcf11fc16c177e0b1d0
+      domain: switch
+  mode: restart
+  icon: mdi:home-circle-outline

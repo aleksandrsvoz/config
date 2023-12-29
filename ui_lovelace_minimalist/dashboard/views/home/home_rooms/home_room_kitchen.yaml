@@ -33,6 +33,13 @@ variables:
     hold_action:
       action: navigate
       navigation_path: "#light_kithcen_pop_up"
+  entity_2:
+    entity_id: switch.light_switch_kitchen_line
+    tap_action:
+      action: toggle
+    hold_action:
+      action: navigate
+      navigation_path: "#light_kithcen_pop_up"
 custom_fields:
   i1:
     card:
@@ -69,3 +76,38 @@ custom_fields:
             icon:
               - color: "#AB2E00"
       entity: "[[[ return variables?.entity_1?.entity_id; ]]]"
+  i2:
+    card:
+      type: "custom:button-card"
+      template: >
+        [[[
+          let templates = [ 'widget_icon_room' ];
+          if (variables?.entity_2?.templates?.length) {
+            templates.push(...variables.entity_2.templates);
+          }
+          return templates;
+        ]]]
+      variables: "[[[ return variables?.entity_2; ]]]"
+      state:
+        - operator: "template"
+          value: "[[[ return !variables.entity_2; ]]]"
+          styles:
+            card:
+              - display: "none"
+
+        - value: "on"
+          icon: mdi:led-strip-variant
+          styles:
+            card:
+              - background-color: "#FFC6AC"
+            icon:
+              - color: "#AB2E00"
+
+        - value: "off"
+          icon: mdi:led-strip-variant-off
+          styles:
+            card:
+              - background-color: "#FFC6AC"
+            icon:
+              - color: "#AB2E00"
+      entity: "[[[ return variables?.entity_2?.entity_id; ]]]"

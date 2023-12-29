@@ -14,25 +14,25 @@
         "color_temp": 500
     },
     "2": {
-        "color_temp": 374,
-        "color_mode": "xy",
+        "color_temp": 500,
+        "color_mode": "color_temp",
         "color": {
-            "x": 0.497,
-            "y": 0.472,
-            "hue": 40,
+            "x": 0.5267,
+            "y": 0.4133,
+            "hue": 28,
             "saturation": 100,
-            "h": 40,
+            "h": 28,
             "s": 100
         },
         "state": "ON",
-        "brightness": 127
+        "brightness": 129
     },
     "0x00124b00292c1c80": {
-        "temperature": 23.37,
-        "humidity": 53.93,
+        "temperature": 23.01,
+        "humidity": 54.36,
         "voltage": 3000,
         "battery": 100,
-        "linkquality": 105
+        "linkquality": 65
     },
     "0xa4c138f3a678c27c": {
         "state": "ON",
@@ -47,7 +47,7 @@
             "h": 25,
             "s": 95
         },
-        "linkquality": 91,
+        "linkquality": 109,
         "color_options": {
             "execute_if_off": false
         },
@@ -55,34 +55,34 @@
         "color_power_on_behavior": "previous"
     },
     "0x3c2ef5fffed68dd3": {
-        "temperature": 22.2,
-        "humidity": 46.4,
+        "temperature": 21.7,
+        "humidity": 53.5,
         "update": {
             "state": "idle"
         },
-        "linkquality": 51,
+        "linkquality": 65,
         "battery": 100
     },
     "0x9035eafffe1000e3": {
-        "temperature": 22.3,
-        "humidity": 46.1,
+        "temperature": 22.8,
+        "humidity": 49.9,
         "battery": 100,
         "update": {
             "state": "idle"
         },
-        "linkquality": 123
+        "linkquality": 142
     },
     "0x84ba20fffecf3174": {
         "battery": 100,
-        "temperature": 22.5,
-        "humidity": 45.7,
-        "linkquality": 127,
+        "temperature": 23,
+        "humidity": 49.9,
+        "linkquality": 112,
         "update": {
             "state": "idle"
         }
     },
     "0xa4c13884f58f65d2": {
-        "linkquality": 61,
+        "linkquality": 51,
         "state": "ON",
         "color_options": {
             "execute_if_off": false
@@ -102,45 +102,26 @@
         "do_not_disturb": false
     },
     "0xa4c13873d12d6958": {
-        "linkquality": 3,
+        "linkquality": 29,
         "state": "ON",
         "color_options": {
             "execute_if_off": false
         },
-        "color_mode": "xy",
-        "color": {
-            "x": 0.497,
-            "y": 0.472,
-            "hue": 40,
-            "h": 40,
-            "saturation": 100,
-            "s": 100
-        },
-        "color_temp": 374,
-        "brightness": 127,
-        "color_power_on_behavior": "previous"
-    },
-    "0xa4c1384cf7a440e3": {
-        "linkquality": 40,
-        "state": "ON",
         "color_mode": "color_temp",
         "color": {
             "x": 0.5267,
             "y": 0.4133,
             "hue": 25,
-            "saturation": 95,
             "h": 25,
+            "saturation": 95,
             "s": 95
         },
-        "brightness": 129,
         "color_temp": 500,
-        "color_options": {
-            "execute_if_off": false
-        },
+        "brightness": 129,
         "color_power_on_behavior": "previous"
     },
-    "0xa4c13823eb1d2ff0": {
-        "linkquality": 51,
+    "0xa4c1384cf7a440e3": {
+        "linkquality": 36,
         "state": "ON",
         "color_mode": "color_temp",
         "color": {
@@ -159,41 +140,18 @@
         "color_power_on_behavior": "previous"
     },
     "0xa4c138a7a35bf2f6": {
-        "preset": "temporary_manual",
+        "preset": "programming",
         "system_mode": "heat",
-        "current_heating_setpoint": 23,
+        "current_heating_setpoint": 19,
         "local_temperature": 22,
-        "boost_heating": "OFF",
-        "boost_heating_countdown": 0,
-        "running_state": "heat",
-        "valve_state": "OPEN",
-        "child_lock": "UNLOCK",
-        "battery": 52,
-        "programming_mode": "09:00/24°C  14:30/23°C  19:30/19°C  22:30/19°C  09:00/21°C  14:30/21°C  19:30/19°C  22:30/19°C  09:00/23°C  14:30/21°C  19:30/19°C  22:30/19°C",
-        "local_temperature_calibration": -2,
-        "max_temperature": 30,
-        "min_temperature": 10,
-        "position": 25,
-        "boost_heating_countdown_time_set": 300,
-        "eco_mode": "OFF",
-        "eco_temperature": 18,
-        "window_detection": "OFF",
-        "window": "CLOSED",
-        "linkquality": 102
-    },
-    "0xa4c138dc609dd4e2": {
-        "preset": "temporary_manual",
-        "system_mode": "heat",
-        "current_heating_setpoint": 20,
-        "local_temperature": 21,
         "boost_heating": "OFF",
         "boost_heating_countdown": 0,
         "running_state": "idle",
         "valve_state": "CLOSED",
         "child_lock": "UNLOCK",
-        "battery": 97,
-        "programming_mode": "08:00/24°C  12:30/19°C  19:30/19°C  22:30/19°C  08:00/24°C  12:30/20°C  19:30/19°C  22:30/19°C  08:00/24°C  12:30/20°C  19:30/19°C  22:30/19°C",
-        "local_temperature_calibration": -3,
+        "battery": 52,
+        "programming_mode": "08:00/27°C  12:30/21°C  17:30/19°C  22:30/19°C  08:00/27°C  12:30/21°C  17:30/19°C  22:30/19°C  08:00/27°C  12:30/21°C  17:30/19°C  22:30/19°C",
+        "local_temperature_calibration": 1,
         "max_temperature": 30,
         "min_temperature": 10,
         "position": 0,
@@ -202,18 +160,41 @@
         "eco_temperature": 18,
         "window_detection": "OFF",
         "window": "CLOSED",
-        "linkquality": 47
+        "linkquality": 112
+    },
+    "0xa4c138dc609dd4e2": {
+        "preset": "programming",
+        "system_mode": "heat",
+        "current_heating_setpoint": 19,
+        "local_temperature": 20,
+        "boost_heating": "OFF",
+        "boost_heating_countdown": 0,
+        "running_state": "heat",
+        "valve_state": "OPEN",
+        "child_lock": "UNLOCK",
+        "battery": 97,
+        "programming_mode": "08:00/27°C  12:30/21°C  17:30/19°C  22:30/19°C  08:00/27°C  12:30/21°C  17:30/19°C  22:30/19°C  08:00/27°C  12:30/21°C  17:30/19°C  22:30/19°C",
+        "local_temperature_calibration": -1,
+        "max_temperature": 30,
+        "min_temperature": 10,
+        "position": 25,
+        "boost_heating_countdown_time_set": 300,
+        "eco_mode": "OFF",
+        "eco_temperature": 18,
+        "window_detection": "OFF",
+        "window": "CLOSED",
+        "linkquality": 61
     },
     "0xa4c1389328fbc285": {
-        "energy": 0.07,
-        "voltage": 227,
+        "energy": 0.27,
+        "voltage": 231,
         "state": "ON",
         "power_outage_memory": "restore",
         "indicator_mode": "off/on",
         "child_lock": "UNLOCK",
         "power": 8,
-        "current": 0.06,
-        "linkquality": 58,
+        "current": 0.05,
+        "linkquality": 36,
         "power_factor": null,
         "power_apparent": null,
         "ac_frequency": null,
@@ -225,10 +206,10 @@
     },
     "0x54ef441000ae9d9b": {
         "power_outage_memory": true,
-        "state": "OFF",
-        "device_temperature": 27,
+        "state": "ON",
+        "device_temperature": 30,
         "power_outage_count": 6,
-        "linkquality": 102,
+        "linkquality": 112,
         "flip_indicator_light": "ON",
         "update": {
             "state": "idle",
@@ -239,9 +220,9 @@
     "0x54ef4410008c011d": {
         "flip_indicator_light": "ON",
         "device_temperature": 29,
-        "power_outage_count": 7,
+        "power_outage_count": 14,
         "state": "ON",
-        "linkquality": 51,
+        "linkquality": 61,
         "update": {
             "state": "idle",
             "installed_version": 24,
@@ -251,10 +232,10 @@
     "0x54ef441000a4e641": {
         "flip_indicator_light": "ON",
         "power_outage_memory": true,
-        "state_left": "OFF",
-        "state_right": "OFF",
-        "linkquality": 123,
-        "device_temperature": 27,
+        "state_left": "ON",
+        "state_right": "ON",
+        "linkquality": 138,
+        "device_temperature": 32,
         "power_outage_count": 0,
         "update": {
             "state": "idle",
@@ -266,23 +247,24 @@
         "power_outage_memory": "restore",
         "indicator_mode": "off/on",
         "child_lock": "UNLOCK",
-        "state": "OFF",
+        "state": "ON",
         "power": 0,
         "energy": 0,
         "power_factor": null,
         "power_apparent": null,
-        "voltage": 234,
+        "voltage": 230,
         "ac_frequency": null,
-        "current": 0
+        "current": 0.01,
+        "linkquality": 32
     },
     "0x54ef441000a4efc3": {
         "state_right": "OFF",
         "state_left": "OFF",
         "device_temperature": 25,
-        "power_outage_count": 1,
+        "power_outage_count": 8,
         "operation_mode_left": "control_relay",
         "power_outage_memory": true,
-        "linkquality": 43,
+        "linkquality": 83,
         "flip_indicator_light": "ON",
         "update": {
             "state": "idle",
@@ -291,17 +273,17 @@
         }
     },
     "0xa4c13845107dd4de": {
-        "preset": "temporary_manual",
+        "preset": "programming",
         "system_mode": "heat",
-        "current_heating_setpoint": 18,
-        "local_temperature": 22,
+        "current_heating_setpoint": 19,
+        "local_temperature": 23,
         "boost_heating": "OFF",
         "boost_heating_countdown": 0,
         "running_state": "idle",
         "valve_state": "CLOSED",
         "child_lock": "LOCK",
-        "battery": 50,
-        "programming_mode": "09:00/24°C  14:30/23°C  19:30/19°C  22:30/19°C  09:00/21°C  14:30/21°C  19:30/19°C  22:30/19°C  09:00/23°C  14:30/21°C  19:30/19°C  22:30/19°C",
+        "battery": 49,
+        "programming_mode": "08:00/27°C  12:30/21°C  17:30/19°C  22:30/19°C  08:00/27°C  12:30/21°C  17:30/19°C  22:30/19°C  08:00/27°C  12:30/21°C  17:30/19°C  22:30/19°C",
         "local_temperature_calibration": 1,
         "max_temperature": 30,
         "min_temperature": 10,
@@ -311,6 +293,22 @@
         "eco_temperature": 18,
         "window_detection": "OFF",
         "window": "CLOSED",
-        "linkquality": 145
+        "linkquality": 138
+    },
+    "0x048727fffe7b656b": {
+        "power_on_behavior": "off",
+        "state": "ON",
+        "linkquality": 65,
+        "update": {
+            "state": "idle",
+            "installed_version": 4110,
+            "latest_version": 4110
+        }
+    },
+    "0xa49e69fffecd3541": {
+        "battery": 100,
+        "voltage": 1500,
+        "linkquality": 112,
+        "learned_ir_code": "BaojoRFCAuAXAQF3BuAFA0AB4AcTQA/gFwFAI+ALAwl8oKojvghCAv//4BoHAghCAg=="
     }
 }

@@ -20,19 +20,28 @@ cards:
     bg_blur: 70
     shadow_opacity: 10
     margin: "13px"
-    margin_top_mobile: 450px
+    margin_top_mobile: 400px
 
-  - type: conditional
-    conditions:
-      - entity: switch.light_switch_kitchen
-        state: "off"
-    card:
-      type: custom:button-card
-      template: card_light_color
-      entity: switch.light_switch_kitchen
-      variables:
-        ulm_card_light_name: " "
-        ulm_card_light_icon: mdi:globe-light-outline
+  - type: horizontal-stack
+    cards:
+      - type: "custom:button-card"
+        template: card_light
+        entity: switch.light_switch_kitchen_line
+        variables:
+          ulm_card_light_name: " "
+          ulm_card_light_icon: mdi:led-strip-variant
+
+      - type: conditional
+        conditions:
+          - entity: switch.light_switch_kitchen
+            state: "off"
+        card:
+          type: custom:button-card
+          template: card_light_color
+          entity: switch.light_switch_kitchen
+          variables:
+            ulm_card_light_name: " "
+            ulm_card_light_icon: mdi:globe-light-outline
 
   - type: conditional
     conditions:
@@ -43,6 +52,11 @@ cards:
       entity: light.light_kitchen
       primary_info: name
       name: Лампа
+      tap_action:
+        action: call-service
+        service: switch.toggle
+        service_data:
+          entity_id: switch.light_switch_kitchen
       icon: mdi:globe-light-outline
       fill_container: false
       use_light_color: true

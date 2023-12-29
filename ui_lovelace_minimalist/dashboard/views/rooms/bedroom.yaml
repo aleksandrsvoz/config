@@ -21,7 +21,7 @@ cards:
               action: none
             icon: mdi:bed-king
             icon_color: green
-            name: "Спальня\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_"
+            name: "Спальня\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_"
             content_info: name
             card_mod:
               style: |
@@ -69,6 +69,7 @@ cards:
         style: |
           :host {
             --card-mod-icon-color: #FB8B24;
+          }
         entity: sensor.temperature_bedroom_temperature
         variables:
           ulm_card_graph_color: "#FB8B24"
@@ -85,6 +86,7 @@ cards:
         style: |
           :host {
             --card-mod-icon-color: #39A7FF;
+          }
         entity: sensor.temperature_bedroom_humidity
         variables:
           ulm_card_graph_color: "#39A7FF"
@@ -156,14 +158,11 @@ cards:
           color: #FAFAFA;
         }
 
-  - type: "custom:button-card"
-    template: card_thermostat
+  - type: thermostat
     entity: climate.radiator_bedroom
-    variables:
-      ulm_card_thermostat_enable_collapse: true
-      ulm_card_thermostat_enable_controls: true
-      ulm_card_thermostat_enable_popup: true
-      ulm_card_thermostat_enable_background_color: true
-      ulm_card_thermostat_enable_display_temperature: true
-      ulm_card_thermostat_enable_horizontal: true
-      ulm_card_thermostat_name: "Температура"
+    features:
+      - type: climate-hvac-modes
+        hvac_modes:
+          - heat
+    theme: minimalist-mobile
+    name: " "

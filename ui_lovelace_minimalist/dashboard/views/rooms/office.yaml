@@ -21,7 +21,7 @@ cards:
               action: none
             icon: mdi:laptop
             icon_color: blue
-            name: "Офис\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_"
+            name: "Офис\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_"
             content_info: name
             card_mod:
               style: |
@@ -126,6 +126,11 @@ cards:
       entity: light.light_office
       primary_info: name
       name: Лампа
+      tap_action:
+        action: call-service
+        service: switch.toggle
+        service_data:
+          entity_id: switch.light_switch_office
       icon: mdi:ceiling-light
       fill_container: false
       use_light_color: true
@@ -145,15 +150,12 @@ cards:
         ha-card {
           color: #FAFAFA;
         }
-
-  - type: "custom:button-card"
-    template: card_thermostat
+        
+  - type: thermostat
     entity: climate.radiator_office
-    variables:
-      ulm_card_thermostat_enable_collapse: true
-      ulm_card_thermostat_enable_controls: true
-      ulm_card_thermostat_enable_popup: true
-      ulm_card_thermostat_enable_background_color: true
-      ulm_card_thermostat_enable_display_temperature: true
-      ulm_card_thermostat_enable_horizontal: true
-      ulm_card_thermostat_name: "Температура"
+    features:
+      - type: climate-hvac-modes
+        hvac_modes:
+          - heat
+    theme: minimalist-mobile
+    name: " "
