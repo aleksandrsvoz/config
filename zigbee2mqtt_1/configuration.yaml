@@ -1,0 +1,74 @@
+mqtt:
+  server: mqtt://core-mosquitto:1883
+  base_topic: zigbee2mqtt_1
+  version: 5
+  user: addons
+  password: EefaeHo6eich5Ohquiochohwei9eurahnguj3eiFoobee2rei8eoYooghoolai1a
+serial:
+  port: tcp://192.168.86.221:6638
+  baudrate: 115200
+  disable_led: false
+advanced:
+  transmit_power: 20
+  channel: 11
+  pan_id: 16744
+  network_key:
+    - 235
+    - 130
+    - 49
+    - 12
+    - 238
+    - 87
+    - 200
+    - 136
+    - 55
+    - 212
+    - 251
+    - 38
+    - 108
+    - 104
+    - 74
+    - 22
+  availability_blocklist: []
+  availability_passlist: []
+  last_seen: ISO_8601
+  log_level: info
+  homeassistant_legacy_entity_attributes: false
+  legacy_api: false
+  legacy_availability_payload: false
+homeassistant: true
+permit_join: false
+frontend:
+  port: 8099
+device_options:
+  legacy: false
+devices:
+  '0x54ef441000ae9d9b':
+    friendly_name: light_switch_office
+  '0x54ef441000a4e1d5':
+    friendly_name: light_switch_toilet
+  '0x00124b00292c1c80':
+    friendly_name: temperature_toilet
+  '0x3c2ef5fffed68dd3':
+    friendly_name: temperature_bedroom
+  '0x9035eafffe1000e3':
+    friendly_name: temperature_office
+  '0xa4c13845107dd4de':
+    friendly_name: '0xa4c13845107dd4de'
+  '0xa4c138a7a35bf2f6':
+    friendly_name: radiator_office
+  '0xa4c138dc609dd4e2':
+    friendly_name: radiator_bedroom
+  '0xa4c138f3a678c27c':
+    friendly_name: light_bulb_office
+    transition: 0
+  '0xa4c13823eb1d2ff0':
+    friendly_name: light_bulb_bedroom_left
+  '0xa4c1384cf7a440e3':
+    friendly_name: light_bulb_bedroom_right
+groups:
+  '1':
+    friendly_name: light_bulb_bedroom_both
+    devices:
+      - 0xa4c13823eb1d2ff0/1
+      - 0xa4c1384cf7a440e3/1

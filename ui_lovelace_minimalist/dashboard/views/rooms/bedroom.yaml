@@ -66,10 +66,10 @@ cards:
       - type: "custom:button-card"
         template: card_graph
         card_mod:
-        style: |
-          :host {
-            --card-mod-icon-color: #FB8B24;
-          }
+          style: |
+            :host {
+              --card-mod-icon-color: #FB8B24;
+            }
         entity: sensor.temperature_bedroom_temperature
         variables:
           ulm_card_graph_color: "#FB8B24"
@@ -83,10 +83,10 @@ cards:
       - type: "custom:button-card"
         template: card_graph
         card_mod:
-        style: |
-          :host {
-            --card-mod-icon-color: #39A7FF;
-          }
+          style: |
+            :host {
+              --card-mod-icon-color: #39A7FF;
+            }
         entity: sensor.temperature_bedroom_humidity
         variables:
           ulm_card_graph_color: "#39A7FF"
@@ -108,7 +108,7 @@ cards:
         }
 
   - type: custom:mushroom-light-card
-    entity: light.bedroom_lights
+    entity: light.light_bulb_bedroom_both
     primary_info: name
     name: Оба
     fill_container: false
@@ -123,7 +123,7 @@ cards:
   - type: horizontal-stack
     cards:
       - type: custom:mushroom-light-card
-        entity: light.light_bedroom_2
+        entity: light.light_bulb_bedroom_left
         primary_info: name
         name: Левый Свет
         fill_container: false
@@ -136,7 +136,7 @@ cards:
         icon_type: icon
 
       - type: custom:mushroom-light-card
-        entity: light.light_bedroom_1
+        entity: light.light_bulb_bedroom_right
         primary_info: name
         name: Правый Свет
         fill_container: false

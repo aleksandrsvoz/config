@@ -23,7 +23,7 @@ cards:
     margin_top_mobile: 300px
 
   - type: custom:mushroom-light-card
-    entity: light.bedroom_lights
+    entity: light.light_bulb_bedroom_both
     primary_info: name
     name: Оба
     fill_container: false
@@ -40,7 +40,7 @@ cards:
     columns: 2
     cards:
       - type: custom:mushroom-light-card
-        entity: light.light_bedroom_2
+        entity: light.light_bulb_bedroom_left
         primary_info: name
         name: Левый Свет
         fill_container: false
@@ -54,7 +54,7 @@ cards:
         layout: vertical
 
       - type: custom:mushroom-light-card
-        entity: light.light_bedroom_1
+        entity: light.light_bulb_bedroom_right
         primary_info: name
         name: Правый Свет
         fill_container: false

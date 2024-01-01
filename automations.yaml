@@ -37,20 +37,19 @@
       - condition: or
         conditions:
         - condition: state
-          entity_id: light.light_office
+          entity_id: light.light_bulb_office
           state: 'off'
         - condition: state
-          entity_id: light.light_office
+          entity_id: light.light_bulb_office
           state: unknown
         - condition: state
-          entity_id: light.light_office
+          entity_id: light.light_bulb_office
           state: unavailable
       sequence:
       - type: turn_on
         device_id: 61b83c69693b8014d4924c78d8d76a60
-        entity_id: 2b46d7d2c8aeb8981640add088abc223
+        entity_id: 94bb80713670b3bed3debfe87bb0ad31
         domain: light
-        brightness_pct: 1
   - choose:
     - conditions:
       - condition: and
@@ -61,7 +60,7 @@
       sequence:
       - service: light.turn_on
         target:
-          entity_id: light.light_office
+          entity_id: light.light_bulb_office
         data:
           brightness: 60
           transition: 0
@@ -72,7 +71,7 @@
     default:
     - service: light.turn_on
       target:
-        entity_id: light.light_office
+        entity_id: light.light_bulb_office
       data:
         transition: 1
         color_temp: 500
@@ -85,7 +84,7 @@
   - platform: device
     type: changed_states
     device_id: 7b9ef4e1b57fd30160f9287a3d9ff8b4
-    entity_id: b9696d7957547e1d5021cadb61a4cde2
+    entity_id: 9d70b4baef8bbfea6a441531d4206d67
     domain: switch
   condition: []
   action:
@@ -96,17 +95,17 @@
         - condition: device
           type: is_on
           device_id: 7b9ef4e1b57fd30160f9287a3d9ff8b4
-          entity_id: b9696d7957547e1d5021cadb61a4cde2
+          entity_id: 9d70b4baef8bbfea6a441531d4206d67
           domain: switch
         - condition: device
           type: is_off
           device_id: 7b9ef4e1b57fd30160f9287a3d9ff8b4
-          entity_id: b73c699ba20e6b7efd6685f510c11879
+          entity_id: 63fc81cf2189c83c764c73fda29bfac2
           domain: switch
       sequence:
       - type: turn_on
         device_id: 7b9ef4e1b57fd30160f9287a3d9ff8b4
-        entity_id: b73c699ba20e6b7efd6685f510c11879
+        entity_id: 63fc81cf2189c83c764c73fda29bfac2
         domain: switch
     - conditions:
       - condition: and
@@ -114,27 +113,27 @@
         - condition: device
           type: is_off
           device_id: 7b9ef4e1b57fd30160f9287a3d9ff8b4
-          entity_id: b9696d7957547e1d5021cadb61a4cde2
+          entity_id: 9d70b4baef8bbfea6a441531d4206d67
           domain: switch
         - condition: device
           type: is_on
           device_id: 7b9ef4e1b57fd30160f9287a3d9ff8b4
-          entity_id: b73c699ba20e6b7efd6685f510c11879
+          entity_id: 63fc81cf2189c83c764c73fda29bfac2
           domain: switch
       sequence:
       - type: turn_off
         device_id: 7b9ef4e1b57fd30160f9287a3d9ff8b4
-        entity_id: b73c699ba20e6b7efd6685f510c11879
+        entity_id: 63fc81cf2189c83c764c73fda29bfac2
         domain: switch
   mode: restart
 - id: '1703503884465'
-  alias: Light bulb restore on turned on in Bedroom
+  alias: Light bulb restore on turned on in Bedroom Left
   description: ''
   trigger:
   - platform: device
     type: turned_on
-    device_id: 4e53e381628e10ad30c5bcde381b7d81
-    entity_id: 88cb1f3ca7233ba5749b3098c84241a9
+    device_id: ade3300f59bfa55f0a55189cb4881051
+    entity_id: 7189ca90b0cf7dfb50a425585ff00333
     domain: light
     for:
       hours: 0
@@ -156,7 +155,7 @@
       - service: light.turn_on
         target:
           entity_id:
-          - light.bedroom_lights
+          - light.light_bulb_bedroom_both
         data:
           brightness: 60
           transition: 0
@@ -168,7 +167,7 @@
     - service: light.turn_on
       target:
         entity_id:
-        - light.bedroom_lights
+        - light.light_bulb_bedroom_both
       data:
         transition: 1
         color_temp: 500
@@ -224,11 +223,11 @@
   action:
   - type: turn_on
     device_id: fd4f21f6ddec80b91491cb78d79dc226
-    entity_id: 190bb6c68ec5cbcf11fc16c177e0b1d0
+    entity_id: 1d297051e94c6d96d37e3481605a0d68
     domain: switch
   - type: turn_on
     device_id: 3ba9465ebaf8aaf5f833451f6b306084
-    entity_id: c52b449cae2014cbd57242fb73e3b77a
+    entity_id: be144f8430257286916aed6cee7b4832
     domain: switch
   mode: restart
 - id: '1703514397437'
@@ -303,6 +302,9 @@
     - condition: state
       entity_id: device_tracker.lena_phone
       state: not_home
+    - condition: state
+      entity_id: input_boolean.is_scene_enabled_out_of_home
+      state: 'on'
   action:
   - service: script.out_of_home_scene
     data: {}
@@ -334,7 +336,7 @@
         entity_id: device_tracker.lena_phone
         state: home
   action:
-  - service: homeassistant.turn_off
+  - service: input_boolean.turn_off
     target:
       entity_id: input_boolean.is_out_of_home
     data: {}
@@ -342,16 +344,16 @@
     data: {}
   - type: turn_on
     device_id: 7b9ef4e1b57fd30160f9287a3d9ff8b4
-    entity_id: b73c699ba20e6b7efd6685f510c11879
+    entity_id: 63fc81cf2189c83c764c73fda29bfac2
     domain: switch
   - delay:
       hours: 0
       minutes: 1
-      seconds: 30
+      seconds: 0
       milliseconds: 0
   - type: turn_off
     device_id: 7b9ef4e1b57fd30160f9287a3d9ff8b4
-    entity_id: b73c699ba20e6b7efd6685f510c11879
+    entity_id: 63fc81cf2189c83c764c73fda29bfac2
     domain: switch
   mode: restart
 - id: '1703586558948'
@@ -375,18 +377,18 @@
       - condition: or
         conditions:
         - condition: state
-          entity_id: light.light_kitchen
+          entity_id: light.light_bulb_kitchen
           state: 'off'
         - condition: state
-          entity_id: light.light_kitchen
+          entity_id: light.light_bulb_kitchen
           state: unknown
         - condition: state
-          entity_id: light.light_kitchen
+          entity_id: light.light_bulb_kitchen
           state: unavailable
       sequence:
       - type: turn_on
         device_id: 71f5d3918bce9ed4109a151edd75457e
-        entity_id: 463e6d64bff6bdc80b849faa2e975904
+        entity_id: 4ece1e3e7fbb975c242f0049e291aa96
         domain: switch
   - choose:
     - conditions:
@@ -399,7 +401,7 @@
       - service: light.turn_on
         target:
           entity_id:
-          - light.light_kitchen
+          - light.light_bulb_kitchen
         data:
           brightness: 60
           transition: 0
@@ -411,7 +413,7 @@
     - service: light.turn_on
       target:
         entity_id:
-        - light.light_kitchen
+        - light.light_bulb_kitchen
       data:
         transition: 1
         color_temp: 500
@@ -438,18 +440,18 @@
       - condition: or
         conditions:
         - condition: state
-          entity_id: light.light_living_room
+          entity_id: light.light_bulb_living_room
           state: 'off'
         - condition: state
-          entity_id: light.light_living_room
+          entity_id: light.light_bulb_living_room
           state: unknown
         - condition: state
-          entity_id: light.light_living_room
+          entity_id: light.light_bulb_living_room
           state: unavailable
       sequence:
       - type: turn_on
         device_id: 5194faa91def9215b7d5fb5c79fbe422
-        entity_id: e61a8091e3b55f1b77b1eac83f33fc17
+        entity_id: 4fd11c35a6fea97277a0b8a420f15f99
         domain: switch
   - choose:
     - conditions:
@@ -462,7 +464,7 @@
       - service: light.turn_on
         target:
           entity_id:
-          - light.light_living_room
+          - light.light_bulb_living_room
         data:
           brightness: 60
           transition: 0
@@ -474,9 +476,137 @@
     - service: light.turn_on
       target:
         entity_id:
-        - light.light_living_room
+        - light.light_bulb_living_room
       data:
         transition: 1
         color_temp: 500
         brightness: 130
   mode: restart
+- id: '1703950084431'
+  alias: Light Switch Toilet Turn On Fun
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id:
+    - sensor.temperature_toilet_humidity
+    for:
+      hours: 0
+      minutes: 30
+      seconds: 0
+    above: 70
+  condition:
+  - condition: state
+    entity_id: switch.light_switch_toilet_right
+    state: 'off'
+  action:
+  - type: turn_on
+    device_id: 76a8d32746327843cc4e2ec948563958
+    entity_id: 9ca52fbdb65c2b7c71e14e39f86ef1a5
+    domain: switch
+  mode: single
+- id: '1703953317779'
+  alias: Light Switch Toilet Turn Off Fun
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id:
+    - sensor.temperature_toilet_humidity
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 30
+    below: 70
+  condition:
+  - condition: state
+    entity_id: switch.light_switch_toilet_right
+    state: 'on'
+  action:
+  - type: turn_off
+    device_id: 76a8d32746327843cc4e2ec948563958
+    entity_id: 9ca52fbdb65c2b7c71e14e39f86ef1a5
+    domain: switch
+  mode: single
+- id: '1704043066447'
+  alias: Light bulb restore on turned on in Bedroom Right
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: 98cef24c9f7a67b9e69a995cc55eb919
+    entity_id: b9f6a9ab0d7667ba64dd1f8841916d4d
+    domain: light
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 1
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: and
+        conditions:
+        - condition: state
+          entity_id: sun.sun
+          state: below_horizon
+        - condition: state
+          entity_id: input_boolean.is_night_mode
+          state: 'on'
+      sequence:
+      - service: light.turn_on
+        target:
+          entity_id:
+          - light.light_bulb_bedroom_both
+        data:
+          brightness: 60
+          transition: 0
+          rgb_color:
+          - 116
+          - 74
+          - 1
+    default:
+    - service: light.turn_on
+      target:
+        entity_id:
+        - light.light_bulb_bedroom_both
+      data:
+        transition: 1
+        color_temp: 500
+        brightness: 130
+  mode: restart
+- id: '1704045559369'
+  alias: Light Switch Turn Light When Door is Opened
+  description: ''
+  trigger:
+  - platform: device
+    device_id: 4491a48c7d623f8065437eb7b0ca2705
+    domain: lock
+    entity_id: 71b9065df4bf5c398d2b19e2cfe666f7
+    type: unlocked
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 1
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.is_out_of_home
+      state: 'off'
+    - condition: state
+      entity_id: switch.light_switch_door_way_right
+      state: 'off'
+  action:
+  - type: turn_on
+    device_id: 7b9ef4e1b57fd30160f9287a3d9ff8b4
+    entity_id: 63fc81cf2189c83c764c73fda29bfac2
+    domain: switch
+  - delay:
+      hours: 0
+      minutes: 3
+      seconds: 0
+      milliseconds: 0
+  - type: turn_off
+    device_id: 7b9ef4e1b57fd30160f9287a3d9ff8b4
+    entity_id: 63fc81cf2189c83c764c73fda29bfac2
+    domain: switch
+  mode: single

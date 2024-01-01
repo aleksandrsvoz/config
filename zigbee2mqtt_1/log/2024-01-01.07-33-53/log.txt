@@ -1,0 +1,13 @@
+info  2024-01-01 07:33:53: Logging to console and directory: '/config/zigbee2mqtt_1/log/2024-01-01.07-33-53' filename: log.txt
+info  2024-01-01 07:33:54: Starting Zigbee2MQTT version 1.34.0 (commit #unknown)
+info  2024-01-01 07:33:54: Starting zigbee-herdsman (0.25.0)
+error 2024-01-01 07:33:57: Error while starting zigbee-herdsman
+error 2024-01-01 07:33:57: Failed to start zigbee
+error 2024-01-01 07:33:57: Check https://www.zigbee2mqtt.io/guide/installation/20_zigbee2mqtt-fails-to-start.html for possible solutions
+error 2024-01-01 07:33:57: Exiting...
+error 2024-01-01 07:33:57: Error: Error while opening socket
+    at Socket.<anonymous> (/app/node_modules/zigbee-herdsman/src/adapter/z-stack/znp/znp.ts:198:24)
+    at Socket.emit (node:events:525:35)
+    at emitErrorNT (node:internal/streams/destroy:157:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:122:3)
+    at processTicksAndRejections (node:internal/process/task_queues:83:21)

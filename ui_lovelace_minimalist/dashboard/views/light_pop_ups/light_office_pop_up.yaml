@@ -40,7 +40,7 @@ cards:
         state: "on"
     card:
       type: custom:mushroom-light-card
-      entity: light.light_office
+      entity: light.light_bulb_office
       primary_info: name
       name: Лампа
       tap_action:

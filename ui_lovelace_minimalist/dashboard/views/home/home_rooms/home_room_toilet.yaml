@@ -23,3 +23,85 @@ styles:
 tap_action:
   action: navigate
   navigation_path: "/ui-lovelace-minimalist/bathroom"
+variables:
+  label_use_temperature: false
+  label_use_brightness: true
+  entity_1:
+    entity_id: switch.light_switch_toilet_left
+    tap_action:
+      action: toggle
+  entity_2:
+    entity_id: switch.light_switch_toilet_right
+    tap_action:
+      action: toggle
+custom_fields:
+  i1:
+    card:
+      type: "custom:button-card"
+      template: >
+        [[[
+          let templates = [ 'widget_icon_room' ];
+          if (variables?.entity_1?.templates?.length) {
+            templates.push(...variables.entity_1.templates);
+          }
+          return templates;
+        ]]]
+      variables: "[[[ return variables?.entity_1; ]]]"
+      state:
+        - operator: "template"
+          value: "[[[ return !variables.entity_1; ]]]"
+          styles:
+            card:
+              - display: "none"
+
+        - value: "on"
+          icon: mdi:lightbulb-on
+          styles:
+            card:
+              - background-color: "#5DBCEB"
+            icon:
+              - color: "#11478F"
+
+        - value: "off"
+          icon: mdi:lightbulb-outline
+          styles:
+            card:
+              - background-color: "#5DBCEB"
+            icon:
+              - color: "#11478F"
+      entity: "[[[ return variables?.entity_1?.entity_id; ]]]"
+  i2:
+    card:
+      type: "custom:button-card"
+      template: >
+        [[[
+          let templates = [ 'widget_icon_room' ];
+          if (variables?.entity_2?.templates?.length) {
+            templates.push(...variables.entity_2.templates);
+          }
+          return templates;
+        ]]]
+      variables: "[[[ return variables?.entity_2; ]]]"
+      state:
+        - operator: "template"
+          value: "[[[ return !variables.entity_2; ]]]"
+          styles:
+            card:
+              - display: "none"
+
+        - value: "on"
+          icon: mdi:fan
+          styles:
+            card:
+              - background-color: "#5DBCEB"
+            icon:
+              - color: "#11478F"
+
+        - value: "off"
+          icon: mdi:fan-minus
+          styles:
+            card:
+              - background-color: "#5DBCEB"
+            icon:
+              - color: "#11478F"
+      entity: "[[[ return variables?.entity_2?.entity_id; ]]]"

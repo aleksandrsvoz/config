@@ -1,0 +1,66 @@
+mqtt:
+  server: mqtt://core-mosquitto:1883
+  base_topic: zigbee2mqtt_2
+  user: addons
+  password: EefaeHo6eich5Ohquiochohwei9eurahnguj3eiFoobee2rei8eoYooghoolai1a
+serial:
+  port: tcp://192.168.86.224:6638
+  baudrate: 115200
+  disable_led: false
+advanced:
+  transmit_power: 20
+  channel: 11
+  pan_id: 27616
+  network_key:
+    - 103
+    - 179
+    - 90
+    - 44
+    - 32
+    - 214
+    - 166
+    - 20
+    - 137
+    - 194
+    - 142
+    - 114
+    - 126
+    - 130
+    - 110
+    - 232
+  availability_blocklist: []
+  availability_passlist: []
+  last_seen: ISO_8601
+  log_level: info
+  homeassistant_legacy_entity_attributes: false
+  legacy_api: false
+  legacy_availability_payload: false
+homeassistant: true
+permit_join: false
+frontend:
+  port: 8099
+device_options:
+  legacy: false
+devices:
+  '0xa4c13862621b0122':
+    friendly_name: power_plug_2
+  '0xa4c1389328fbc285':
+    friendly_name: power_plug_1
+  '0x84ba20fffecf3174':
+    friendly_name: temperature_living_room
+  '0x54ef441000a4e641':
+    friendly_name: light_switch_living_room
+  '0x54ef4410008c011d':
+    friendly_name: light_switch_kitchen
+  '0x54ef441000a4efc3':
+    friendly_name: light_switch_door_way
+  '0x048727fffe7b656b':
+    friendly_name: light_switch_kitchen_line
+  '0xa4c13845107dd4de':
+    friendly_name: radiator_living_room
+  '0xa4c13884f58f65d2':
+    friendly_name: light_bulb_living_room
+  '0xa4c13873d12d6958':
+    friendly_name: light_bulb_kitchen
+  '0xa49e69fffecd3541':
+    friendly_name: ir_remote

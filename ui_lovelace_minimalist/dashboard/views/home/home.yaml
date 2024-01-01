@@ -23,12 +23,7 @@ cards:
         name: "Away"
         color: "yellow"
 
-  - type: "custom:button-card"
-    template: chip_mdi_icon_state
-    variables:
-      ulm_chip_mdi_icon_state_icon: mdi:lightbulb
-      ulm_chip_mdi_icon_state_entity: sensor.count_lights_on
-      ulm_chip_mdi_icon_state_icon_color: orange
+  - !include home_info_chips.yaml
 
   - type: "custom:button-card"
     template: card_title
@@ -45,14 +40,6 @@ cards:
         - color: white
     name: Комнаты
   - !include home_rooms/home_rooms.yaml
-
-  - type: "custom:button-card"
-    template: card_title
-    styles:
-      card:
-        - color: white
-    name: Сцены
-  - !include home_scenes.yaml
 
   ## Pop-ups
   - !include home_users/user_alex.yaml

@@ -11,6 +11,7 @@
             states('switch.light_switch_living_room_right') == 'on',
             states('switch.light_switch_kitchen_line') == 'on',
             states('switch.light_switch_door_way_right') == 'on',
-            states('light.light_bedroom_1') == 'on',
-            states('light.light_bedroom_2') == 'on',
+            states('switch.light_switch_toilet_left') == 'on',
+            states('light.light_bulb_bedroom_left') == 'on',
+            states('light.light_bulb_bedroom_right') == 'on',
           ] | select('==', true) | list | count }}

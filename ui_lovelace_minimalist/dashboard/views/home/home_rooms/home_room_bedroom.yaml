@@ -27,7 +27,7 @@ variables:
   label_use_temperature: false
   label_use_brightness: true
   entity_1:
-    entity_id: light.bedroom_lights
+    entity_id: light.light_bulb_bedroom_both
     tap_action:
       action: toggle
     hold_action:
