@@ -8,8 +8,8 @@
         "child_lock": "UNLOCK",
         "power": 0,
         "current": 0,
-        "last_seen": "2024-01-01T07:22:21.830Z",
-        "linkquality": 76
+        "last_seen": "2024-01-01T07:39:32.784Z",
+        "linkquality": 80
     },
     "0xa4c1389328fbc285": {
         "energy": 0.4,
@@ -20,21 +20,21 @@
         "child_lock": "UNLOCK",
         "power": 0,
         "current": 0,
-        "last_seen": "2024-01-01T07:23:39.628Z",
+        "last_seen": "2024-01-01T07:39:47.577Z",
         "linkquality": 91
     },
     "0x84ba20fffecf3174": {
-        "temperature": 22.6,
+        "temperature": 22.7,
         "humidity": 42,
         "battery": 100,
-        "last_seen": "2024-01-01T07:19:03.090Z",
+        "last_seen": "2024-01-01T07:37:36.429Z",
         "linkquality": 171,
         "update": {
             "state": "idle"
         }
     },
     "0x54ef441000a4e641": {
-        "last_seen": "2024-01-01T07:24:00.725Z",
+        "last_seen": "2024-01-01T07:38:26.104Z",
         "linkquality": 171,
         "device_temperature": 27,
         "power_outage_count": 1,
@@ -55,7 +55,7 @@
         "device_temperature": 26,
         "power_outage_count": 4,
         "state": "OFF",
-        "last_seen": "2024-01-01T07:23:22.248Z",
+        "last_seen": "2024-01-01T07:38:13.354Z",
         "linkquality": 72,
         "flip_indicator_light": "ON"
     },
@@ -64,8 +64,8 @@
         "power_outage_count": 3,
         "state_left": "ON",
         "state_right": "ON",
-        "last_seen": "2024-01-01T07:23:34.193Z",
-        "linkquality": 65,
+        "last_seen": "2024-01-01T07:38:39.168Z",
+        "linkquality": 69,
         "flip_indicator_light": "ON"
     },
     "0xa4c13845107dd4de": {
@@ -85,7 +85,7 @@
         "boost_heating_countdown": 0,
         "running_state": "heat",
         "valve_state": "OPEN",
-        "last_seen": "2024-01-01T07:01:06.971Z",
+        "last_seen": "2024-01-01T07:38:37.210Z",
         "linkquality": 171,
         "preset": "programming",
         "system_mode": "heat",
