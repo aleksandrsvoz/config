@@ -48,7 +48,7 @@
       sequence:
       - type: turn_on
         device_id: 61b83c69693b8014d4924c78d8d76a60
-        entity_id: 94bb80713670b3bed3debfe87bb0ad31
+        entity_id: 84f3bab49846227acf98ac355ed36c74
         domain: light
   - choose:
     - conditions:
@@ -78,7 +78,7 @@
         brightness: 130
   mode: restart
 - id: '1703499610744'
-  alias: Door Way sync two buttons left to right
+  alias: Light Switch Door Way Sync Left to Right
   description: ''
   trigger:
   - platform: device
@@ -126,53 +126,6 @@
         entity_id: 63fc81cf2189c83c764c73fda29bfac2
         domain: switch
   mode: restart
-- id: '1703503884465'
-  alias: Light bulb restore on turned on in Bedroom Left
-  description: ''
-  trigger:
-  - platform: device
-    type: turned_on
-    device_id: ade3300f59bfa55f0a55189cb4881051
-    entity_id: 7189ca90b0cf7dfb50a425585ff00333
-    domain: light
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 1
-  condition: []
-  action:
-  - choose:
-    - conditions:
-      - condition: and
-        conditions:
-        - condition: state
-          entity_id: sun.sun
-          state: below_horizon
-        - condition: state
-          entity_id: input_boolean.is_night_mode
-          state: 'on'
-      sequence:
-      - service: light.turn_on
-        target:
-          entity_id:
-          - light.light_bulb_bedroom_both
-        data:
-          brightness: 60
-          transition: 0
-          rgb_color:
-          - 116
-          - 74
-          - 1
-    default:
-    - service: light.turn_on
-      target:
-        entity_id:
-        - light.light_bulb_bedroom_both
-      data:
-        transition: 1
-        color_temp: 500
-        brightness: 130
-  mode: restart
 - id: '1703506200819'
   alias: Scene TV On
   description: ''
@@ -184,8 +137,16 @@
     to: 'on'
   condition: []
   action:
-  - service: script.tv_scene
+  - service: input_boolean.turn_on
+    target:
+      entity_id: input_boolean.is_tv_mode
     data: {}
+  - if:
+    - condition: time
+      after: '16:00:00'
+    then:
+    - service: script.tv_scene
+      data: {}
   mode: restart
 - id: '1703506966884'
   alias: Scene TV Off
@@ -201,13 +162,11 @@
     entity_id: input_boolean.is_scene_enabled_tv_mode
     state: 'on'
   action:
-  - service: scene.turn_on
-    target:
-      entity_id: scene.guest_scene
-    metadata: {}
   - service: input_boolean.turn_off
     target:
       entity_id: input_boolean.is_tv_mode
+    data: {}
+  - service: script.default_scene
     data: {}
   mode: restart
 - id: '1703509721556'
@@ -250,7 +209,18 @@
     - condition: state
       entity_id: input_boolean.is_night_mode
       state: 'off'
+    - condition: state
+      entity_id: input_boolean.is_out_of_home
+      state: 'off'
   action:
+  - service: light.turn_on
+    metadata: {}
+    data:
+      color_temp: 500
+      brightness_pct: 1
+    target:
+      entity_id:
+      - light.light_bulb_bedroom_both
   - service: script.night_scene_script
     data: {}
   mode: single
@@ -501,7 +471,7 @@
   action:
   - type: turn_on
     device_id: 76a8d32746327843cc4e2ec948563958
-    entity_id: 9ca52fbdb65c2b7c71e14e39f86ef1a5
+    entity_id: b2d128e4857598ba79e025578b6e3bfe
     domain: switch
   mode: single
 - id: '1703953317779'
@@ -523,56 +493,9 @@
   action:
   - type: turn_off
     device_id: 76a8d32746327843cc4e2ec948563958
-    entity_id: 9ca52fbdb65c2b7c71e14e39f86ef1a5
+    entity_id: b2d128e4857598ba79e025578b6e3bfe
     domain: switch
   mode: single
-- id: '1704043066447'
-  alias: Light bulb restore on turned on in Bedroom Right
-  description: ''
-  trigger:
-  - platform: device
-    type: turned_on
-    device_id: 98cef24c9f7a67b9e69a995cc55eb919
-    entity_id: b9f6a9ab0d7667ba64dd1f8841916d4d
-    domain: light
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 1
-  condition: []
-  action:
-  - choose:
-    - conditions:
-      - condition: and
-        conditions:
-        - condition: state
-          entity_id: sun.sun
-          state: below_horizon
-        - condition: state
-          entity_id: input_boolean.is_night_mode
-          state: 'on'
-      sequence:
-      - service: light.turn_on
-        target:
-          entity_id:
-          - light.light_bulb_bedroom_both
-        data:
-          brightness: 60
-          transition: 0
-          rgb_color:
-          - 116
-          - 74
-          - 1
-    default:
-    - service: light.turn_on
-      target:
-        entity_id:
-        - light.light_bulb_bedroom_both
-      data:
-        transition: 1
-        color_temp: 500
-        brightness: 130
-  mode: restart
 - id: '1704045559369'
   alias: Light Switch Turn Light When Door is Opened
   description: ''
@@ -608,5 +531,26 @@
   - type: turn_off
     device_id: 7b9ef4e1b57fd30160f9287a3d9ff8b4
     entity_id: 63fc81cf2189c83c764c73fda29bfac2
+    domain: switch
+  mode: single
+- id: '1704097005310'
+  alias: Light Switch Door Way Sync Right to Left
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_off
+    device_id: 7b9ef4e1b57fd30160f9287a3d9ff8b4
+    entity_id: 63fc81cf2189c83c764c73fda29bfac2
+    domain: switch
+  condition:
+  - condition: device
+    type: is_on
+    device_id: 7b9ef4e1b57fd30160f9287a3d9ff8b4
+    entity_id: 9d70b4baef8bbfea6a441531d4206d67
+    domain: switch
+  action:
+  - type: turn_off
+    device_id: 7b9ef4e1b57fd30160f9287a3d9ff8b4
+    entity_id: 9d70b4baef8bbfea6a441531d4206d67
     domain: switch
   mode: single

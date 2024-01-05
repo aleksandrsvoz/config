@@ -185,10 +185,6 @@ cards:
 
   - type: thermostat
     entity: climate.radiator_living_room
-    features:
-      - type: climate-hvac-modes
-        hvac_modes:
-          - heat
     theme: minimalist-mobile
     name: " "
 

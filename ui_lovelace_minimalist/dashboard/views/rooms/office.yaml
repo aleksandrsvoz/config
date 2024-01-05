@@ -155,9 +155,5 @@ cards:
 
   - type: thermostat
     entity: climate.radiator_office
-    features:
-      - type: climate-hvac-modes
-        hvac_modes:
-          - heat
     theme: minimalist-mobile
     name: " "

@@ -3,12 +3,16 @@ slowly_could_down_the_living_room_light:
   variables:
     delay_duration: 00:01:00
   sequence:
-  - delay: 00:07:00
+  - delay:
+      hours: 0
+      minutes: 15
+      seconds: 0
+      milliseconds: 0
   - service: light.turn_on
     data:
       rgb_color:
-      - 200
-      - 130
+      - 255
+      - 255
       - 0
       brightness: 170
     target:
@@ -128,8 +132,8 @@ slowly_could_down_the_living_room_light:
       brightness: 10
   - delay: '{{ delay_duration }}'
   - type: turn_off
-    device_id: 50b3ccbaa618896a91c155ec6c661f11
-    entity_id: cdbdd61ab861fbe85bb3a2d3f4820fd7
+    device_id: 533075495f43061dd6073666a834321c
+    entity_id: 6bed5b94fd896075c4268ef184e46707
     domain: light
   mode: restart
   icon: mdi:lightbulb-night
@@ -180,6 +184,13 @@ night_scene_script:
       data: {}
     - service: script.turn_off_everything
       data: {}
+    - service: light.turn_on
+      metadata: {}
+      data:
+        color_temp: 500
+      target:
+        entity_id:
+        - light.light_bulb_bedroom_both
     - service: script.slowly_could_down_the_living_room_light
       data: {}
   mode: restart
@@ -239,7 +250,7 @@ tv_scene:
       domain: switch
     - delay:
         hours: 0
-        minutes: 3
+        minutes: 2
         seconds: 0
         milliseconds: 0
     - if:
@@ -258,7 +269,7 @@ tv_scene:
           - 255
           - 213
           - 0
-          brightness_pct: 60
+          brightness_pct: 40
       - type: turn_off
         device_id: 14eed61f8508ee688ac4a30f62057d6c
         entity_id: 8770b876554ea9b3d11b491f300e8998
@@ -305,6 +316,13 @@ default_scene:
     device_id: 5194faa91def9215b7d5fb5c79fbe422
     entity_id: 4fd11c35a6fea97277a0b8a420f15f99
     domain: switch
+  - service: light.turn_on
+    metadata: {}
+    data:
+      color_temp: 500
+    target:
+      entity_id:
+      - light.light_bulb_kitchen
   mode: restart
   icon: mdi:home-circle-outline
 turn_off_everything:
@@ -340,15 +358,15 @@ turn_off_everything:
     domain: switch
   - type: turn_off
     device_id: 635d67e70eb7055a7e8e41306c8f8897
-    entity_id: f6c0f6fa9b88fe1244ad0293040db777
+    entity_id: 62b13580f99d8ee5ecffa8fefec9b4d4
     domain: switch
   - type: turn_off
     device_id: 76a8d32746327843cc4e2ec948563958
-    entity_id: 80cfadc270e526d49765f8582f8d1962
+    entity_id: c6292c95321da203ef2e5e48987d52b2
     domain: switch
   - type: turn_off
     device_id: 76a8d32746327843cc4e2ec948563958
-    entity_id: 9ca52fbdb65c2b7c71e14e39f86ef1a5
+    entity_id: b2d128e4857598ba79e025578b6e3bfe
     domain: switch
   - if:
     - condition: device
@@ -379,8 +397,8 @@ turn_off_everything:
       state: 'off'
     then:
     - type: turn_off
-      device_id: 50b3ccbaa618896a91c155ec6c661f11
-      entity_id: cdbdd61ab861fbe85bb3a2d3f4820fd7
+      device_id: 533075495f43061dd6073666a834321c
+      entity_id: 6bed5b94fd896075c4268ef184e46707
       domain: light
   mode: restart
   icon: mdi:power
