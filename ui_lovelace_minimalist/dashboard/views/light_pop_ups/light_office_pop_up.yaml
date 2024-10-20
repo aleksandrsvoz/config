@@ -1,6 +1,7 @@
 type: vertical-stack
 cards:
-  - type: custom:bubble-pop-up
+  - type: custom:bubble-card
+    card_type: pop-up
     hash: "#light_office_pop_up"
     name: "\_\_\_\_Свет в Офисе"
     card_mod:
@@ -32,7 +33,19 @@ cards:
       entity: switch.light_switch_office
       variables:
         ulm_card_light_name: " "
-        ulm_card_light_icon: mdi:ceiling-light
+        ulm_card_light_icon: mdi:ceiling-light-outline
+
+  - type: conditional
+    conditions:
+      - entity: switch.light_switch_office
+        state: "unavailable"
+    card:
+      type: custom:button-card
+      template: card_light_color
+      entity: switch.light_switch_office
+      variables:
+        ulm_card_light_name: " "
+        ulm_card_light_icon: mdi:ceiling-light-outline
 
   - type: conditional
     conditions:

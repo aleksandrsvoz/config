@@ -6,7 +6,7 @@ cards:
       ulm_chip_mdi_icon_state_icon: mdi:lightbulb
       ulm_chip_mdi_icon_state_entity: sensor.count_lights_on
       ulm_chip_mdi_icon_state_icon_color: orange
-      
+
   - type: "custom:button-card"
     template: chip_mdi_icon_state
     variables:
@@ -42,7 +42,7 @@ cards:
       ulm_chip_mdi_icon_state_icon_color: orange
     tap_action:
       action: call-service
-      service: script.tv_scene
+      service: script.turn_light_for_tv
     hold_action:
       action: call-service
       service: input_boolean.turn_off
@@ -50,14 +50,19 @@ cards:
         entity_id: input_boolean.is_tv_mode
 
   - type: "custom:button-card"
-    template: chip_icon_label
-    label: Default
-    icon: "mdi:home-circle-outline"
-    card_mod:
-      style: |
-        :host {
-          --card-mod-icon-color: orange;
-        }
+    template: chip_mdi_icon_state
+    variables:
+      ulm_chip_mdi_icon_state_entity: switch.sirens_on_montion
+      ulm_chip_mdi_icon_state_icon_color: orange
+    hold_action:
+      action: perform-action
+      perform_action: switch.turn_off
+      target:
+        entity_id: switch.sirens_on_montion
     tap_action:
-      action: call-service
-      service: script.default_scene
+      action: perform-action
+      perform_action: switch.turn_on
+      target:
+        entity_id: switch.sirens_on_montion
+    use_entity_picture: true
+    content_info: state

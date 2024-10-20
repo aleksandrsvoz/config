@@ -34,7 +34,7 @@ variables:
       action: navigate
       navigation_path: "#light_kithcen_pop_up"
   entity_2:
-    entity_id: switch.light_switch_kitchen_line
+    entity_id: switch.light_switch_kitchen
     tap_action:
       action: toggle
     hold_action:
@@ -75,6 +75,13 @@ custom_fields:
               - background-color: "#FFC6AC"
             icon:
               - color: "#AB2E00"
+        - value: "unavailable"
+          icon: mdi:lightbulb-outline
+          styles:
+            card:
+              - background-color: "#FFC6AC"
+            icon:
+              - color: "#AB2E00"
       entity: "[[[ return variables?.entity_1?.entity_id; ]]]"
   i2:
     card:
@@ -96,7 +103,7 @@ custom_fields:
               - display: "none"
 
         - value: "on"
-          icon: mdi:led-strip-variant
+          icon: mdi:ceiling-light-multiple
           styles:
             card:
               - background-color: "#FFC6AC"
@@ -104,7 +111,14 @@ custom_fields:
               - color: "#AB2E00"
 
         - value: "off"
-          icon: mdi:led-strip-variant-off
+          icon: mdi:ceiling-light-multiple-outline
+          styles:
+            card:
+              - background-color: "#FFC6AC"
+            icon:
+              - color: "#AB2E00"
+        - value: "unavailable"
+          icon: mdi:ceiling-light-multiple-outline
           styles:
             card:
               - background-color: "#FFC6AC"

@@ -3,26 +3,6 @@ path: "home"
 background: center / cover no-repeat url('/local/images/bg.png')
 
 cards:
-  - type: "custom:button-card"
-    template: "card_welcome_scenes"
-    triggers_update: input_boolean.is_scene_menu_opened
-    entity: input_boolean.is_scene_menu_opened
-    variables:
-      ulm_card_welcome_scenes_collapse: input_boolean.is_scene_menu_opened
-      ulm_weather: "weather.forecast_home_assistant"
-      entity_1:
-        entity_id: input_boolean.is_scene_enabled_night_mode
-        name: "Night"
-        color: "yellow"
-      entity_2:
-        entity_id: input_boolean.is_scene_enabled_tv_mode
-        name: "TV"
-        color: "yellow"
-      entity_3:
-        entity_id: input_boolean.is_scene_enabled_out_of_home
-        name: "Away"
-        color: "yellow"
-
   - !include home_info_chips.yaml
 
   - type: "custom:button-card"

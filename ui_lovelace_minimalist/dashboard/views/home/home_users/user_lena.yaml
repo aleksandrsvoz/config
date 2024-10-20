@@ -1,7 +1,8 @@
 # home_user_lena.yaml
 type: vertical-stack
 cards:
-  - type: custom:bubble-pop-up
+  - type: custom:bubble-card
+    card_type: pop-up
     hash: "#user_lena"
     name: "\_\_\_\_Лена"
     card_mod:

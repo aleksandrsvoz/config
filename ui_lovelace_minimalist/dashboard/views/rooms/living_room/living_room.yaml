@@ -129,14 +129,6 @@ cards:
 
   - type: horizontal-stack
     cards:
-      - type: "custom:button-card"
-        template: card_light_color
-        entity: switch.power_plug_1
-        variables:
-          ulm_card_light_name: " "
-          ulm_card_light_icon: mdi:pine-tree
-          ulm_card_light_color: green
-
       - type: custom:mushroom-entity-card
         entity: switch.power_plug_2
         primary_info: state
@@ -187,5 +179,3 @@ cards:
     entity: climate.radiator_living_room
     theme: minimalist-mobile
     name: " "
-
-  - !include strip_line_pop_up.yaml

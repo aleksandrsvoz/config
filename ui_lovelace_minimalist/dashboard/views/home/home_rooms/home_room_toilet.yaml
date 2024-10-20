@@ -27,13 +27,19 @@ variables:
   label_use_temperature: false
   label_use_brightness: true
   entity_1:
-    entity_id: switch.light_switch_toilet_left
+    entity_id: switch.light_switch_door_way_and_toilet_right
     tap_action:
       action: toggle
   entity_2:
     entity_id: switch.light_switch_toilet_right
     tap_action:
       action: toggle
+  entity_3:
+    entity_id: switch.light_switch_toilet_left
+    tap_action:
+      action: toggle
+  entity_4:
+    entity_id: binary_sensor.motion_toilet_occupancy
 custom_fields:
   i1:
     card:
@@ -63,6 +69,13 @@ custom_fields:
               - color: "#11478F"
 
         - value: "off"
+          icon: mdi:lightbulb-outline
+          styles:
+            card:
+              - background-color: "#5DBCEB"
+            icon:
+              - color: "#11478F"
+        - value: "unavailable"
           icon: mdi:lightbulb-outline
           styles:
             card:
@@ -104,4 +117,90 @@ custom_fields:
               - background-color: "#5DBCEB"
             icon:
               - color: "#11478F"
+        - value: "unavailable"
+          icon: mdi:fan-minus
+          styles:
+            card:
+              - background-color: "#5DBCEB"
+            icon:
+              - color: "#11478F"
       entity: "[[[ return variables?.entity_2?.entity_id; ]]]"
+  i3:
+    card:
+      type: "custom:button-card"
+      template: >
+        [[[
+          let templates = [ 'widget_icon_room' ];
+          if (variables?.entity_3?.templates?.length) {
+            templates.push(...variables.entity_3.templates);
+          }
+          return templates;
+        ]]]
+      variables: "[[[ return variables?.entity_3; ]]]"
+      state:
+        - operator: "template"
+          value: "[[[ return !variables.entity_3; ]]]"
+          styles:
+            card:
+              - display: "none"
+
+        - value: "on"
+          icon: mdi:lightbulb-night
+          styles:
+            card:
+              - background-color: "#5DBCEB"
+            icon:
+              - color: "#11478F"
+
+        - value: "off"
+          icon: mdi:lightbulb-night-outline
+          styles:
+            card:
+              - background-color: "#5DBCEB"
+            icon:
+              - color: "#11478F"
+        - value: "unavailable"
+          icon: mdi:lightbulb-night-outline
+          styles:
+            card:
+              - background-color: "#5DBCEB"
+            icon:
+              - color: "#11478F"
+      entity: "[[[ return variables?.entity_3?.entity_id; ]]]"
+  i4:
+    card:
+      type: "custom:button-card"
+      template: >
+        [[[
+          let templates = [ 'widget_icon_room' ];
+          if (variables?.entity_4?.templates?.length) {
+            templates.push(...variables.entity_4.templates);
+          }
+          return templates;
+        ]]]
+      variables: "[[[ return variables?.entity_4; ]]]"
+      state:
+        - operator: "template"
+          value: "[[[ return !variables.entity_4; ]]]"
+          styles:
+            card:
+              - display: "none"
+
+        - value: "on"
+          icon: mdi:motion-sensor
+          styles:
+            card:
+              - background-color: "#B5E1F7"
+            icon:
+              - color: "#645510"
+
+        - value: "off"
+          styles:
+            card:
+              - display: "none"
+
+        - value: "unavailable"
+          styles:
+            card:
+              - display: "none"
+      entity: "[[[ return variables?.entity_4?.entity_id; ]]]"

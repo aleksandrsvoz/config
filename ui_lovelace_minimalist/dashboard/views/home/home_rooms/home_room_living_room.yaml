@@ -34,13 +34,6 @@ variables:
       action: navigate
       navigation_path: "#light_living_room_pop_up"
   entity_2:
-    entity_id: switch.light_switch_living_room_left
-    tap_action:
-      action: toggle
-    hold_action:
-      action: navigate
-      navigation_path: "#light_living_room_pop_up"
-  entity_3:
     entity_id: remote.android_tv
     tap_action:
       action: navigate
@@ -83,6 +76,13 @@ custom_fields:
               - background-color: "#EEC690"
             icon:
               - color: "#7E4400"
+        - value: "unavailable"
+          icon: mdi:lightbulb-outline
+          styles:
+            card:
+              - background-color: "#EEC690"
+            icon:
+              - color: "#7E4400"
       entity: "[[[ return variables?.entity_1?.entity_id; ]]]"
   i2:
     card:
@@ -104,41 +104,6 @@ custom_fields:
               - display: "none"
 
         - value: "on"
-          icon: mdi:ceiling-light
-          styles:
-            card:
-              - background-color: "#EEC690"
-            icon:
-              - color: "#7E4400"
-
-        - value: "off"
-          icon: mdi:ceiling-light-outline
-          styles:
-            card:
-              - background-color: "#EEC690"
-            icon:
-              - color: "#7E4400"
-      entity: "[[[ return variables?.entity_2?.entity_id; ]]]"
-  i3:
-    card:
-      type: "custom:button-card"
-      template: >
-        [[[
-          let templates = [ 'widget_icon_room' ];
-          if (variables?.entity_3?.templates?.length) {
-            templates.push(...variables.entity_3.templates);
-          }
-          return templates;
-        ]]]
-      variables: "[[[ return variables?.entity_3; ]]]"
-      state:
-        - operator: "template"
-          value: "[[[ return !variables.entity_3; ]]]"
-          styles:
-            card:
-              - display: "none"
-
-        - value: "on"
           icon: mdi:remote
           styles:
             card:
@@ -153,4 +118,4 @@ custom_fields:
               - background-color: "#EEC690"
             icon:
               - color: "#7E4400"
-      entity: "[[[ return variables?.entity_3?.entity_id; ]]]"
+      entity: "[[[ return variables?.entity_2?.entity_id; ]]]"

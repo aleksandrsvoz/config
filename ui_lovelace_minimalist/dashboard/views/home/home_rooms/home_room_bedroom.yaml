@@ -27,12 +27,14 @@ variables:
   label_use_temperature: false
   label_use_brightness: true
   entity_1:
-    entity_id: light.light_bulb_bedroom_both
+    entity_id: switch.light_switch_bedroom_both
     tap_action:
       action: toggle
     hold_action:
       action: navigate
       navigation_path: "#light_bedroom_pop_up"
+  entity_4:
+    entity_id: binary_sensor.motion_bedroom_occupancy
 custom_fields:
   i1:
     card:
@@ -68,4 +70,47 @@ custom_fields:
               - background-color: "#75C7AC"
             icon:
               - color: "#395144"
+        - value: "unavailable"
+          icon: mdi:lightbulb-outline
+          styles:
+            card:
+              - background-color: "#75C7AC"
+            icon:
+              - color: "#395144"
       entity: "[[[ return variables?.entity_1?.entity_id; ]]]"
+  i4:
+    card:
+      type: "custom:button-card"
+      template: >
+        [[[
+          let templates = [ 'widget_icon_room' ];
+          if (variables?.entity_4?.templates?.length) {
+            templates.push(...variables.entity_4.templates);
+          }
+          return templates;
+        ]]]
+      variables: "[[[ return variables?.entity_4; ]]]"
+      state:
+        - operator: "template"
+          value: "[[[ return !variables.entity_4; ]]]"
+          styles:
+            card:
+              - display: "none"
+
+        - value: "on"
+          icon: mdi:motion-sensor
+          styles:
+            card:
+              - background-color: "#BDE5D8"
+            icon:
+              - color: "#645510"
+
+        - value: "off"
+          styles:
+            card:
+              - display: "none"
+        - value: "unavailable"
+          styles:
+            card:
+              - display: "none"
+      entity: "[[[ return variables?.entity_4?.entity_id; ]]]"

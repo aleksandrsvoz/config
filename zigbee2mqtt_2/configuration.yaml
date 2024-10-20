@@ -4,7 +4,7 @@ mqtt:
   user: addons
   password: EefaeHo6eich5Ohquiochohwei9eurahnguj3eiFoobee2rei8eoYooghoolai1a
 serial:
-  port: tcp://192.168.86.224:6638
+  port: tcp://192.168.86.250:6638
   baudrate: 115200
   disable_led: false
 advanced:
@@ -36,7 +36,7 @@ advanced:
   legacy_api: false
   legacy_availability_payload: false
 homeassistant: true
-permit_join: false
+permit_join: true
 frontend:
   port: 8099
 device_options:
@@ -48,8 +48,6 @@ devices:
     friendly_name: power_plug_1
   '0x84ba20fffecf3174':
     friendly_name: temperature_living_room
-  '0x00124b00292c1c80':
-    friendly_name: temperature_toilet
   '0x3c2ef5fffed68dd3':
     friendly_name: temperature_bedroom
   '0x9035eafffe1000e3':
@@ -75,19 +73,43 @@ devices:
     transition: 0
   '0xa4c13823eb1d2ff0':
     friendly_name: light_bulb_bedroom_left
-  '0xa4c1384cf7a440e3':
-    friendly_name: light_bulb_bedroom_right
-  '0xa49e69fffecd3541':
-    friendly_name: ir_remote
   '0xa4c138a7a35bf2f6':
     friendly_name: radiator_office
   '0xa4c138dc609dd4e2':
     friendly_name: radiator_bedroom
   '0xa4c13845107dd4de':
     friendly_name: radiator_living_room
+  '0x00124b00292c1c80':
+    friendly_name: temperature_toilet
+  '0x54ef4410007d7a59':
+    friendly_name: light_switch_bedroom
+  '0x54ef4410007d79ba':
+    friendly_name: light_switch_door_way_and_toilet
+  '0xa4c1384eee1b1326':
+    friendly_name: light_bulb_bedroom_right
+    homeassistant:
+      name: light_bulb_bedroom_right
+    legacy: false
+    optimistic: true
+  '0x54ef441000b02a30':
+    friendly_name: test_bulb
+  '0x28dba7fffe010408':
+    friendly_name: motion_kitchen
+  '0x0cae5ffffec2a31f':
+    friendly_name: motion_toilet
+  '0x4c5bb3fffe470cba':
+    friendly_name: motion_office
+  '0x842712fffe7bb113':
+    friendly_name: button_bedroom
+  '0xa49e69fffecd3541':
+    friendly_name: ir_remote
+  '0x0ceff6fffe594c6b':
+    friendly_name: 'motion_bedroom '
+  '0xa4c138b3103ce793':
+    friendly_name: 'current_brightness '
 groups:
   '1':
     friendly_name: light_bulb_bedroom_both
     devices:
       - 0xa4c13823eb1d2ff0/1
-      - 0xa4c1384cf7a440e3/1
+      - 0xa4c1384eee1b1326/1

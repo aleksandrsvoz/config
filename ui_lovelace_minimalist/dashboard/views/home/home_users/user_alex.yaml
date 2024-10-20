@@ -1,7 +1,8 @@
 # home_user_alex.yaml
 type: vertical-stack
 cards:
-  - type: custom:bubble-pop-up
+  - type: custom:bubble-card
+    card_type: pop-up
     hash: "#user_alex"
     name: "\_\_\_\_Саша"
     card_mod:
@@ -37,7 +38,7 @@ cards:
         icon: mdi:alarm-bell
         badge_icon: ""
         multiline_secondary: true
-        icon_color: "#595959"
+        icon_color: "#AE322A"
         badge_color: ""
         card_mod:
           style: |
@@ -46,7 +47,7 @@ cards:
             }
         tap_action:
           action: call-service
-          service: notify.mobile_app_pixel_7_pro
+          service: notify.mobile_app_alex_phone
           data:
             title: Поиск
             message: Происходит поиск телефона
@@ -61,7 +62,7 @@ cards:
         primary: Notification
         secondary: ""
         icon: mdi:message-badge-outline
-        icon_color: "#595959"
+        icon_color: "#64AF9E"
         card_mod:
           style: |
             ha-card {
@@ -69,7 +70,7 @@ cards:
             }
         tap_action:
           action: call-service
-          service: notify.mobile_app_pixel_7_pro
+          service: notify.mobile_app_alex_phone
           target: {}
           data:
             message: Можешь пожалуйста ответить Лене

@@ -1,6 +1,7 @@
 type: vertical-stack
 cards:
-  - type: custom:bubble-pop-up
+  - type: custom:bubble-card
+    card_type: pop-up
     hash: "#light_bedroom_pop_up"
     name: "\_\_\_\_Свет в Спальне"
     card_mod:
@@ -22,47 +23,103 @@ cards:
     margin: "13px"
     margin_top_mobile: 300px
 
-  - type: custom:mushroom-light-card
-    entity: light.light_bulb_bedroom_both
-    primary_info: name
-    name: Оба
-    fill_container: false
-    use_light_color: true
-    show_brightness_control: true
-    show_color_control: true
-    show_color_temp_control: true
-    collapsible_controls: true
-    secondary_info: state
-    icon_type: icon
-    layout: vertical
-
-  - type: grid
-    columns: 2
+  - type: horizontal-stack
     cards:
-      - type: custom:mushroom-light-card
-        entity: light.light_bulb_bedroom_left
-        primary_info: name
-        name: Левый Свет
-        fill_container: false
-        use_light_color: true
-        show_brightness_control: true
-        show_color_control: true
-        show_color_temp_control: true
-        collapsible_controls: true
-        secondary_info: state
-        icon_type: icon
-        layout: vertical
+      - type: conditional
+        conditions:
+          - entity: switch.light_switch_bedroom_left
+            state: "off"
+        card:
+          type: "custom:button-card"
+          template: card_light
+          entity: switch.light_switch_bedroom_left
+          variables:
+            ulm_card_light_name: "Левый"
+            ulm_card_light_icon: mdi:ceiling-light-outline
 
-      - type: custom:mushroom-light-card
-        entity: light.light_bulb_bedroom_right
-        primary_info: name
-        name: Правый Свет
-        fill_container: false
-        use_light_color: true
-        show_brightness_control: true
-        show_color_control: true
-        show_color_temp_control: true
-        collapsible_controls: true
-        secondary_info: state
-        icon_type: icon
-        layout: vertical
+      - type: conditional
+        conditions:
+          - entity: switch.light_switch_bedroom_right
+            state: "off"
+        card:
+          type: custom:button-card
+          template: card_light_color
+          entity: switch.light_switch_bedroom_right
+          variables:
+            ulm_card_light_name: "Правый"
+            ulm_card_light_icon: mdi:ceiling-light-outline
+
+  - type: conditional
+    conditions:
+      - entity: switch.light_switch_bedroom_both
+        state: "on"
+    card:
+      type: custom:mushroom-light-card
+      entity: light.light_bulb_bedroom_both
+      primary_info: name
+      name: Оба
+      fill_container: false
+      use_light_color: true
+      show_brightness_control: true
+      show_color_control: true
+      show_color_temp_control: true
+      collapsible_controls: true
+      secondary_info: state
+      icon_type: icon
+      layout: vertical
+      tap_action:
+        action: call-service
+        service: switch.toggle
+        service_data:
+          entity_id: switch.light_switch_bedroom_both
+
+  - type: horizontal-stack
+    cards:
+      - type: conditional
+        conditions:
+          - entity: switch.light_switch_bedroom_left
+            state: "on"
+        card:
+          type: custom:mushroom-light-card
+          entity: light.light_bulb_bedroom_left
+          icon: mdi:ceiling-light
+          primary_info: name
+          name: Левый Свет
+          fill_container: false
+          use_light_color: true
+          show_brightness_control: true
+          show_color_control: true
+          show_color_temp_control: true
+          collapsible_controls: true
+          secondary_info: state
+          icon_type: icon
+          layout: vertical
+          tap_action:
+            action: call-service
+            service: switch.toggle
+            service_data:
+              entity_id: switch.light_switch_bedroom_left
+      - type: conditional
+        conditions:
+          - entity: switch.light_switch_bedroom_right
+            state: "on"
+        card:
+          type: custom:mushroom-light-card
+          entity: light.light_bulb_bedroom_right
+          icon: mdi:ceiling-light
+          primary_info: name
+          name: Правый Свет
+          fill_container: false
+          use_light_color: true
+          show_brightness_control: true
+          show_color_control: true
+          show_color_temp_control: true
+          collapsible_controls: true
+          secondary_info: state
+          icon_type: icon
+          layout: vertical
+          tap_action:
+            action: call-service
+            service: switch.toggle
+            service_data:
+              entity_id: switch.light_switch_bedroom_right

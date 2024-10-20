@@ -1,6 +1,7 @@
 type: vertical-stack
 cards:
-  - type: custom:bubble-pop-up
+  - type: custom:bubble-card
+    card_type: pop-up
     hash: "#light_kithcen_pop_up"
     name: "\_\_\_\_Свет на Кухне"
     card_mod:
@@ -24,12 +25,28 @@ cards:
 
   - type: horizontal-stack
     cards:
-      - type: "custom:button-card"
-        template: card_light
-        entity: switch.light_switch_kitchen_line
-        variables:
-          ulm_card_light_name: " "
-          ulm_card_light_icon: mdi:led-strip-variant
+      - type: conditional
+        conditions:
+          - entity: switch.light_switch_kitchen
+            state: "off"
+        card:
+          type: custom:button-card
+          template: card_light_color
+          entity: switch.light_switch_kitchen
+          variables:
+            ulm_card_light_name: " "
+            ulm_card_light_icon: mdi:globe-light-outline
+      - type: conditional
+        conditions:
+          - entity: switch.light_switch_kitchen
+            state: "unavailable"
+        card:
+          type: custom:button-card
+          template: card_light_color
+          entity: switch.light_switch_kitchen
+          variables:
+            ulm_card_light_name: " "
+            ulm_card_light_icon: mdi:globe-light-outline
 
       - type: conditional
         conditions:
@@ -42,6 +59,41 @@ cards:
           variables:
             ulm_card_light_name: " "
             ulm_card_light_icon: mdi:globe-light-outline
+      - type: conditional
+        conditions:
+          - entity: switch.light_switch_kitchen
+            state: "unavailable"
+        card:
+          type: custom:button-card
+          template: card_light_color
+          entity: switch.light_switch_kitchen
+          variables:
+            ulm_card_light_name: " "
+            ulm_card_light_icon: mdi:globe-light-outline
+
+  - type: conditional
+    conditions:
+      - entity: switch.light_switch_kitchen
+        state: "on"
+    card:
+      type: custom:mushroom-light-card
+      entity: light.light_bulb_kitchen
+      primary_info: name
+      name: Лампа
+      tap_action:
+        action: call-service
+        service: switch.toggle
+        service_data:
+          entity_id: switch.light_switch_kitchen
+      icon: mdi:globe-light-outline
+      fill_container: false
+      use_light_color: true
+      show_brightness_control: true
+      show_color_control: true
+      show_color_temp_control: true
+      collapsible_controls: true
+      secondary_info: state
+      icon_type: icon
 
   - type: conditional
     conditions:

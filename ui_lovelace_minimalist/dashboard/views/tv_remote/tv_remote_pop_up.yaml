@@ -1,7 +1,8 @@
 # tv_remote.yaml
 type: vertical-stack
 cards:
-  - type: custom:bubble-pop-up
+  - type: custom:bubble-card
+    card_type: pop-up
     hash: "#tv_remote_pop_up"
     name: Пульт
     margin_top_mobile: 170px
@@ -34,8 +35,7 @@ cards:
         - home
         - power
       - - touchpad
-      - - vol_buttons
-      - - volume_slider
+      - - volume_buttons
       - - rewind
         - play_pause
         - fast_forward

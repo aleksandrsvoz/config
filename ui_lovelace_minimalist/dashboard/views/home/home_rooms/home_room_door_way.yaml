@@ -67,6 +67,13 @@ custom_fields:
               - background-color: "#A3A4FF"
             icon:
               - color: "#424289"
+        - value: "unavailable"
+          icon: mdi:lightbulb-outline
+          styles:
+            card:
+              - background-color: "#A3A4FF"
+            icon:
+              - color: "#424289"
       entity: "[[[ return variables?.entity_1?.entity_id; ]]]"
   i2:
     card:

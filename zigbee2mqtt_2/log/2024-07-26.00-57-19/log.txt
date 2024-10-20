@@ -1,0 +1,18 @@
+info  2024-07-26 00:57:19: Logging to console and directory: '/config/zigbee2mqtt_2/log/2024-07-26.00-57-19' filename: log.txt
+info  2024-07-26 00:57:19: Starting Zigbee2MQTT version 1.36.1 (commit #unknown)
+info  2024-07-26 00:57:19: Starting zigbee-herdsman (0.40.3)
+error 2024-07-26 00:58:15: Error while starting zigbee-herdsman
+error 2024-07-26 00:58:15: Failed to start zigbee
+error 2024-07-26 00:58:15: Check https://www.zigbee2mqtt.io/guide/installation/20_zigbee2mqtt-fails-to-start.html for possible solutions
+error 2024-07-26 00:58:15: Exiting...
+error 2024-07-26 00:58:15: Error: SRSP - ZDO - extFindGroup after 6000ms
+    at Object.start (/app/node_modules/zigbee-herdsman/src/utils/waitress.ts:63:23)
+    at /app/node_modules/zigbee-herdsman/src/adapter/z-stack/znp/znp.ts:312:45
+    at Queue.execute (/app/node_modules/zigbee-herdsman/src/utils/queue.ts:35:26)
+    at Znp.request (/app/node_modules/zigbee-herdsman/src/adapter/z-stack/znp/znp.ts:300:27)
+    at ZnpAdapterManager.addToGroup (/app/node_modules/zigbee-herdsman/src/adapter/z-stack/adapter/manager.ts:454:39)
+    at ZnpAdapterManager.start (/app/node_modules/zigbee-herdsman/src/adapter/z-stack/adapter/manager.ts:103:20)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at Controller.start (/app/node_modules/zigbee-herdsman/src/controller/controller.ts:132:29)
+    at Zigbee.start (/app/lib/zigbee.ts:62:27)
+    at Controller.start (/app/lib/controller.ts:109:27)

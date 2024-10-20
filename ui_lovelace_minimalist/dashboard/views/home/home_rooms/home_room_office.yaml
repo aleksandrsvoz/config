@@ -33,6 +33,8 @@ variables:
     hold_action:
       action: navigate
       navigation_path: "#light_office_pop_up"
+  entity_4:
+    entity_id: binary_sensor.motion_office_occupancy
 custom_fields:
   i1:
     card:
@@ -68,4 +70,48 @@ custom_fields:
               - background-color: "#D3D342"
             icon:
               - color: "#645510"
+        - value: "unavailable"
+          icon: mdi:lightbulb-outline
+          styles:
+            card:
+              - background-color: "#D3D342"
+            icon:
+              - color: "#645510"
       entity: "[[[ return variables?.entity_1?.entity_id; ]]]"
+  i4:
+    card:
+      type: "custom:button-card"
+      template: >
+        [[[
+          let templates = [ 'widget_icon_room' ];
+          if (variables?.entity_4?.templates?.length) {
+            templates.push(...variables.entity_4.templates);
+          }
+          return templates;
+        ]]]
+      variables: "[[[ return variables?.entity_4; ]]]"
+      state:
+        - operator: "template"
+          value: "[[[ return !variables.entity_4; ]]]"
+          styles:
+            card:
+              - display: "none"
+
+        - value: "on"
+          icon: mdi:motion-sensor
+          styles:
+            card:
+              - background-color: "#F3F4B6"
+            icon:
+              - color: "#645510"
+
+        - value: "off"
+          styles:
+            card:
+              - display: "none"
+
+        - value: "unavailable"
+          styles:
+            card:
+              - display: "none"
+      entity: "[[[ return variables?.entity_4?.entity_id; ]]]"
