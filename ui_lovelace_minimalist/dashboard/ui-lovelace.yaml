@@ -4,6 +4,6 @@ title: "Minimalist"
 views:
   - !include views/home/home.yaml
   - !include views/tv_remote/tv_remote.yaml
-  - !include views/rooms/living_room/living_room.yaml
+  - !include views/rooms/living_room.yaml
   - !include views/rooms/bedroom.yaml
   - !include views/rooms/office.yaml

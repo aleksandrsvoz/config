@@ -27,14 +27,13 @@ variables:
   label_use_temperature: false
   label_use_brightness: true
   entity_1:
-    entity_id: switch.light_switch_door_way_and_toilet_right
-    tap_action:
-      action: toggle
-  entity_2:
     entity_id: switch.light_switch_toilet_right
     tap_action:
       action: toggle
-  entity_3:
+    hold_action:
+      action: navigate
+      navigation_path: "#light_toilet_pop_up"
+  entity_2:
     entity_id: switch.light_switch_toilet_left
     tap_action:
       action: toggle
@@ -125,48 +124,6 @@ custom_fields:
             icon:
               - color: "#11478F"
       entity: "[[[ return variables?.entity_2?.entity_id; ]]]"
-  i3:
-    card:
-      type: "custom:button-card"
-      template: >
-        [[[
-          let templates = [ 'widget_icon_room' ];
-          if (variables?.entity_3?.templates?.length) {
-            templates.push(...variables.entity_3.templates);
-          }
-          return templates;
-        ]]]
-      variables: "[[[ return variables?.entity_3; ]]]"
-      state:
-        - operator: "template"
-          value: "[[[ return !variables.entity_3; ]]]"
-          styles:
-            card:
-              - display: "none"
-
-        - value: "on"
-          icon: mdi:lightbulb-night
-          styles:
-            card:
-              - background-color: "#5DBCEB"
-            icon:
-              - color: "#11478F"
-
-        - value: "off"
-          icon: mdi:lightbulb-night-outline
-          styles:
-            card:
-              - background-color: "#5DBCEB"
-            icon:
-              - color: "#11478F"
-        - value: "unavailable"
-          icon: mdi:lightbulb-night-outline
-          styles:
-            card:
-              - background-color: "#5DBCEB"
-            icon:
-              - color: "#11478F"
-      entity: "[[[ return variables?.entity_3?.entity_id; ]]]"
   i4:
     card:
       type: "custom:button-card"

@@ -27,5 +27,5 @@ cards:
   - !include ../tv_remote/tv_remote_pop_up.yaml
   - !include ../light_pop_ups/light_living_room_pop_up.yaml
   - !include ../light_pop_ups/light_bedroom_pop_up.yaml
-  - !include ../light_pop_ups/light_kitchen_pop_up.yaml
   - !include ../light_pop_ups/light_office_pop_up.yaml
+  - !include ../light_pop_ups/light_toilet_pop_up.yaml

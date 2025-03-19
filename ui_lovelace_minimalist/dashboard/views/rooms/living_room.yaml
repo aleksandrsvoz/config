@@ -1,0 +1,223 @@
+title: "Living Room"
+path: "living_room"
+background: bottom / cover no-repeat url('/local/images/bg.png')
+cards:
+  - type: custom:layout-card
+    layout_type: custom:grid-layout
+    layout:
+      grid-template-columns: 85% 10%
+      grid-template-areas: |
+        "left right"
+    cards:
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: entity
+            entity: sensor.temperature_living_room_temperature
+            tap_action:
+              action: none
+            hold_action:
+              action: none
+            double_tap_action:
+              action: none
+            icon: mdi:sofa
+            icon_color: brown
+            name: "Гостиная\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_"
+            content_info: name
+            card_mod:
+              style: |
+                ::slotted(span) {
+                  font-size:20px !important;
+                }
+                ha-card {
+                  justify-content: center;
+                  --chip-icon-size: 25px;
+                  --chip-height: 50px;
+                }
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: entity
+            entity: sensor.temperature_living_room_temperature
+            card_mod:
+              style: |
+                ha-card {
+                  --chip-icon-size: 25px;
+                  --chip-height: 50px;
+                  --chip-width: 50px;
+                  border-radius: 100% !important;
+                }
+            tap_action:
+              action: navigate
+              navigation_path: /ui-lovelace-minimalist/home
+            icon: mdi:close
+            content_info: none
+
+  - type: custom:bubble-card
+    card_type: separator
+    name: Температура и влажность
+    icon: mdi:water-thermometer
+    card_mod:
+      style: |
+        ha-card {
+          color: #FAFAFA;
+        }
+
+  - type: horizontal-stack
+    cards:
+      - type: "custom:button-card"
+        template: card_graph
+        card_mod:
+          style: |
+            :host {
+              --card-mod-icon-color: #FB8B24;
+            }
+        entity: sensor.temperature_living_room_temperature
+        variables:
+          ulm_card_graph_color: "#FB8B24"
+          ulm_card_graph_name: Температура
+          ulm_card_graph_entity: sensor.temperature_living_room_temperature
+          ulm_card_graph_type: fill
+          ulm_card_graph_hours: 24
+          ulm_card_graph_group_by: interval
+          ulm_card_graph_line_width: 5
+
+      - type: "custom:button-card"
+        template: card_graph
+        card_mod:
+          style: |
+            :host {
+              --card-mod-icon-color: #39A7FF;
+            }
+        entity: sensor.temperature_living_room_humidity
+        variables:
+          ulm_card_graph_color: "#39A7FF"
+          ulm_card_graph_name: Влажность
+          ulm_card_graph_entity: sensor.temperature_living_room_humidity
+          ulm_card_graph_type: fill
+          ulm_card_graph_hours: 24
+          ulm_card_graph_group_by: interval
+          ulm_card_graph_line_width: 5
+
+  - type: custom:bubble-card
+    card_type: separator
+    name: Свет и Выключатели
+    icon: mdi:lightbulb
+    card_mod:
+      style: |
+        ha-card {
+          color: #FAFAFA;
+        }
+
+  - type: custom:button-card
+    template: card_light_color
+    entity: switch.christmast_tree_power
+    variables:
+      ulm_card_light_name: " "
+      ulm_card_light_icon: mdi:pine-tree
+
+    ## Main Light
+  - type: custom:button-card
+    template: card_light_color
+    entity: switch.light_switch_living_room_left
+    variables:
+      ulm_card_light_name: " "
+      ulm_card_light_icon: mdi:vanity-light
+
+  ## Lamp All
+  - type: custom:button-card
+    template: card_light_color
+    entity: switch.light_switch_living_room_center
+    variables:
+      ulm_card_light_name: " "
+      ulm_card_light_icon: mdi:light-recessed
+
+  - type: horizontal-stack
+    cards:
+      ## Lamp Main
+      - type: conditional
+        conditions:
+          - entity: switch.light_switch_living_room_center
+            state: "on"
+        card:
+          type: custom:mushroom-light-card
+          entity: light.all_lamps_living_room
+          primary_info: name
+          name: Основной
+          tap_action:
+            action: call-service
+            service: light.toggle
+            service_data:
+              entity_id: light.all_lamps_living_room
+          icon: mdi:light-recessed
+          fill_container: false
+          use_light_color: true
+          show_brightness_control: true
+          show_color_control: true
+          show_color_temp_control: true
+          collapsible_controls: true
+          secondary_info: state
+          icon_type: icon
+
+      ## Lamp RGB
+      - type: conditional
+        conditions:
+          - entity: switch.light_switch_living_room_center
+            state: "on"
+        card:
+          type: custom:mushroom-light-card
+          entity: light.all_rgb_living_room
+          primary_info: name
+          name: Подсветка
+          tap_action:
+            action: call-service
+            service: light.toggle
+            service_data:
+              entity_id: light.all_rgb_living_room
+          icon: mdi:led-strip-variant
+          fill_container: false
+          use_light_color: true
+          show_brightness_control: true
+          show_color_control: true
+          show_color_temp_control: true
+          collapsible_controls: true
+          secondary_info: state
+          icon_type: icon
+
+  - type: custom:bubble-card
+    card_type: separator
+    name: Шторы
+    icon: mdi:curtains
+    card_mod:
+      style: |
+        ha-card {
+          color: #FAFAFA;
+        }
+
+  - type: custom:mushroom-cover-card
+    entity: cover.curtains_living_room_entry
+    secondary_info: state
+    primary_info: name
+    icon_type: entity-picture
+    show_position_control: true
+    show_tilt_position_control: false
+    show_buttons_control: true
+    name: Окно на Выезд
+
+  - type: custom:mushroom-cover-card
+    entity: cover.curtains_living_room_veranda_window
+    secondary_info: state
+    primary_info: name
+    icon_type: entity-picture
+    show_position_control: true
+    show_tilt_position_control: false
+    show_buttons_control: true
+    name: Окно на Веранду
+
+  - type: custom:mushroom-cover-card
+    entity: cover.curtains_living_room_veranda_exit
+    secondary_info: state
+    primary_info: name
+    icon_type: entity-picture
+    show_position_control: true
+    show_tilt_position_control: false
+    show_buttons_control: true
+    name: Выход на Веранду

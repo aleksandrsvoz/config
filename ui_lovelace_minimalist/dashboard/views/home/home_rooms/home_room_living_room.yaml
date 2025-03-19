@@ -27,13 +27,20 @@ variables:
   label_use_temperature: false
   label_use_brightness: true
   entity_1:
-    entity_id: switch.light_switch_living_room_right
+    entity_id: switch.light_switch_living_room_left
     tap_action:
       action: toggle
     hold_action:
       action: navigate
       navigation_path: "#light_living_room_pop_up"
   entity_2:
+    entity_id: switch.light_switch_living_room_center
+    tap_action:
+      action: toggle
+    hold_action:
+      action: navigate
+      navigation_path: "#light_kithcen_pop_up"
+  entity_3:
     entity_id: remote.android_tv
     tap_action:
       action: navigate
@@ -104,6 +111,48 @@ custom_fields:
               - display: "none"
 
         - value: "on"
+          icon: mdi:ceiling-light-multiple
+          styles:
+            card:
+              - background-color: "#EEC690"
+            icon:
+              - color: "#7E4400"
+
+        - value: "off"
+          icon: mdi:ceiling-light-multiple-outline
+          styles:
+            card:
+              - background-color: "#EEC690"
+            icon:
+              - color: "#7E4400"
+        - value: "unavailable"
+          icon: mdi:ceiling-light-multiple-outline
+          styles:
+            card:
+              - background-color: "#EEC690"
+            icon:
+              - color: "#7E4400"
+      entity: "[[[ return variables?.entity_2?.entity_id; ]]]"
+  i3:
+    card:
+      type: "custom:button-card"
+      template: >
+        [[[
+          let templates = [ 'widget_icon_room' ];
+          if (variables?.entity_3?.templates?.length) {
+            templates.push(...variables.entity_3.templates);
+          }
+          return templates;
+        ]]]
+      variables: "[[[ return variables?.entity_3; ]]]"
+      state:
+        - operator: "template"
+          value: "[[[ return !variables.entity_3; ]]]"
+          styles:
+            card:
+              - display: "none"
+
+        - value: "on"
           icon: mdi:remote
           styles:
             card:
@@ -118,4 +167,4 @@ custom_fields:
               - background-color: "#EEC690"
             icon:
               - color: "#7E4400"
-      entity: "[[[ return variables?.entity_2?.entity_id; ]]]"
+      entity: "[[[ return variables?.entity_3?.entity_id; ]]]"

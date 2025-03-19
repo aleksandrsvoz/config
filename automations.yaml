@@ -1,712 +1,242 @@
 - id: '1703506200819'
   alias: Scene TV On
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
-    - remote.android_tv
+  triggers:
+  - entity_id:
+    - media_player.main_tv
     from:
     to: 'on'
-  condition: []
-  action:
-  - service: input_boolean.turn_on
-    target:
+    trigger: state
+  conditions: []
+  actions:
+  - target:
       entity_id: input_boolean.is_tv_mode
     data: {}
+    action: input_boolean.turn_on
   - if:
-    - condition: time
-      after: '16:00:00'
+    - condition: sun
+      after: sunset
     then:
-    - service: script.turn_light_for_tv
+    - action: script.light_scene_for_tv
       data: {}
+  - action: cover.close_cover
+    metadata: {}
+    data: {}
+    target:
+      entity_id:
+      - cover.curtains_living_room_entry
+      - cover.curtains_living_room_veranda_window
   mode: restart
 - id: '1703506966884'
   alias: Scene TV Off
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
-    - media_player.android_tv_2
+  triggers:
+  - entity_id:
+    - media_player.main_tv
     from:
     to: unavailable
-  condition: []
-  action:
-  - service: input_boolean.turn_off
-    target:
+    trigger: state
+  conditions: []
+  actions:
+  - target:
       entity_id: input_boolean.is_tv_mode
     data: {}
-  - service: script.default_scene
-    data: {}
+    action: input_boolean.turn_off
+  - if:
+    - condition: sun
+      before: sunset
+      after: sunrise
+    then:
+    - action: cover.open_cover
+      metadata: {}
+      data: {}
+      target:
+        entity_id: cover.curtains_living_room_entry
+    - action: cover.set_cover_position
+      metadata: {}
+      data:
+        position: 40
+      target:
+        entity_id:
+        - cover.curtains_living_room_veranda_window
+        - cover.curtains_living_room_veranda_exit
+    else:
+    - if:
+      - condition: state
+        entity_id: input_boolean.is_night_mode
+        state: 'off'
+      then:
+      - action: script.scene_default_living_room_light
+        data: {}
   mode: restart
 - id: '1703514397437'
   alias: Scene Night On
   description: ''
-  trigger:
-  - platform: time
-    at: 02:30:00
-  condition:
+  triggers:
+  - at: 02:30:00
+    trigger: time
+  conditions:
   - condition: and
     conditions:
     - condition: time
-      after: input_datetime.time_for_night_mode_on
       before: 08:00:00
+      after: 02:00:00
     - condition: state
       entity_id: input_boolean.is_night_mode
       state: 'off'
     - condition: state
       entity_id: input_boolean.is_out_of_home
       state: 'off'
-  action:
-  - service: light.turn_on
-    data:
-      rgb_color:
-      - 209
-      - 116
-      - 23
-      brightness: 255
-    target:
-      entity_id:
-      - light.light_bulb_bedroom_both
-  - service: script.night_scene_script
-    data: {}
+  actions:
+  - data: {}
+    action: script.night_scene_script
   mode: single
 - id: '1703517954260'
-  alias: Scene Night Off
+  alias: scene_new_day_start
   description: ''
-  trigger:
-  - platform: time
-    at: 09:00:00
-  condition: []
-  action:
-  - service: homeassistant.turn_off
+  triggers:
+  - at: '11:00:00'
+    trigger: time
+  conditions: []
+  actions:
+  - action: input_boolean.turn_off
+    metadata: {}
+    data: {}
     target:
       entity_id: input_boolean.is_night_mode
+  - action: script.open_all_curtains
     data: {}
   mode: restart
 - id: '1703534667532'
   alias: Scene Come Back Home
   description: ''
-  trigger:
-  - platform: device
-    device_id: 4491a48c7d623f8065437eb7b0ca2705
-    domain: lock
-    entity_id: 71b9065df4bf5c398d2b19e2cfe666f7
-    type: unlocked
-  condition:
+  triggers:
+  - trigger: state
+    entity_id:
+    - device_tracker.alex_phone
+    from:
+    to: home
+  conditions:
   - condition: and
     conditions:
     - condition: state
       entity_id: input_boolean.is_out_of_home
       state: 'on'
-  action:
-  - service: input_boolean.turn_off
-    target:
+  actions:
+  - target:
       entity_id: input_boolean.is_out_of_home
     data: {}
-  - service: script.default_scene
-    data: {}
+    action: input_boolean.turn_off
+  - if:
+    - condition: time
+      after: '17:00:00'
+      before: 09:00:00
+    then:
+    - type: turn_on
+      device_id: 7357f8d05df45291660c6c6e161f1246
+      entity_id: fe2183299a222b576ffa37abad2801d2
+      domain: switch
+  - if:
+    - condition: time
+      after: 09:00:00
+      before: '17:00:00'
+    then:
+    - action: script.open_all_curtains
+      data: {}
+  - type: turn_on
+    device_id: 7357f8d05df45291660c6c6e161f1246
+    entity_id: abd4c4f57d6006a61139995261a5443e
+    domain: switch
   mode: restart
-- id: '1703586558948'
-  alias: Light bulb restore on turned on in Kitchen
+- id: '1706287849527'
+  alias: turn_on_light_in_toulet_on_montion
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
-    - switch.light_switch_kitchen
-    from: 'off'
-    to: 'on'
-  condition: []
-  action:
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 0
-      milliseconds: 100
-  - choose:
-    - conditions:
-      - condition: or
-        conditions:
-        - condition: state
-          entity_id: light.light_bulb_kitchen
-          state: 'off'
-        - condition: state
-          entity_id: light.light_bulb_kitchen
-          state: unknown
-        - condition: state
-          entity_id: light.light_bulb_kitchen
-          state: unavailable
-      sequence:
-      - type: turn_on
-        device_id: f0d7af3c0df1f8dfd2a113dfa9d17491
-        entity_id: effad693737a2ce3fa3e192de27b8550
-        domain: light
-  - service: light.turn_on
-    metadata: {}
-    data:
-      color_temp: 500
-      brightness_pct: 51
-    target:
-      device_id: f0d7af3c0df1f8dfd2a113dfa9d17491
-  mode: single
-- id: '1703586698215'
-  alias: Light bulb restore on turned on in Living Room
-  description: ''
-  trigger:
-  - platform: state
-    entity_id:
-    - switch.light_switch_living_room_right
-    from: 'off'
-    to: 'on'
-  condition: []
-  action:
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 0
-      milliseconds: 100
-  - choose:
-    - conditions:
-      - condition: or
-        conditions:
-        - condition: state
-          entity_id: light.light_bulb_living_room
-          state: 'off'
-        - condition: state
-          entity_id: light.light_bulb_living_room
-          state: unknown
-        - condition: state
-          entity_id: light.light_bulb_living_room
-          state: unavailable
-      sequence:
-      - type: turn_on
-        device_id: 47ee0b7fb4afbedc48c4f642ab6af90a
-        entity_id: d55cdbfa0861893c4fefd856f6b71bd4
-        domain: light
-  - service: light.turn_on
-    metadata: {}
-    data:
-      color_temp: 500
-      brightness_pct: 51
-    target:
-      device_id:
-      - 47ee0b7fb4afbedc48c4f642ab6af90a
-  mode: restart
-- id: '1703950084431'
-  alias: Turn fun when light is on
-  description: ''
-  trigger:
+  triggers:
   - type: occupied
-    platform: device
-    device_id: 33e9501a25495bcd5ddb695c825a6ba3
-    entity_id: a1b936741c723e71c7c6bdf294cdd740
+    device_id: 49b9b95059ecf6e64052222018d39612
+    entity_id: 539d7b288d4055ae57b0aadff46e2353
     domain: binary_sensor
+    trigger: device
   - type: not_occupied
-    platform: device
-    device_id: 33e9501a25495bcd5ddb695c825a6ba3
-    entity_id: a1b936741c723e71c7c6bdf294cdd740
+    device_id: 49b9b95059ecf6e64052222018d39612
+    entity_id: 539d7b288d4055ae57b0aadff46e2353
     domain: binary_sensor
+    trigger: device
     for:
       hours: 0
       minutes: 1
       seconds: 0
-  condition: []
-  action:
+  conditions:
+  - condition: state
+    entity_id: input_boolean.bath_relax_light
+    state: 'off'
+  actions:
   - choose:
     - conditions:
       - type: is_occupied
         condition: device
-        device_id: 33e9501a25495bcd5ddb695c825a6ba3
-        entity_id: a1b936741c723e71c7c6bdf294cdd740
+        device_id: 49b9b95059ecf6e64052222018d39612
+        entity_id: 539d7b288d4055ae57b0aadff46e2353
         domain: binary_sensor
       sequence:
       - type: turn_on
-        device_id: 76a8d32746327843cc4e2ec948563958
-        entity_id: b2d128e4857598ba79e025578b6e3bfe
+        device_id: 9f322d6a42df3160e4711615a91ccbaa
+        entity_id: a821db613e5d5c12247c1255f2e13a1f
         domain: switch
+      - delay:
+          hours: 0
+          minutes: 5
+          seconds: 0
+      - if:
+        - condition: device
+          type: is_on
+          device_id: 9f322d6a42df3160e4711615a91ccbaa
+          entity_id: a821db613e5d5c12247c1255f2e13a1f
+          domain: switch
+        - type: is_occupied
+          condition: device
+          device_id: 49b9b95059ecf6e64052222018d39612
+          entity_id: 539d7b288d4055ae57b0aadff46e2353
+          domain: binary_sensor
+        then:
+        - type: turn_on
+          device_id: 9f322d6a42df3160e4711615a91ccbaa
+          entity_id: 0ce45bf2f566e980e99c7709fd312e4d
+          domain: switch
+        else:
+        - type: turn_off
+          device_id: 9f322d6a42df3160e4711615a91ccbaa
+          entity_id: a821db613e5d5c12247c1255f2e13a1f
+          domain: switch
     - conditions:
       - type: is_not_occupied
         condition: device
-        device_id: 33e9501a25495bcd5ddb695c825a6ba3
-        entity_id: a1b936741c723e71c7c6bdf294cdd740
-        domain: binary_sensor
-      sequence:
-      - type: turn_off
-        device_id: 76a8d32746327843cc4e2ec948563958
-        entity_id: b2d128e4857598ba79e025578b6e3bfe
-        domain: switch
-  mode: restart
-- id: '1704045559369'
-  alias: Light Switch Turn Light When Door is Opened
-  description: ''
-  trigger:
-  - platform: device
-    device_id: 4491a48c7d623f8065437eb7b0ca2705
-    domain: lock
-    entity_id: 71b9065df4bf5c398d2b19e2cfe666f7
-    type: unlocked
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 1
-  condition: []
-  action:
-  - type: turn_on
-    device_id: 7b9ef4e1b57fd30160f9287a3d9ff8b4
-    entity_id: 63fc81cf2189c83c764c73fda29bfac2
-    domain: switch
-  - type: turn_on
-    device_id: fac9c97b208ea5dc648ca4f4a37cc98a
-    entity_id: ee52bb34731c28ebec46bb4080fa7200
-    domain: switch
-  - delay:
-      hours: 0
-      minutes: 1
-      seconds: 30
-      milliseconds: 0
-  - type: turn_off
-    device_id: 7b9ef4e1b57fd30160f9287a3d9ff8b4
-    entity_id: 63fc81cf2189c83c764c73fda29bfac2
-    domain: switch
-  - type: turn_off
-    device_id: fac9c97b208ea5dc648ca4f4a37cc98a
-    entity_id: ee52bb34731c28ebec46bb4080fa7200
-    domain: switch
-  mode: restart
-- id: '1704967221373'
-  alias: Восстановление цвета лампы в Спальне (Левый)
-  description: ''
-  trigger:
-  - platform: state
-    entity_id:
-    - switch.light_switch_bedroom_left
-    from: 'off'
-    to: 'on'
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 1
-  condition: []
-  action:
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 0
-      milliseconds: 100
-  - choose:
-    - conditions:
-      - condition: or
-        conditions:
-        - condition: state
-          entity_id: light.light_bulb_bedroom_left
-          state: 'off'
-        - condition: state
-          entity_id: light.light_bulb_bedroom_left
-          state: unknown
-        - condition: state
-          entity_id: light.light_bulb_bedroom_left
-          state: unavailable
-      sequence:
-      - type: turn_on
-        device_id: 4b9c0a3cf2ce89470bd5c6902f3ee321
-        entity_id: 153b3955ae149cb50105a2849c59ef20
-        domain: switch
-  - service: light.turn_on
-    metadata: {}
-    data:
-      color_temp: 500
-      brightness_pct: 47
-    target:
-      device_id:
-      - ade3300f59bfa55f0a55189cb4881051
-      - b276888d15bdcd319f4265e9e3e1bc30
-  mode: single
-- id: '1704967663467'
-  alias: light_bulb_restore_on_turned_on_in_bedroom_right
-  description: ''
-  trigger:
-  - platform: state
-    entity_id:
-    - switch.light_switch_bedroom_right
-    from: 'off'
-    to: 'on'
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 1
-  condition: []
-  action:
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 0
-      milliseconds: 100
-  - choose:
-    - conditions:
-      - condition: or
-        conditions:
-        - condition: state
-          entity_id: light.light_bulb_bedroom_right
-          state: 'off'
-        - condition: state
-          entity_id: light.light_bulb_bedroom_right
-          state: unknown
-        - condition: state
-          entity_id: light.light_bulb_bedroom_right
-          state: unavailable
-      sequence:
-      - type: turn_on
-        device_id: 4b9c0a3cf2ce89470bd5c6902f3ee321
-        entity_id: ed74b6f968d7c77e44796fed69e45551
-        domain: switch
-  - service: light.turn_on
-    metadata: {}
-    data:
-      color_temp: 500
-      brightness_pct: 50
-    target:
-      device_id:
-      - ade3300f59bfa55f0a55189cb4881051
-      - b276888d15bdcd319f4265e9e3e1bc30
-  mode: single
-- id: '1706287849527'
-  alias: turn_on_light_in_toulet_on_montion
-  description: ''
-  trigger:
-  - platform: state
-    entity_id:
-    - binary_sensor.motion_toilet_occupancy
-    to: 'on'
-    from: 'off'
-  condition:
-  - condition: device
-    type: is_off
-    device_id: fac9c97b208ea5dc648ca4f4a37cc98a
-    entity_id: 7467fdf8d4af418b116114ed8a10ca49
-    domain: switch
-  - condition: device
-    type: is_off
-    device_id: 76a8d32746327843cc4e2ec948563958
-    entity_id: c6292c95321da203ef2e5e48987d52b2
-    domain: switch
-  - type: is_motion
-    condition: device
-    device_id: 33e9501a25495bcd5ddb695c825a6ba3
-    entity_id: a1b936741c723e71c7c6bdf294cdd740
-    domain: binary_sensor
-  action:
-  - choose:
-    - conditions:
-      - condition: state
-        entity_id: input_boolean.is_night_mode
-        state: 'on'
-      sequence:
-      - type: turn_on
-        device_id: 76a8d32746327843cc4e2ec948563958
-        entity_id: c6292c95321da203ef2e5e48987d52b2
-        domain: switch
-    - conditions:
-      - condition: state
-        entity_id: input_boolean.is_night_mode
-        state: 'off'
-      sequence:
-      - type: turn_on
-        device_id: fac9c97b208ea5dc648ca4f4a37cc98a
-        entity_id: 7467fdf8d4af418b116114ed8a10ca49
-        domain: switch
-  mode: single
-- id: '1706288882956'
-  alias: turn_off_light_in_toulet_on_montion_stop
-  description: ''
-  trigger:
-  - platform: state
-    entity_id:
-    - binary_sensor.motion_toilet_occupancy
-    from: 'on'
-    to: 'off'
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 30
-  condition:
-  - condition: or
-    conditions:
-    - condition: device
-      type: is_on
-      device_id: fac9c97b208ea5dc648ca4f4a37cc98a
-      entity_id: 7467fdf8d4af418b116114ed8a10ca49
-      domain: switch
-    - condition: device
-      type: is_on
-      device_id: 76a8d32746327843cc4e2ec948563958
-      entity_id: c6292c95321da203ef2e5e48987d52b2
-      domain: switch
-    - type: is_no_motion
-      condition: device
-      device_id: 33e9501a25495bcd5ddb695c825a6ba3
-      entity_id: a1b936741c723e71c7c6bdf294cdd740
-      domain: binary_sensor
-  action:
-  - if:
-    - condition: device
-      type: is_on
-      device_id: 76a8d32746327843cc4e2ec948563958
-      entity_id: c6292c95321da203ef2e5e48987d52b2
-      domain: switch
-    then:
-    - type: turn_off
-      device_id: 76a8d32746327843cc4e2ec948563958
-      entity_id: c6292c95321da203ef2e5e48987d52b2
-      domain: switch
-  - if:
-    - condition: device
-      type: is_on
-      device_id: fac9c97b208ea5dc648ca4f4a37cc98a
-      entity_id: 7467fdf8d4af418b116114ed8a10ca49
-      domain: switch
-    then:
-    - type: turn_off
-      device_id: fac9c97b208ea5dc648ca4f4a37cc98a
-      entity_id: 7467fdf8d4af418b116114ed8a10ca49
-      domain: switch
-  mode: single
-- id: '1713434025922'
-  alias: bedroom_button_night_mode
-  description: ''
-  trigger:
-  - platform: device
-    domain: mqtt
-    device_id: e84aca75dbef5bfa21f7d24d483b3e2f
-    type: action
-    subtype: single
-  condition: []
-  action:
-  - choose:
-    - conditions:
-      - condition: state
-        entity_id: input_boolean.is_night_mode
-        state: 'on'
-      sequence:
-      - delay:
-          hours: 0
-          minutes: 0
-          seconds: 5
-          milliseconds: 0
-      - service: script.night_scene_script
-        data: {}
-      - service: script.slowly_could_down_the_living_room_light
-        data: {}
-    - conditions:
-      - condition: state
-        entity_id: input_boolean.is_night_mode
-        state: 'off'
-      sequence:
-      - service: script.night_scene_script
-        data: {}
-  mode: restart
-- id: '1713440501671'
-  alias: montion_kitchen_light
-  description: ''
-  trigger:
-  - type: motion
-    platform: device
-    device_id: 9855f85c9d52aad3e1296f58d27d2d2f
-    entity_id: c22af08c6f1384adc96240bcddc7f249
-    domain: binary_sensor
-  - type: no_motion
-    platform: device
-    device_id: 9855f85c9d52aad3e1296f58d27d2d2f
-    entity_id: c22af08c6f1384adc96240bcddc7f249
-    domain: binary_sensor
-    for:
-      hours: 0
-      minutes: 9
-      seconds: 0
-  condition: []
-  action:
-  - choose:
-    - conditions:
-      - condition: and
-        conditions:
-        - type: is_motion
-          condition: device
-          device_id: 9855f85c9d52aad3e1296f58d27d2d2f
-          entity_id: c22af08c6f1384adc96240bcddc7f249
-          domain: binary_sensor
-        - condition: device
-          type: is_off
-          device_id: 14eed61f8508ee688ac4a30f62057d6c
-          entity_id: 8770b876554ea9b3d11b491f300e8998
-          domain: switch
-        - condition: state
-          entity_id: input_boolean.is_night_mode
-          state: 'off'
-        - condition: state
-          entity_id: input_boolean.is_tv_mode
-          state: 'off'
-      sequence:
-      - type: turn_on
-        device_id: 14eed61f8508ee688ac4a30f62057d6c
-        entity_id: 8770b876554ea9b3d11b491f300e8998
-        domain: switch
-    - conditions:
-      - condition: and
-        conditions:
-        - type: is_no_motion
-          condition: device
-          device_id: 9855f85c9d52aad3e1296f58d27d2d2f
-          entity_id: c22af08c6f1384adc96240bcddc7f249
-          domain: binary_sensor
-        - condition: device
-          type: is_on
-          device_id: 14eed61f8508ee688ac4a30f62057d6c
-          entity_id: 8770b876554ea9b3d11b491f300e8998
-          domain: switch
-        - condition: state
-          entity_id: input_boolean.is_tv_mode
-          state: 'off'
-      sequence:
-      - type: turn_off
-        device_id: 14eed61f8508ee688ac4a30f62057d6c
-        entity_id: 8770b876554ea9b3d11b491f300e8998
-        domain: switch
-  mode: single
-- id: '1717708354620'
-  alias: light_swith_turn_on_default_light
-  description: ''
-  trigger:
-  - platform: state
-    entity_id:
-    - switch.light_switch_office
-    from: 'off'
-    to: 'on'
-  condition: []
-  action:
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 0
-      milliseconds: 100
-  - choose:
-    - conditions:
-      - condition: or
-        conditions:
-        - condition: state
-          state: 'off'
-          entity_id: light.light_bulb_office
-        - condition: state
-          state: unknown
-          entity_id: light.light_bulb_office
-        - condition: state
-          state: unavailable
-          entity_id: light.light_bulb_office
-      sequence:
-      - type: turn_on
-        device_id: 61b83c69693b8014d4924c78d8d76a60
-        entity_id: 84f3bab49846227acf98ac355ed36c74
-        domain: light
-  - service: light.turn_on
-    metadata: {}
-    data:
-      color_temp: 500
-      brightness_pct: 51
-    target:
-      device_id: 61b83c69693b8014d4924c78d8d76a60
-  mode: single
-- id: '1721375648861'
-  alias: Motion_bedroom
-  description: ''
-  trigger:
-  - type: motion
-    platform: device
-    device_id: 49b9b95059ecf6e64052222018d39612
-    entity_id: 815754b993baaa92091f8453bc771e2e
-    domain: binary_sensor
-  - type: no_motion
-    platform: device
-    device_id: 49b9b95059ecf6e64052222018d39612
-    entity_id: 815754b993baaa92091f8453bc771e2e
-    domain: binary_sensor
-    for:
-      hours: 0
-      minutes: 4
-      seconds: 0
-  condition: []
-  action:
-  - choose:
-    - conditions:
-      - type: is_motion
-        condition: device
         device_id: 49b9b95059ecf6e64052222018d39612
-        entity_id: 815754b993baaa92091f8453bc771e2e
+        entity_id: 539d7b288d4055ae57b0aadff46e2353
         domain: binary_sensor
-      - condition: or
-        conditions:
-        - condition: device
-          type: is_off
-          device_id: 4b9c0a3cf2ce89470bd5c6902f3ee321
-          entity_id: 153b3955ae149cb50105a2849c59ef20
-          domain: switch
-        - condition: device
-          type: is_off
-          device_id: 4b9c0a3cf2ce89470bd5c6902f3ee321
-          entity_id: ed74b6f968d7c77e44796fed69e45551
-          domain: switch
-      - condition: state
-        entity_id: input_boolean.is_night_mode
-        state: 'off'
-      - condition: time
-        after: '21:00:00'
-        before: 09:00:00
-      sequence:
-      - type: turn_on
-        device_id: 4b9c0a3cf2ce89470bd5c6902f3ee321
-        entity_id: ed74b6f968d7c77e44796fed69e45551
-        domain: switch
-      - type: turn_on
-        device_id: 4b9c0a3cf2ce89470bd5c6902f3ee321
-        entity_id: 153b3955ae149cb50105a2849c59ef20
-        domain: switch
-    - conditions:
-      - type: is_no_motion
-        condition: device
-        device_id: 49b9b95059ecf6e64052222018d39612
-        entity_id: 815754b993baaa92091f8453bc771e2e
-        domain: binary_sensor
-      - condition: or
-        conditions:
-        - condition: device
-          type: is_on
-          device_id: 4b9c0a3cf2ce89470bd5c6902f3ee321
-          entity_id: ed74b6f968d7c77e44796fed69e45551
-          domain: switch
-        - condition: device
-          type: is_on
-          device_id: 4b9c0a3cf2ce89470bd5c6902f3ee321
-          entity_id: 153b3955ae149cb50105a2849c59ef20
-          domain: switch
       sequence:
       - type: turn_off
-        device_id: 4b9c0a3cf2ce89470bd5c6902f3ee321
-        entity_id: ed74b6f968d7c77e44796fed69e45551
+        device_id: 9f322d6a42df3160e4711615a91ccbaa
+        entity_id: a821db613e5d5c12247c1255f2e13a1f
         domain: switch
       - type: turn_off
-        device_id: 4b9c0a3cf2ce89470bd5c6902f3ee321
-        entity_id: 153b3955ae149cb50105a2849c59ef20
+        device_id: 9f322d6a42df3160e4711615a91ccbaa
+        entity_id: 0ce45bf2f566e980e99c7709fd312e4d
         domain: switch
-  mode: single
+  mode: restart
 - id: '1728054560141'
   alias: camera_outside_1_signalization
   description: ''
   triggers:
-  - type: motion
+  - type: turned_on
     device_id: 7f4bcb35d80c0abdc873b963c5f33149
-    entity_id: 38c15e94a24ade5ede016c98ddad0972
+    entity_id: 4323080068dedff77945cd79c209bb66
     domain: binary_sensor
+    trigger: device
     for:
       hours: 0
       minutes: 0
-      seconds: 2
-    trigger: device
+      seconds: 1
   conditions: []
   actions:
   - if:
@@ -790,11 +320,15 @@
   alias: camera_outside_3_signalization
   description: ''
   triggers:
-  - type: motion
+  - type: turned_on
     device_id: 4bf13aed1990aac2416c3dce43873ecb
-    entity_id: bba2fe0e553cc70da5b4b8f9f93943d8
+    entity_id: f73c2cbe6858ad45b781eb049f03036a
     domain: binary_sensor
     trigger: device
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 1
   conditions: []
   actions:
   - if:
@@ -834,11 +368,15 @@
   alias: camera_outside_4_signalization
   description: ''
   triggers:
-  - type: motion
+  - type: turned_on
     device_id: fa3918d5199d340d71ae9276ecf35c7a
-    entity_id: 36627e1033bb90333935c7151832e988
+    entity_id: 8efd21bbd780d8cd7668d509db74c591
     domain: binary_sensor
     trigger: device
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 1
   conditions: []
   actions:
   - if:
@@ -873,4 +411,563 @@
           hours: 0
           minutes: 5
           seconds: 0
+  mode: restart
+- id: '1734602045734'
+  alias: water_leak_turn_off_pump
+  description: ''
+  triggers:
+  - type: moist
+    device_id: 22446d1bb7ef7a30ec3416b45b2f7b37
+    entity_id: 42244bafa1c910093adcde1bff4e8bd7
+    domain: binary_sensor
+    trigger: device
+  - type: moist
+    device_id: 577adde50928cac6a32aa9a30015d404
+    entity_id: 6b4d4db2620208ce17883199588bffd1
+    domain: binary_sensor
+    trigger: device
+  - type: moist
+    device_id: 69e9dd36aafc9201355f3167b82efdcd
+    entity_id: 8d6824288698c3a77fdad9d7d9e3d0e2
+    domain: binary_sensor
+    trigger: device
+  - type: moist
+    device_id: b2583a6f53625b0aa18860f03b03139c
+    entity_id: 8d72a8970ecc86c4fe7cceb807848c79
+    domain: binary_sensor
+    trigger: device
+  - type: moist
+    device_id: 1cdebfc04d2a967f79b9b920e79b9011
+    entity_id: efc49636bb72a44891f2d9ec89d5f256
+    domain: binary_sensor
+    trigger: device
+  conditions: []
+  actions:
+  - type: turn_off
+    device_id: 3ba9465ebaf8aaf5f833451f6b306084
+    entity_id: c52b449cae2014cbd57242fb73e3b77a
+    domain: switch
+  - if:
+    - type: is_moist
+      condition: device
+      device_id: 577adde50928cac6a32aa9a30015d404
+      entity_id: 6b4d4db2620208ce17883199588bffd1
+      domain: binary_sensor
+    then:
+    - data:
+        title: Поиск
+        data:
+          ttl: 0
+          priority: high
+          channel: alarm_stream
+          critical: 1
+          volume: 5
+        message: 'Протчека под Раковиной в Туалете '
+      action: notify.mobile_app_alex_phone
+  - if:
+    - type: is_moist
+      condition: device
+      device_id: 69e9dd36aafc9201355f3167b82efdcd
+      entity_id: 8d6824288698c3a77fdad9d7d9e3d0e2
+      domain: binary_sensor
+    then:
+    - data:
+        title: Поиск
+        data:
+          ttl: 0
+          priority: high
+          channel: alarm_stream
+          critical: 1
+          volume: 5
+        message: Протечка под Душем
+      action: notify.mobile_app_alex_phone
+  - if:
+    - type: is_moist
+      condition: device
+      device_id: b2583a6f53625b0aa18860f03b03139c
+      entity_id: 8d72a8970ecc86c4fe7cceb807848c79
+      domain: binary_sensor
+    then:
+    - data:
+        title: Поиск
+        data:
+          ttl: 0
+          priority: high
+          channel: alarm_stream
+          critical: 1
+          volume: 5
+        message: 'Протечка под Ванной '
+      action: notify.mobile_app_alex_phone
+  - if:
+    - type: is_moist
+      condition: device
+      device_id: 22446d1bb7ef7a30ec3416b45b2f7b37
+      entity_id: 42244bafa1c910093adcde1bff4e8bd7
+      domain: binary_sensor
+    then:
+    - data:
+        title: Поиск
+        data:
+          ttl: 0
+          priority: high
+          channel: alarm_stream
+          critical: 1
+          volume: 5
+        message: 'Протечка в Кательной '
+      action: notify.mobile_app_alex_phone
+  - if:
+    - type: is_moist
+      condition: device
+      device_id: 1cdebfc04d2a967f79b9b920e79b9011
+      entity_id: efc49636bb72a44891f2d9ec89d5f256
+      domain: binary_sensor
+    then:
+    - data:
+        title: Поиск
+        data:
+          ttl: 0
+          priority: high
+          channel: alarm_stream
+          critical: 1
+          volume: 5
+        message: Протечка под Раковиной на Кухне
+      action: notify.mobile_app_alex_phone
+  mode: single
+- id: '1734857873011'
+  alias: out_of_home
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - device_tracker.alex_phone
+    from: home
+    to: not_home
+  conditions:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: sensor.alex_phone_wifi_connection
+      state: alex
+  actions:
+  - action: script.out_of_home_scene
+    data: {}
+  mode: single
+- id: '1735361036675'
+  alias: signalization_camera_outside_5
+  description: ''
+  triggers:
+  - type: turned_on
+    device_id: 8be5ee8e7826864f14b692771238f544
+    entity_id: f3b16ea57b391be0ebe8bf290686f642
+    domain: binary_sensor
+    trigger: device
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 2
+  conditions: []
+  actions:
+  - if:
+    - condition: and
+      conditions:
+      - condition: or
+        conditions:
+        - condition: state
+          entity_id: input_boolean.is_out_of_home
+          state: 'on'
+        - condition: state
+          entity_id: input_boolean.is_night_mode
+          state: 'on'
+      - type: is_motion
+        condition: device
+        device_id: 8be5ee8e7826864f14b692771238f544
+        entity_id: 16d15567335aa8969cbb8a1541c8ae76
+        domain: binary_sensor
+      - condition: state
+        entity_id: switch.sirens_on_montion
+        state: 'off'
+    then:
+    - action: script.turn_on_signalization
+      data:
+        field_notify_device: 38800d05e076153b488af0cb1ec0ea49
+        field_title: Подтвердите
+        field_message: Включить сигнализацию?
+        field_subtitle: ''
+        field_attachment_type: camera_entity
+        field_attachment_camera_entity: camera.camera_outside_5_fluent
+        field_timeout:
+          hours: 0
+          minutes: 5
+          seconds: 0
+  mode: restart
+- id: '1735541535940'
+  alias: office_light_default
+  description: ''
+  triggers:
+  - type: turned_on
+    device_id: 41d0d918eee80b32b4b0ddc14305712e
+    entity_id: 8c54936e7c875d09c48da25498d3d5ec
+    domain: switch
+    trigger: device
+  conditions: []
+  actions:
+  - action: script.default_light_office
+    data: {}
+  mode: single
+- id: '1735542507105'
+  alias: play_room_default_light
+  description: ''
+  triggers:
+  - type: turned_on
+    device_id: 9fc9345d9a64615c1257c72777350996
+    entity_id: 0da3c9d108505e717fb558c418721ee0
+    domain: switch
+    trigger: device
+  conditions: []
+  actions:
+  - action: script.default_light_play_room
+    data: {}
+  mode: single
+- id: '1735544315711'
+  alias: bedroom_light_default
+  description: ''
+  triggers:
+  - type: turned_on
+    device_id: 0ad8df8921ac33b31d9365b024ba0a63
+    entity_id: 716a713dc4426006d7e8c33c08a5adaf
+    domain: switch
+    trigger: device
+  conditions: []
+  actions:
+  - action: script.default_light_bedroom
+    data: {}
+  mode: single
+- id: '1735544502401'
+  alias: toilet_light_default
+  description: ''
+  triggers:
+  - type: turned_on
+    device_id: 9f322d6a42df3160e4711615a91ccbaa
+    entity_id: a821db613e5d5c12247c1255f2e13a1f
+    domain: switch
+    trigger: device
+  conditions: []
+  actions:
+  - action: script.default_light_toilet
+    data: {}
+  mode: single
+- id: '1735544870136'
+  alias: living_room_light_default
+  description: ''
+  triggers:
+  - type: turned_on
+    device_id: 7e342378d3fb08500340f48dbd6663ef
+    entity_id: 1c53e751212e2b03f51898c7c16bf2e6
+    domain: switch
+    trigger: device
+  conditions: []
+  actions:
+  - action: script.default_light_living_room
+    data: {}
+  mode: single
+- id: '1735899030896'
+  alias: motion_turn_light_bedroom
+  description: ''
+  triggers:
+  - type: occupied
+    device_id: e931a8105655a766b0456a3760033b26
+    entity_id: 3ad158c746e355d0aef233222257e7b2
+    domain: binary_sensor
+    trigger: device
+  - type: not_occupied
+    device_id: e931a8105655a766b0456a3760033b26
+    entity_id: 3ad158c746e355d0aef233222257e7b2
+    domain: binary_sensor
+    trigger: device
+  conditions:
+  - condition: state
+    entity_id: input_boolean.is_night_mode
+    state: 'off'
+  - condition: sun
+    after: sunset
+    before: sunrise
+  actions:
+  - choose:
+    - conditions:
+      - type: is_occupied
+        condition: device
+        device_id: e931a8105655a766b0456a3760033b26
+        entity_id: 3ad158c746e355d0aef233222257e7b2
+        domain: binary_sensor
+      sequence:
+      - type: turn_on
+        device_id: 0ad8df8921ac33b31d9365b024ba0a63
+        entity_id: 716a713dc4426006d7e8c33c08a5adaf
+        domain: switch
+    - conditions:
+      - type: is_not_occupied
+        condition: device
+        device_id: e931a8105655a766b0456a3760033b26
+        entity_id: 3ad158c746e355d0aef233222257e7b2
+        domain: binary_sensor
+      sequence:
+      - type: turn_off
+        device_id: 0ad8df8921ac33b31d9365b024ba0a63
+        entity_id: 716a713dc4426006d7e8c33c08a5adaf
+        domain: switch
+  mode: restart
+- id: '1736190330518'
+  alias: motion_kitchen_turn_light
+  description: ''
+  triggers:
+  - type: motion
+    device_id: 9855f85c9d52aad3e1296f58d27d2d2f
+    entity_id: c939d3536db12ccec82445a0f38e2c64
+    domain: binary_sensor
+    trigger: device
+  - type: no_motion
+    device_id: 9855f85c9d52aad3e1296f58d27d2d2f
+    entity_id: c939d3536db12ccec82445a0f38e2c64
+    domain: binary_sensor
+    trigger: device
+    for:
+      hours: 0
+      minutes: 4
+      seconds: 0
+  conditions: []
+  actions:
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 1
+      milliseconds: 0
+  - choose:
+    - conditions:
+      - type: is_motion
+        condition: device
+        device_id: 9855f85c9d52aad3e1296f58d27d2d2f
+        entity_id: c939d3536db12ccec82445a0f38e2c64
+        domain: binary_sensor
+      sequence:
+      - type: turn_on
+        device_id: cf944bc6f717898701f5b679824e71b8
+        entity_id: 7e2ac4d951d748b6ff4096a217e8dc42
+        domain: switch
+    - conditions:
+      - type: is_no_motion
+        condition: device
+        device_id: 9855f85c9d52aad3e1296f58d27d2d2f
+        entity_id: c939d3536db12ccec82445a0f38e2c64
+        domain: binary_sensor
+      - condition: state
+        entity_id: input_boolean.is_tv_mode
+        state: 'off'
+      sequence:
+      - type: turn_off
+        device_id: cf944bc6f717898701f5b679824e71b8
+        entity_id: 7e2ac4d951d748b6ff4096a217e8dc42
+        domain: switch
+  mode: restart
+- id: '1736620150355'
+  alias: motion_turn_door_way_light
+  description: ''
+  triggers:
+  - type: motion
+    device_id: fad09dd80ad43b71cae860e0cabd9954
+    entity_id: b003a8fe15538faf32fb56dcd29348ad
+    domain: binary_sensor
+    trigger: device
+  - type: no_motion
+    device_id: fad09dd80ad43b71cae860e0cabd9954
+    entity_id: b003a8fe15538faf32fb56dcd29348ad
+    domain: binary_sensor
+    trigger: device
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - type: is_motion
+        condition: device
+        device_id: fad09dd80ad43b71cae860e0cabd9954
+        entity_id: b003a8fe15538faf32fb56dcd29348ad
+        domain: binary_sensor
+      sequence:
+      - type: turn_on
+        device_id: 7357f8d05df45291660c6c6e161f1246
+        entity_id: abd4c4f57d6006a61139995261a5443e
+        domain: switch
+    - conditions:
+      - type: is_no_motion
+        condition: device
+        device_id: fad09dd80ad43b71cae860e0cabd9954
+        entity_id: b003a8fe15538faf32fb56dcd29348ad
+        domain: binary_sensor
+      sequence:
+      - type: turn_off
+        device_id: 7357f8d05df45291660c6c6e161f1246
+        entity_id: abd4c4f57d6006a61139995261a5443e
+        domain: switch
+  mode: restart
+- id: '1736705827269'
+  alias: turn_outside_light
+  description: ''
+  triggers:
+  - trigger: sun
+    event: sunset
+    offset: 0
+  conditions: []
+  actions:
+  - type: turn_on
+    device_id: 7357f8d05df45291660c6c6e161f1246
+    entity_id: fe2183299a222b576ffa37abad2801d2
+    domain: switch
+  mode: single
+- id: '1736705960563'
+  alias: turn_off_outside_light
+  description: ''
+  triggers:
+  - trigger: time
+    at: 01:00:00
+  conditions: []
+  actions:
+  - type: turn_off
+    device_id: 7357f8d05df45291660c6c6e161f1246
+    entity_id: fe2183299a222b576ffa37abad2801d2
+    domain: switch
+  mode: single
+- id: '1736706947167'
+  alias: motion_turn_light_corridor
+  description: ''
+  triggers:
+  - type: motion
+    device_id: c1ed251d864d6e697c2841f51b722833
+    entity_id: 0120f2489af1f3d8ca5d358ade08d6f7
+    domain: binary_sensor
+    trigger: device
+  - type: no_motion
+    device_id: c1ed251d864d6e697c2841f51b722833
+    entity_id: 0120f2489af1f3d8ca5d358ade08d6f7
+    domain: binary_sensor
+    trigger: device
+  conditions:
+  - condition: sun
+    after: sunset
+    before: sunrise
+  - condition: state
+    entity_id: input_boolean.is_night_mode
+    state: 'off'
+  actions:
+  - choose:
+    - conditions:
+      - type: is_motion
+        condition: device
+        device_id: c1ed251d864d6e697c2841f51b722833
+        entity_id: 0120f2489af1f3d8ca5d358ade08d6f7
+        domain: binary_sensor
+      sequence:
+      - type: turn_on
+        device_id: 55a71504c8477f2e332f048be9c4b45f
+        entity_id: 0ce2cfd83e0e19a24d621a725b4e1588
+        domain: switch
+    - conditions:
+      - type: is_no_motion
+        condition: device
+        device_id: c1ed251d864d6e697c2841f51b722833
+        entity_id: 0120f2489af1f3d8ca5d358ade08d6f7
+        domain: binary_sensor
+      sequence:
+      - type: turn_off
+        device_id: 55a71504c8477f2e332f048be9c4b45f
+        entity_id: 0ce2cfd83e0e19a24d621a725b4e1588
+        domain: switch
+  mode: restart
+- id: '1737111081391'
+  alias: motion_turn_light_office
+  description: ''
+  triggers:
+  - type: occupied
+    device_id: ec5141e3c652e9a9bda0961b36142085
+    entity_id: 8325e74bf536f71efff9f4c6d257ba8c
+    domain: binary_sensor
+    trigger: device
+  - type: not_occupied
+    device_id: ec5141e3c652e9a9bda0961b36142085
+    entity_id: 8325e74bf536f71efff9f4c6d257ba8c
+    domain: binary_sensor
+    trigger: device
+  - trigger: sun
+    event: sunset
+    offset: 0
+  conditions:
+  - condition: sun
+    after: sunset
+    before: sunrise
+  actions:
+  - choose:
+    - conditions:
+      - type: is_occupied
+        condition: device
+        device_id: ec5141e3c652e9a9bda0961b36142085
+        entity_id: 8325e74bf536f71efff9f4c6d257ba8c
+        domain: binary_sensor
+      sequence:
+      - type: turn_on
+        device_id: 41d0d918eee80b32b4b0ddc14305712e
+        entity_id: 8c54936e7c875d09c48da25498d3d5ec
+        domain: switch
+    - conditions:
+      - type: is_not_occupied
+        condition: device
+        device_id: ec5141e3c652e9a9bda0961b36142085
+        entity_id: 8325e74bf536f71efff9f4c6d257ba8c
+        domain: binary_sensor
+      sequence:
+      - type: turn_off
+        device_id: 41d0d918eee80b32b4b0ddc14305712e
+        entity_id: 8c54936e7c875d09c48da25498d3d5ec
+        domain: switch
+  mode: restart
+- id: '1740134885775'
+  alias: motion_turn_light_boiler_room
+  description: ''
+  triggers:
+  - type: motion
+    device_id: efeac6094fe615c71cf50142a5aa73d8
+    entity_id: 35f3c0d6a1cfec110edfc100322c1cb0
+    domain: binary_sensor
+    trigger: device
+  - type: no_motion
+    device_id: efeac6094fe615c71cf50142a5aa73d8
+    entity_id: 35f3c0d6a1cfec110edfc100322c1cb0
+    domain: binary_sensor
+    trigger: device
+    for:
+      hours: 0
+      minutes: 3
+      seconds: 0
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - type: is_motion
+        condition: device
+        device_id: efeac6094fe615c71cf50142a5aa73d8
+        entity_id: 35f3c0d6a1cfec110edfc100322c1cb0
+        domain: binary_sensor
+      sequence:
+      - type: turn_on
+        device_id: 68cca160f76a3d21d2ef9561b0fbcf20
+        entity_id: 78b4d9ff47943692994902be1790c0b1
+        domain: switch
+    - conditions:
+      - type: is_no_motion
+        condition: device
+        device_id: efeac6094fe615c71cf50142a5aa73d8
+        entity_id: 35f3c0d6a1cfec110edfc100322c1cb0
+        domain: binary_sensor
+      sequence:
+      - type: turn_off
+        device_id: 68cca160f76a3d21d2ef9561b0fbcf20
+        entity_id: 78b4d9ff47943692994902be1790c0b1
+        domain: switch
   mode: restart

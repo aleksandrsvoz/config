@@ -1,0 +1,75 @@
+## Boiler Room
+type: "custom:button-card"
+template:
+  - card_room
+name: Кательная
+entity: sensor.temperature_boiler_room_temperature
+icon: mdi:water-boiler
+styles:
+  icon:
+    # Icon color
+    - color: "#286764"
+  card:
+    # Click Ripple color
+    - --mdc-ripple-color: "#286764"
+    - --mdc-ripple-press-opacity: 0.3
+    # Card bacground color
+    - background: "#9DF6F2"
+    # Card text color
+    - color: "#286764"
+  img_cell:
+    # Card icon circle color
+    - background-color: "#4FCAC4"
+tap_action:
+  action: navigate
+  navigation_path: living_room
+variables:
+  label_use_temperature: false
+  label_use_brightness: true
+  entity_1:
+    entity_id: switch.light_switch_boiler_room
+    tap_action:
+      action: toggle
+custom_fields:
+  i1:
+    card:
+      type: "custom:button-card"
+      template: >
+        [[[
+          let templates = [ 'widget_icon_room' ];
+          if (variables?.entity_1?.templates?.length) {
+            templates.push(...variables.entity_1.templates);
+          }
+          return templates;
+        ]]]
+      variables: "[[[ return variables?.entity_1; ]]]"
+      state:
+        - operator: "template"
+          value: "[[[ return !variables.entity_1; ]]]"
+          styles:
+            card:
+              - display: "none"
+
+        - value: "on"
+          icon: mdi:lightbulb-on
+          styles:
+            card:
+              - background-color: "#4FCAC4"
+            icon:
+              - color: "#286764"
+
+        - value: "off"
+          icon: mdi:lightbulb-outline
+          styles:
+            card:
+              - background-color: "#4FCAC4"
+            icon:
+              - color: "#286764"
+        - value: "unavailable"
+          icon: mdi:lightbulb-outline
+          styles:
+            card:
+              - background-color: "#4FCAC4"
+            icon:
+              - color: "#286764"
+      entity: "[[[ return variables?.entity_1?.entity_id; ]]]"

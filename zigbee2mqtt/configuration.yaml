@@ -1,0 +1,135 @@
+version: 4
+homeassistant:
+  enabled: true
+advanced:
+  network_key:
+    - 171
+    - 78
+    - 57
+    - 112
+    - 111
+    - 183
+    - 92
+    - 99
+    - 43
+    - 124
+    - 228
+    - 19
+    - 188
+    - 234
+    - 207
+    - 110
+  pan_id: 42324
+  ext_pan_id:
+    - 176
+    - 76
+    - 32
+    - 237
+    - 255
+    - 114
+    - 147
+    - 105
+mqtt:
+  server: mqtt://core-mosquitto:1883
+  user: addons
+  password: Pie5seiGo7wahdaiteojut4ehei2Daeroesh7pi2aochair2Goo6eik8eiZoh6ie
+serial:
+  port: tcp://192.168.86.250:6638
+  baudrate: 115200
+  adapter: zstack
+frontend:
+  enabled: true
+  port: 8099
+devices:
+  '0xa4c13862621b0122':
+    friendly_name: water_pump_power
+  '0xa4c1389328fbc285':
+    friendly_name: christmast_tree_power
+  '0x28dba7fffe010408':
+    friendly_name: motion_kitchen
+  '0x0ceff6fffe594c6b':
+    friendly_name: motion_toilet
+  '0x54ef441000b152f1':
+    friendly_name: lamp_toilet
+  '0x54ef44100053626f':
+    friendly_name: light_switch_living_room
+  '0x54ef441000b15118':
+    friendly_name: lamp_office
+  '0x54ef4410004c302e':
+    friendly_name: light_switch_office
+  '0x54ef441000b11828':
+    friendly_name: lamp_bedroom
+  '0x54ef4410004c2ddb':
+    friendly_name: light_switch_bedroom
+  '0x54ef441000b15a58':
+    friendly_name: lamp_play_room
+  '0x54ef44100053668b':
+    friendly_name: light_switch_playroom
+  '0x54ef441000b14f4f':
+    friendly_name: lamp_2_living_room
+  '0x54ef441000b1091e':
+    friendly_name: lamp_1_living_room
+  '0x54ef441000535cf7':
+    friendly_name: light_switch_corridor
+  '0x54ef441000537e7d':
+    friendly_name: light_switch_doorway
+  '0x54ef4410004c2231':
+    friendly_name: light_switch_boiler_room
+  '0x54ef4410004c3188':
+    friendly_name: light_switch_kitchen
+  '0x54ef4410004c2d07':
+    friendly_name: light_switch_garage
+  '0xa4c138760920794c':
+    friendly_name: general_water_valve
+  '0x54ef441000647dbd':
+    friendly_name: light_switch_toilet
+  '0x0ceff6fffe1bbe5a':
+    friendly_name: water_sensor_boiler_room
+  '0x0ceff6fffe901d6e':
+    friendly_name: water_sensor_toilet_sink
+  '0x8c65a3fffed452eb':
+    friendly_name: water_sensor_shower
+  '0x0ceff6fffe1bca74':
+    friendly_name: water_sensor_bath
+  '0xa4c1389832495911':
+    friendly_name: curtains_office
+  '0xa4c13820637d46b1':
+    friendly_name: curtains_bedroom
+  '0x0ceff6fffe672d2b':
+    friendly_name: temperature_bedroom
+  '0x0ceff6fffe1744e5':
+    friendly_name: temperature_living_room
+  '0x28dba7fffe753d06':
+    friendly_name: water_sensor_kitchen
+  '0xa4c1381477e17549':
+    friendly_name: 'curtains_living_room_entry '
+  '0x00124b00292c1c80':
+    friendly_name: temperature_garage
+  '0x9035eafffe1000e3':
+    friendly_name: temperature_office
+  '0x3c2ef5fffed68dd3':
+    friendly_name: temperature_toilet
+  '0x84ba20fffecf3174':
+    friendly_name: temperature_corridor
+  '0x0cae5ffffec2a31f':
+    friendly_name: motion_garage
+  '0xa4c138938ac04d13':
+    friendly_name: curtains_living_room_veranda_window
+  '0xa4c138c350314be7':
+    friendly_name: curtains_living_room_veranda_exit
+  '0x0ceff6fffe181438':
+    friendly_name: motion_door_way
+  '0x28dba7fffe73bcf9':
+    friendly_name: motion_corridor
+  '0x7cc6b6fffe0b6330':
+    friendly_name: motion_office
+  '0x7cc6b6fffe0b54fe':
+    friendly_name: motion_bedroom
+  '0x842712fffe7bb113':
+    friendly_name: '0x842712fffe7bb113'
+  '0x00124b0030d34d67':
+    friendly_name: power_window_gerland
+  '0x0ceff6fffee555d6':
+    friendly_name: motion_boiler_room
+  '0xd44867fffe2aa773':
+    friendly_name: temperature_boiler_room

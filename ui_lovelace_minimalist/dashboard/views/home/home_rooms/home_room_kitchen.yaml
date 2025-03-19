@@ -27,12 +27,9 @@ variables:
   label_use_temperature: false
   label_use_brightness: true
   entity_1:
-    entity_id: switch.light_switch_kitchen
+    entity_id: switch.light_switch_living_room_right
     tap_action:
       action: toggle
-    hold_action:
-      action: navigate
-      navigation_path: "#light_kithcen_pop_up"
   entity_2:
     entity_id: switch.light_switch_kitchen
     tap_action:
@@ -103,7 +100,7 @@ custom_fields:
               - display: "none"
 
         - value: "on"
-          icon: mdi:ceiling-light-multiple
+          icon: mdi:led-strip-variant
           styles:
             card:
               - background-color: "#FFC6AC"
@@ -111,14 +108,14 @@ custom_fields:
               - color: "#AB2E00"
 
         - value: "off"
-          icon: mdi:ceiling-light-multiple-outline
+          icon: mdi:led-strip-variant-off
           styles:
             card:
               - background-color: "#FFC6AC"
             icon:
               - color: "#AB2E00"
         - value: "unavailable"
-          icon: mdi:ceiling-light-multiple-outline
+          icon: mdi:led-strip-variant-off
           styles:
             card:
               - background-color: "#FFC6AC"

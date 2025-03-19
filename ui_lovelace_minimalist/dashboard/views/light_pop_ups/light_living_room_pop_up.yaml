@@ -23,47 +23,65 @@ cards:
     margin: "13px"
     margin_top_mobile: 350px
 
+    ## Main Light
+  - type: custom:button-card
+    template: card_light_color
+    entity: switch.light_switch_living_room_left
+    variables:
+      ulm_card_light_name: " "
+      ulm_card_light_icon: mdi:vanity-light
+
+  ## Lamp All
+  - type: custom:button-card
+    template: card_light_color
+    entity: switch.light_switch_living_room_center
+    variables:
+      ulm_card_light_name: " "
+      ulm_card_light_icon: mdi:light-recessed
+
   - type: horizontal-stack
     cards:
+      ## Lamp Main
       - type: conditional
         conditions:
-          - entity: switch.light_switch_living_room_right
-            state: "off"
-        card:
-          type: custom:button-card
-          template: card_light_color
-          entity: switch.light_switch_living_room_right
-          variables:
-            ulm_card_light_name: " "
-            ulm_card_light_icon: mdi:globe-light-outline
-
-      - type: conditional
-        conditions:
-          - entity: switch.light_switch_living_room_right
-            state: "unavailable"
-        card:
-          type: custom:button-card
-          template: card_light_color
-          entity: switch.light_switch_living_room_right
-          variables:
-            ulm_card_light_name: " "
-            ulm_card_light_icon: mdi:globe-light-outline
-
-      - type: conditional
-        conditions:
-          - entity: switch.light_switch_living_room_right
+          - entity: switch.light_switch_living_room_center
             state: "on"
         card:
           type: custom:mushroom-light-card
-          entity: light.light_bulb_living_room
+          entity: light.all_lamps_living_room
           primary_info: name
-          name: Лампа
+          name: Основной
           tap_action:
             action: call-service
-            service: switch.toggle
+            service: light.toggle
             service_data:
-              entity_id: switch.light_switch_living_room_right
-          icon: mdi:globe-light-outline
+              entity_id: light.all_lamps_living_room
+          icon: mdi:light-recessed
+          fill_container: false
+          use_light_color: true
+          show_brightness_control: true
+          show_color_control: true
+          show_color_temp_control: true
+          collapsible_controls: true
+          secondary_info: state
+          icon_type: icon
+
+      ## Lamp RGB
+      - type: conditional
+        conditions:
+          - entity: switch.light_switch_living_room_center
+            state: "on"
+        card:
+          type: custom:mushroom-light-card
+          entity: light.all_rgb_living_room
+          primary_info: name
+          name: Подсветка
+          tap_action:
+            action: call-service
+            service: light.toggle
+            service_data:
+              entity_id: light.all_rgb_living_room
+          icon: mdi:led-strip-variant
           fill_container: false
           use_light_color: true
           show_brightness_control: true

@@ -23,50 +23,62 @@ cards:
     margin: "13px"
     margin_top_mobile: 450px
 
-  - type: conditional
-    conditions:
-      - entity: switch.light_switch_office
-        state: "off"
-    card:
-      type: custom:button-card
-      template: card_light_color
-      entity: switch.light_switch_office
-      variables:
-        ulm_card_light_name: " "
-        ulm_card_light_icon: mdi:ceiling-light-outline
+  ## Lamp Full
+  - type: custom:button-card
+    template: card_light_color
+    entity: switch.light_switch_office
+    variables:
+      ulm_card_light_name: " "
+      ulm_card_light_icon: mdi:light-recessed
 
-  - type: conditional
-    conditions:
-      - entity: switch.light_switch_office
-        state: "unavailable"
-    card:
-      type: custom:button-card
-      template: card_light_color
-      entity: switch.light_switch_office
-      variables:
-        ulm_card_light_name: " "
-        ulm_card_light_icon: mdi:ceiling-light-outline
+  - type: horizontal-stack
+    cards:
+      ## Lamp Main
+      - type: conditional
+        conditions:
+          - entity: switch.light_switch_office
+            state: "on"
+        card:
+          type: custom:mushroom-light-card
+          entity: light.lamp_office_white
+          primary_info: name
+          name: Основной
+          tap_action:
+            action: call-service
+            service: light.toggle
+            service_data:
+              entity_id: light.lamp_office_white
+          icon: mdi:light-recessed
+          fill_container: false
+          use_light_color: true
+          show_brightness_control: true
+          show_color_control: true
+          show_color_temp_control: true
+          collapsible_controls: true
+          secondary_info: state
+          icon_type: icon
 
-  - type: conditional
-    conditions:
-      - entity: switch.light_switch_office
-        state: "on"
-    card:
-      type: custom:mushroom-light-card
-      entity: light.light_bulb_office
-      primary_info: name
-      name: Лампа
-      tap_action:
-        action: call-service
-        service: switch.toggle
-        service_data:
-          entity_id: switch.light_switch_office
-      icon: mdi:ceiling-light
-      fill_container: false
-      use_light_color: true
-      show_brightness_control: true
-      show_color_control: true
-      show_color_temp_control: true
-      collapsible_controls: true
-      secondary_info: state
-      icon_type: icon
+      ## Lamp RGB
+      - type: conditional
+        conditions:
+          - entity: switch.light_switch_office
+            state: "on"
+        card:
+          type: custom:mushroom-light-card
+          entity: light.lamp_office_rgb
+          primary_info: name
+          name: Подсветка
+          tap_action:
+            action: call-service
+            service: light.toggle
+            service_data:
+              entity_id: light.lamp_office_rgb
+          icon: mdi:light-recessed
+          fill_container: false
+          use_light_color: true
+          show_brightness_control: true
+          show_color_control: true
+          show_color_temp_control: true
+          collapsible_controls: true
+          secondary_info: state
+          icon_type: icon

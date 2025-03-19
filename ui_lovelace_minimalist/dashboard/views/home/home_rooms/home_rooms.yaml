@@ -11,4 +11,8 @@ cards:
 
   - !include home_room_door_way.yaml
 
+  - !include home_room_garage.yaml
+
   - !include home_room_toilet.yaml
+
+  - !include home_room_boiler_room.yaml

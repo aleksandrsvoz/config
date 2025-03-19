@@ -1,0 +1,84 @@
+type: vertical-stack
+cards:
+  - type: custom:bubble-card
+    card_type: pop-up
+    hash: "#light_toilet_pop_up"
+    name: "\_\_\_\_Свет в Туалете"
+    card_mod:
+      style: |
+        ha-card {
+          color: #B5E1F7;
+        }
+        :host {
+          --background-color: rgb(255, 255, 255);
+        }
+        .header-icon {
+          display: none;
+        }
+    icon: mdi:lightbulb
+    bg_color: "#D3D342"
+    bg_opacity: 90
+    bg_blur: 70
+    shadow_opacity: 10
+    margin: "13px"
+    margin_top_mobile: 450px
+
+  ## Lamp Full
+  - type: custom:button-card
+    template: card_light_color
+    entity: switch.light_switch_toilet_right
+    variables:
+      ulm_card_light_name: " "
+      ulm_card_light_icon: mdi:light-recessed
+
+  - type: horizontal-stack
+    cards:
+      ## Lamp Main
+      - type: conditional
+        conditions:
+          - entity: switch.light_switch_toilet_right
+            state: "on"
+        card:
+          type: custom:mushroom-light-card
+          entity: light.lamp_toilet_white
+          primary_info: name
+          name: Основной
+          tap_action:
+            action: call-service
+            service: light.toggle
+            service_data:
+              entity_id: light.lamp_toilet_white
+          icon: mdi:light-recessed
+          fill_container: false
+          use_light_color: true
+          show_brightness_control: true
+          show_color_control: true
+          show_color_temp_control: true
+          collapsible_controls: true
+          secondary_info: state
+          icon_type: icon
+
+      ## Lamp RGB
+      - type: conditional
+        conditions:
+          - entity: switch.light_switch_toilet_right
+            state: "on"
+        card:
+          type: custom:mushroom-light-card
+          entity: light.lamp_toilet_rgb
+          primary_info: name
+          name: Подсветка
+          tap_action:
+            action: call-service
+            service: light.toggle
+            service_data:
+              entity_id: light.lamp_toilet_rgb
+          icon: mdi:light-recessed
+          fill_container: false
+          use_light_color: true
+          show_brightness_control: true
+          show_color_control: true
+          show_color_temp_control: true
+          collapsible_controls: true
+          secondary_info: state
+          icon_type: icon

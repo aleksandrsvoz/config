@@ -5,15 +5,17 @@
       icon_template: mdi:lightbulb
       value_template: >
         {{ [
-            states('switch.light_switch_office') == 'on',
-            states('switch.light_switch_kitchen') == 'on',
+            states('switch.light_switch_doorway_left') == 'on',
+            states('switch.light_switch_doorway_right') == 'on',
+            states('switch.light_switch_boiler_room') == 'on',
+            states('switch.light_switch_corridor') == 'on',
+            states('switch.light_switch_living_room_center') == 'on',
             states('switch.light_switch_living_room_left') == 'on',
             states('switch.light_switch_living_room_right') == 'on',
-            states('switch.light_switch_kitchen_line') == 'on',
-            states('switch.light_switch_door_way_right') == 'on',
-            states('switch.light_switch_toilet_left') == 'on',
-            states('switch.light_switch_bedroom_left') == 'on',
-            states('switch.light_switch_bedroom_right') == 'on',
-            states('switch.light_switch_door_way_and_toilet_left') == 'on',
-            states('switch.light_switch_door_way_and_toilet_right') == 'on'
+            states('switch.light_switch_kitchen') == 'on',
+            states('switch.light_switch_toilet_right') == 'on',
+            states('switch.light_switch_office') == 'on',
+            states('switch.light_switch_playroom') == 'on',
+            states('switch.light_switch_bedroom') == 'on',
+            states('switch.light_switch_garage') == 'on'
           ] | select('==', true) | list | count }}

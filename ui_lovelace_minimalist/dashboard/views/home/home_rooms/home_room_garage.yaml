@@ -1,0 +1,75 @@
+## Garage
+type: "custom:button-card"
+template:
+  - card_room
+name: Гараж
+entity: sensor.temperature_garage_temperature
+icon: mdi:garage-variant
+styles:
+  icon:
+    # Icon color
+    - color: "#70475E"
+  card:
+    # Click Ripple color
+    - --mdc-ripple-color: "#70475E"
+    - --mdc-ripple-press-opacity: 0.3
+    # Card bacground color
+    - background: "#ECBCD7"
+    # Card text color
+    - color: "#70475E"
+  img_cell:
+    # Card icon circle color
+    - background-color: "#CB80AB"
+tap_action:
+  action: navigate
+  navigation_path: bedroom
+variables:
+  label_use_temperature: false
+  label_use_brightness: true
+  entity_1:
+    entity_id: switch.light_switch_garage
+    tap_action:
+      action: toggle
+custom_fields:
+  i1:
+    card:
+      type: "custom:button-card"
+      template: >
+        [[[
+          let templates = [ 'widget_icon_room' ];
+          if (variables?.entity_1?.templates?.length) {
+            templates.push(...variables.entity_1.templates);
+          }
+          return templates;
+        ]]]
+      variables: "[[[ return variables?.entity_1; ]]]"
+      state:
+        - operator: "template"
+          value: "[[[ return !variables.entity_1; ]]]"
+          styles:
+            card:
+              - display: "none"
+
+        - value: "on"
+          icon: mdi:lightbulb-on
+          styles:
+            card:
+              - background-color: "#CB80AB"
+            icon:
+              - color: "#70475E"
+
+        - value: "off"
+          icon: mdi:lightbulb-outline
+          styles:
+            card:
+              - background-color: "#CB80AB"
+            icon:
+              - color: "#70475E"
+        - value: "unavailable"
+          icon: mdi:lightbulb-outline
+          styles:
+            card:
+              - background-color: "#CB80AB"
+            icon:
+              - color: "#70475E"
+      entity: "[[[ return variables?.entity_1?.entity_id; ]]]"
