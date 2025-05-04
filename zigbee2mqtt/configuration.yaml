@@ -56,7 +56,7 @@ devices:
   '0x54ef441000b15118':
     friendly_name: lamp_office
   '0x54ef4410004c302e':
-    friendly_name: light_switch_office
+    friendly_name: light_switch_play_room
   '0x54ef441000b11828':
     friendly_name: lamp_bedroom
   '0x54ef4410004c2ddb':
@@ -64,7 +64,7 @@ devices:
   '0x54ef441000b15a58':
     friendly_name: lamp_play_room
   '0x54ef44100053668b':
-    friendly_name: light_switch_playroom
+    friendly_name: light_switch_office
   '0x54ef441000b14f4f':
     friendly_name: lamp_2_living_room
   '0x54ef441000b1091e':
@@ -92,7 +92,7 @@ devices:
   '0x0ceff6fffe1bca74':
     friendly_name: water_sensor_bath
   '0xa4c1389832495911':
-    friendly_name: curtains_office
+    friendly_name: curtains_play_room
   '0xa4c13820637d46b1':
     friendly_name: curtains_bedroom
   '0x0ceff6fffe672d2b':
@@ -133,3 +133,7 @@ devices:
     friendly_name: motion_boiler_room
   '0xd44867fffe2aa773':
     friendly_name: temperature_boiler_room
+  '0xa4c138c25b760d06':
+    friendly_name: curtains_office
+  '0x00124b0030d359b8':
+    friendly_name: socket_office_table

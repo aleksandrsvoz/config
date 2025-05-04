@@ -33,6 +33,10 @@ variables:
     hold_action:
       action: navigate
       navigation_path: "#light_office_pop_up"
+  entity_2:
+    entity_id: switch.socket_office_table
+    tap_action:
+      action: toggle
   entity_4:
     entity_id: binary_sensor.motion_office_occupancy
 custom_fields:
@@ -78,6 +82,48 @@ custom_fields:
             icon:
               - color: "#645510"
       entity: "[[[ return variables?.entity_1?.entity_id; ]]]"
+  i2:
+    card:
+      type: "custom:button-card"
+      template: >
+        [[[
+          let templates = [ 'widget_icon_room' ];
+          if (variables?.entity_2?.templates?.length) {
+            templates.push(...variables.entity_2.templates);
+          }
+          return templates;
+        ]]]
+      variables: "[[[ return variables?.entity_2; ]]]"
+      state:
+        - operator: "template"
+          value: "[[[ return !variables.entity_2; ]]]"
+          styles:
+            card:
+              - display: "none"
+
+        - value: "on"
+          icon: mdi:power-plug
+          styles:
+            card:
+              - background-color: "#D3D342"
+            icon:
+              - color: "#645510"
+
+        - value: "off"
+          icon: mdi:power-plug-off-outline
+          styles:
+            card:
+              - background-color: "#D3D342"
+            icon:
+              - color: "#645510"
+        - value: "unavailable"
+          icon: mdi:power-plug-off-outline
+          styles:
+            card:
+              - background-color: "#D3D342"
+            icon:
+              - color: "#645510"
+      entity: "[[[ return variables?.entity_2?.entity_id; ]]]"
   i4:
     card:
       type: "custom:button-card"

@@ -29,17 +29,15 @@ variables:
     tap_action:
       action: toggle
   entity_2:
-    entity_id: switch.light_switch_corridor
-    tap_action:
-      action: toggle
-  entity_3:
     entity_id: switch.light_switch_doorway_left
     tap_action:
       action: toggle
-  entity_4:
+  entity_3:
     entity_id: lock.front_door_lock
     tap_action:
       action: toggle
+  entity_4:
+    entity_id: binary_sensor.motion_door_way_occupancy
 
 custom_fields:
   i1:
@@ -104,48 +102,6 @@ custom_fields:
               - display: "none"
 
         - value: "on"
-          icon: mdi:ceiling-light-multiple
-          styles:
-            card:
-              - background-color: "#A3A4FF"
-            icon:
-              - color: "#424289"
-
-        - value: "off"
-          icon: mdi:ceiling-light-multiple-outline
-          styles:
-            card:
-              - background-color: "#A3A4FF"
-            icon:
-              - color: "#424289"
-        - value: "unavailable"
-          icon: mdi:ceiling-light-multiple-outline
-          styles:
-            card:
-              - background-color: "#A3A4FF"
-            icon:
-              - color: "#424289"
-      entity: "[[[ return variables?.entity_2?.entity_id; ]]]"
-  i3:
-    card:
-      type: "custom:button-card"
-      template: >
-        [[[
-          let templates = [ 'widget_icon_room' ];
-          if (variables?.entity_3?.templates?.length) {
-            templates.push(...variables.entity_3.templates);
-          }
-          return templates;
-        ]]]
-      variables: "[[[ return variables?.entity_3; ]]]"
-      state:
-        - operator: "template"
-          value: "[[[ return !variables.entity_3; ]]]"
-          styles:
-            card:
-              - display: "none"
-
-        - value: "on"
           icon: mdi:home-plus
           styles:
             card:
@@ -167,22 +123,22 @@ custom_fields:
               - background-color: "#A3A4FF"
             icon:
               - color: "#424289"
-      entity: "[[[ return variables?.entity_3?.entity_id; ]]]"
-  i4:
+      entity: "[[[ return variables?.entity_2?.entity_id; ]]]"
+  i3:
     card:
       type: "custom:button-card"
       template: >
         [[[
           let templates = [ 'widget_icon_room' ];
-          if (variables?.entity_4?.templates?.length) {
-            templates.push(...variables.entity_4.templates);
+          if (variables?.entity_3?.templates?.length) {
+            templates.push(...variables.entity_3.templates);
           }
           return templates;
         ]]]
-      variables: "[[[ return variables?.entity_4; ]]]"
+      variables: "[[[ return variables?.entity_3; ]]]"
       state:
         - operator: "template"
-          value: "[[[ return !variables.entity_4; ]]]"
+          value: "[[[ return !variables.entity_3; ]]]"
           styles:
             card:
               - display: "none"
@@ -218,4 +174,41 @@ custom_fields:
               - background-color: "#F8CDB7"
             icon:
               - color: "#DA5C22"
+      entity: "[[[ return variables?.entity_3?.entity_id; ]]]"
+  i4:
+    card:
+      type: "custom:button-card"
+      template: >
+        [[[
+          let templates = [ 'widget_icon_room' ];
+          if (variables?.entity_4?.templates?.length) {
+            templates.push(...variables.entity_4.templates);
+          }
+          return templates;
+        ]]]
+      variables: "[[[ return variables?.entity_4; ]]]"
+      state:
+        - operator: "template"
+          value: "[[[ return !variables.entity_4; ]]]"
+          styles:
+            card:
+              - display: "none"
+
+        - value: "on"
+          icon: mdi:motion-sensor
+          styles:
+            card:
+              - background-color: "#D5D6FF"
+            icon:
+              - color: "#424289"
+
+        - value: "off"
+          styles:
+            card:
+              - display: "none"
+
+        - value: "unavailable"
+          styles:
+            card:
+              - display: "none"
       entity: "[[[ return variables?.entity_4?.entity_id; ]]]"

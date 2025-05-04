@@ -46,5 +46,5 @@ cards:
       ulm_card_person_zone1: zone.home
       ulm_card_person_zone2: zone.parents
       ulm_multiline: true
-      ulm_card_person_battery_entity: sensor.lena_phone_battery_level
-      ulm_card_person_battery_state_entity: sensor.lena_phone_battery_state
+      ulm_card_person_battery_entity: sensor.lenok_battery_level
+      ulm_card_person_battery_state_entity: sensor.lenok_battery_state

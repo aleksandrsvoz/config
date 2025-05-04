@@ -30,6 +30,8 @@ variables:
     entity_id: switch.light_switch_garage
     tap_action:
       action: toggle
+  entity_4:
+    entity_id: binary_sensor.motion_garage_occupancy
 custom_fields:
   i1:
     card:
@@ -73,3 +75,40 @@ custom_fields:
             icon:
               - color: "#70475E"
       entity: "[[[ return variables?.entity_1?.entity_id; ]]]"
+  i4:
+    card:
+      type: "custom:button-card"
+      template: >
+        [[[
+          let templates = [ 'widget_icon_room' ];
+          if (variables?.entity_4?.templates?.length) {
+            templates.push(...variables.entity_4.templates);
+          }
+          return templates;
+        ]]]
+      variables: "[[[ return variables?.entity_4; ]]]"
+      state:
+        - operator: "template"
+          value: "[[[ return !variables.entity_4; ]]]"
+          styles:
+            card:
+              - display: "none"
+
+        - value: "on"
+          icon: mdi:motion-sensor
+          styles:
+            card:
+              - background-color: "#ECBCD7"
+            icon:
+              - color: "#70475E"
+
+        - value: "off"
+          styles:
+            card:
+              - display: "none"
+
+        - value: "unavailable"
+          styles:
+            card:
+              - display: "none"
+      entity: "[[[ return variables?.entity_4?.entity_id; ]]]"

@@ -20,6 +20,8 @@ cards:
         - color: white
     name: Комнаты
   - !include home_rooms/home_rooms.yaml
+  - type: custom:mushroom-title-card
+    title: " "
 
   ## Pop-ups
   - !include home_users/user_alex.yaml

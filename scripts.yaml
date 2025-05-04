@@ -32,10 +32,6 @@ turn_off_tv_notification:
 night_scene_script:
   alias: Night Scene
   sequence:
-  - target:
-      entity_id: input_boolean.is_night_mode
-    data: {}
-    action: input_boolean.turn_on
   - delay:
       hours: 0
       minutes: 0
@@ -43,60 +39,27 @@ night_scene_script:
       milliseconds: 0
   - action: script.lock_door
     data: {}
-  - data: {}
-    action: script.turn_off_everything
-  - action: script.bedroom_night_light
+  - target:
+      entity_id: input_boolean.is_night_mode
     data: {}
+    action: input_boolean.turn_on
+  - action: script.turn_off_everything_2
+    data: {}
+  - parallel:
+    - action: script.office_night_light
+      data: {}
+    - sequence:
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 20
+      - action: switch.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: switch.socket_office_table
   mode: restart
   icon: mdi:weather-night
-turn_off_everything:
-  alias: Turn Off everything
-  sequence:
-  - if:
-    - type: is_not_occupied
-      condition: device
-      device_id: 49b9b95059ecf6e64052222018d39612
-      entity_id: 539d7b288d4055ae57b0aadff46e2353
-      domain: binary_sensor
-    then:
-    - type: turn_off
-      device_id: 9f322d6a42df3160e4711615a91ccbaa
-      entity_id: a821db613e5d5c12247c1255f2e13a1f
-      domain: switch
-    - type: turn_off
-      device_id: 9f322d6a42df3160e4711615a91ccbaa
-      entity_id: 0ce45bf2f566e980e99c7709fd312e4d
-      domain: switch
-  - if:
-    - condition: state
-      entity_id: input_boolean.is_night_mode
-      state: 'off'
-    then:
-    - type: turn_off
-      device_id: 0ad8df8921ac33b31d9365b024ba0a63
-      entity_id: 716a713dc4426006d7e8c33c08a5adaf
-      domain: switch
-  - action: switch.turn_off
-    metadata: {}
-    data: {}
-    target:
-      area_id:
-      - garage
-      - play_room
-      - living_room
-      - corridor
-      - kitchen
-      - boiler_room
-      - office
-      - front_dore
-      - outside
-  - action: cover.close_cover
-    metadata: {}
-    data: {}
-    target:
-      label_id: shtory
-  mode: restart
-  icon: mdi:power
 make_noice_alex_phone:
   alias: make_noice_alex_phone
   sequence:
@@ -502,7 +465,7 @@ default_light_bedroom:
     metadata: {}
     data:
       brightness_pct: 100
-      kelvin: 2000
+      kelvin: 4500
     target:
       entity_id:
       - light.lamp_bedroom_rgb
@@ -618,15 +581,6 @@ bedroom_night_light:
       brightness_pct: 1
     target:
       entity_id: light.lamp_bedroom_rgb
-  - delay:
-      hours: 1
-      minutes: 0
-      seconds: 0
-      milliseconds: 0
-  - type: turn_off
-    device_id: 0ad8df8921ac33b31d9365b024ba0a63
-    entity_id: 716a713dc4426006d7e8c33c08a5adaf
-    domain: switch
   description: ''
   icon: mdi:lightbulb-night
   mode: restart
@@ -646,8 +600,8 @@ out_of_home_scene:
       entity_id: input_boolean.is_out_of_home
     data: {}
     action: input_boolean.turn_on
-  - data: {}
-    action: script.turn_off_everything
+  - action: script.turn_off_everything_2
+    data: {}
   - action: script.lock_door
     data: {}
   mode: restart
@@ -767,26 +721,6 @@ show_camera_5:
   alias: show_camera_5
   description: ''
   mode: restart
-open_all_curtains:
-  sequence:
-  - action: cover.open_cover
-    metadata: {}
-    data: {}
-    target:
-      area_id:
-      - office
-      - bedroom
-      entity_id: cover.curtains_living_room_entry
-  - action: cover.set_cover_position
-    metadata: {}
-    data:
-      position: 50
-    target:
-      entity_id:
-      - cover.curtains_living_room_veranda_exit
-      - cover.curtains_living_room_veranda_window
-  alias: open_all_curtains
-  description: ''
 unknown:
   sequence:
   - action: camera.play_stream
@@ -800,3 +734,156 @@ unknown:
   alias: Камера Баня
   description: ''
   mode: restart
+office_night_light:
+  sequence:
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 1
+      milliseconds: 0
+  - type: turn_on
+    device_id: 9fc9345d9a64615c1257c72777350996
+    entity_id: 0da3c9d108505e717fb558c418721ee0
+    domain: switch
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - repeat:
+      sequence:
+      - action: light.turn_on
+        metadata: {}
+        data:
+          brightness_step_pct: -1
+        target:
+          entity_id: light.lamp_office_white
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 2
+      count: 15
+  - action: light.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: light.lamp_office_white
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - action: light.turn_on
+    metadata: {}
+    data:
+      brightness_pct: 100
+      rgb_color:
+      - 255
+      - 204
+      - 94
+    target:
+      entity_id:
+      - light.lamp_office_rgb
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - repeat:
+      sequence:
+      - action: light.turn_on
+        metadata: {}
+        data:
+          rgb_color:
+          - 255
+          - 204
+          - 94
+          brightness_step_pct: -1
+        target:
+          entity_id:
+          - light.lamp_office_rgb
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 4
+      count: 82
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - action: light.turn_on
+    metadata: {}
+    data:
+      brightness_pct: 1
+      rgb_color:
+      - 255
+      - 204
+      - 94
+    target:
+      entity_id:
+      - light.lamp_office_rgb
+  - wait_for_trigger:
+    - trigger: time
+      at: 04:30:00
+  - type: turn_off
+    device_id: 9fc9345d9a64615c1257c72777350996
+    entity_id: 0da3c9d108505e717fb558c418721ee0
+    domain: switch
+  alias: office_night_light
+  description: ''
+  icon: mdi:lightbulb-night
+  mode: restart
+turn_off_everything_2:
+  sequence:
+  - if:
+    - type: is_not_occupied
+      condition: device
+      device_id: 49b9b95059ecf6e64052222018d39612
+      entity_id: 539d7b288d4055ae57b0aadff46e2353
+      domain: binary_sensor
+    then:
+    - type: turn_off
+      device_id: 9f322d6a42df3160e4711615a91ccbaa
+      entity_id: a821db613e5d5c12247c1255f2e13a1f
+      domain: switch
+    - type: turn_off
+      device_id: 9f322d6a42df3160e4711615a91ccbaa
+      entity_id: 0ce45bf2f566e980e99c7709fd312e4d
+      domain: switch
+  - if:
+    - condition: state
+      entity_id: input_boolean.is_night_mode
+      state: 'off'
+    then:
+    - action: switch.turn_off
+      metadata: {}
+      data: {}
+      target:
+        entity_id:
+        - switch.light_switch_bedroom
+        - switch.light_switch_office
+  - action: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id:
+      - switch.light_switch_garage
+      - switch.light_switch_play_room
+      - switch.light_switch_living_room_left
+      - switch.light_switch_living_room_center
+      - switch.light_switch_corridor
+      - switch.light_switch_kitchen
+      - switch.light_switch_living_room_right
+      - switch.light_switch_boiler_room
+      - switch.light_switch_doorway_right
+      - switch.light_switch_doorway_left
+  - action: cover.close_cover
+    metadata: {}
+    data: {}
+    target:
+      label_id: shtory
+  alias: Turn Off everything
+  mode: restart
+  icon: mdi:power
+  description: ''

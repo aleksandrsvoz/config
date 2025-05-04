@@ -23,9 +23,7 @@
     metadata: {}
     data: {}
     target:
-      entity_id:
-      - cover.curtains_living_room_entry
-      - cover.curtains_living_room_veranda_window
+      area_id: living_room
   mode: restart
 - id: '1703506966884'
   alias: Scene TV Off
@@ -51,15 +49,7 @@
       metadata: {}
       data: {}
       target:
-        entity_id: cover.curtains_living_room_entry
-    - action: cover.set_cover_position
-      metadata: {}
-      data:
-        position: 40
-      target:
-        entity_id:
-        - cover.curtains_living_room_veranda_window
-        - cover.curtains_living_room_veranda_exit
+        area_id: living_room
     else:
     - if:
       - condition: state
@@ -95,7 +85,7 @@
   alias: scene_new_day_start
   description: ''
   triggers:
-  - at: '11:00:00'
+  - at: '10:00:00'
     trigger: time
   conditions: []
   actions:
@@ -104,8 +94,35 @@
     data: {}
     target:
       entity_id: input_boolean.is_night_mode
-  - action: script.open_all_curtains
+  - action: switch.turn_on
+    metadata: {}
     data: {}
+    target:
+      entity_id: switch.socket_office_table
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+  - action: cover.open_cover
+    metadata: {}
+    data: {}
+    target:
+      area_id:
+      - play_room
+      - office
+      - bedroom
+  - if:
+    - condition: not
+      conditions:
+      - condition: state
+        entity_id: media_player.main_tv
+        state: 'on'
+    then:
+    - action: cover.open_cover
+      metadata: {}
+      data: {}
+      target:
+        area_id: living_room
   mode: restart
 - id: '1703534667532'
   alias: Scene Come Back Home
@@ -114,6 +131,11 @@
   - trigger: state
     entity_id:
     - device_tracker.alex_phone
+    from:
+    to: home
+  - trigger: state
+    entity_id:
+    - device_tracker.lena_phone
     from:
     to: home
   conditions:
@@ -141,8 +163,11 @@
       after: 09:00:00
       before: '17:00:00'
     then:
-    - action: script.open_all_curtains
+    - action: cover.open_cover
+      metadata: {}
       data: {}
+      target:
+        label_id: shtory
   - type: turn_on
     device_id: 7357f8d05df45291660c6c6e161f1246
     entity_id: abd4c4f57d6006a61139995261a5443e
@@ -185,7 +210,7 @@
         domain: switch
       - delay:
           hours: 0
-          minutes: 5
+          minutes: 1
           seconds: 0
       - if:
         - condition: device
@@ -541,13 +566,23 @@
     entity_id:
     - device_tracker.alex_phone
     from: home
-    to: not_home
+    to:
+  - trigger: state
+    entity_id:
+    - device_tracker.lena_phone
+    from: home
+    to:
   conditions:
-  - condition: not
-    conditions:
-    - condition: state
-      entity_id: sensor.alex_phone_wifi_connection
-      state: alex
+  - condition: device
+    device_id: fcc1a45d906abca2b5a86671aeb34e23
+    domain: device_tracker
+    entity_id: 0fdde9713008c9165fb88f0a12a8cee2
+    type: is_not_home
+  - condition: device
+    device_id: 38800d05e076153b488af0cb1ec0ea49
+    domain: device_tracker
+    entity_id: 7a92673ea2f6f7e431a51419b2c49328
+    type: is_not_home
   actions:
   - action: script.out_of_home_scene
     data: {}
@@ -604,11 +639,11 @@
   alias: office_light_default
   description: ''
   triggers:
-  - type: turned_on
-    device_id: 41d0d918eee80b32b4b0ddc14305712e
-    entity_id: 8c54936e7c875d09c48da25498d3d5ec
-    domain: switch
-    trigger: device
+  - trigger: state
+    entity_id:
+    - switch.light_switch_office
+    from: 'off'
+    to: 'on'
   conditions: []
   actions:
   - action: script.default_light_office
@@ -619,8 +654,8 @@
   description: ''
   triggers:
   - type: turned_on
-    device_id: 9fc9345d9a64615c1257c72777350996
-    entity_id: 0da3c9d108505e717fb558c418721ee0
+    device_id: 41d0d918eee80b32b4b0ddc14305712e
+    entity_id: 8c54936e7c875d09c48da25498d3d5ec
     domain: switch
     trigger: device
   conditions: []
@@ -632,11 +667,11 @@
   alias: bedroom_light_default
   description: ''
   triggers:
-  - type: turned_on
-    device_id: 0ad8df8921ac33b31d9365b024ba0a63
-    entity_id: 716a713dc4426006d7e8c33c08a5adaf
-    domain: switch
-    trigger: device
+  - trigger: state
+    entity_id:
+    - switch.light_switch_bedroom
+    from: 'off'
+    to: 'on'
   conditions: []
   actions:
   - action: script.default_light_bedroom
@@ -684,13 +719,17 @@
     entity_id: 3ad158c746e355d0aef233222257e7b2
     domain: binary_sensor
     trigger: device
+    for:
+      hours: 0
+      minutes: 3
+      seconds: 0
   conditions:
   - condition: state
     entity_id: input_boolean.is_night_mode
     state: 'off'
-  - condition: sun
-    after: sunset
-    before: sunrise
+  - condition: time
+    after: '16:30:00'
+    before: '20:00:00'
   actions:
   - choose:
     - conditions:
@@ -902,6 +941,9 @@
   - condition: sun
     after: sunset
     before: sunrise
+  - condition: state
+    entity_id: input_boolean.is_night_mode
+    state: 'off'
   actions:
   - choose:
     - conditions:
@@ -912,8 +954,8 @@
         domain: binary_sensor
       sequence:
       - type: turn_on
-        device_id: 41d0d918eee80b32b4b0ddc14305712e
-        entity_id: 8c54936e7c875d09c48da25498d3d5ec
+        device_id: 9fc9345d9a64615c1257c72777350996
+        entity_id: 0da3c9d108505e717fb558c418721ee0
         domain: switch
     - conditions:
       - type: is_not_occupied
@@ -923,8 +965,8 @@
         domain: binary_sensor
       sequence:
       - type: turn_off
-        device_id: 41d0d918eee80b32b4b0ddc14305712e
-        entity_id: 8c54936e7c875d09c48da25498d3d5ec
+        device_id: 9fc9345d9a64615c1257c72777350996
+        entity_id: 0da3c9d108505e717fb558c418721ee0
         domain: switch
   mode: restart
 - id: '1740134885775'
@@ -969,5 +1011,48 @@
       - type: turn_off
         device_id: 68cca160f76a3d21d2ef9561b0fbcf20
         entity_id: 78b4d9ff47943692994902be1790c0b1
+        domain: switch
+  mode: restart
+- id: '1745344588027'
+  alias: motion_turn_light_garage
+  description: ''
+  triggers:
+  - type: occupied
+    device_id: 33e9501a25495bcd5ddb695c825a6ba3
+    entity_id: 36b34c049d44df1fe25e77dbfe3e62e7
+    domain: binary_sensor
+    trigger: device
+  - type: not_occupied
+    device_id: 33e9501a25495bcd5ddb695c825a6ba3
+    entity_id: 36b34c049d44df1fe25e77dbfe3e62e7
+    domain: binary_sensor
+    trigger: device
+  conditions:
+  - condition: state
+    entity_id: input_boolean.is_night_mode
+    state: 'off'
+  actions:
+  - choose:
+    - conditions:
+      - type: is_occupied
+        condition: device
+        device_id: 33e9501a25495bcd5ddb695c825a6ba3
+        entity_id: 36b34c049d44df1fe25e77dbfe3e62e7
+        domain: binary_sensor
+      sequence:
+      - type: turn_on
+        device_id: 403b1c56fe2f9b615f9dbfba97226661
+        entity_id: b634c5307d40bc9a3fa318e7abe05ac2
+        domain: switch
+    - conditions:
+      - type: is_not_occupied
+        condition: device
+        device_id: 33e9501a25495bcd5ddb695c825a6ba3
+        entity_id: 36b34c049d44df1fe25e77dbfe3e62e7
+        domain: binary_sensor
+      sequence:
+      - type: turn_off
+        device_id: 403b1c56fe2f9b615f9dbfba97226661
+        entity_id: b634c5307d40bc9a3fa318e7abe05ac2
         domain: switch
   mode: restart
