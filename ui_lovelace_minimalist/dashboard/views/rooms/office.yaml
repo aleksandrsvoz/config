@@ -99,13 +99,20 @@ cards:
 
   - type: custom:bubble-card
     card_type: separator
-    name: Свет
+    name: Свет и Выключатели
     icon: mdi:lightbulb
     card_mod:
       style: |
         ha-card {
           color: #FAFAFA;
         }
+
+  - type: custom:button-card
+    template: card_light_color
+    entity: switch.socket_office_table
+    variables:
+      ulm_card_light_name: "Стол"
+      ulm_card_light_icon: mdi:power
 
   ## Lamp Full
   - type: custom:button-card
@@ -166,7 +173,6 @@ cards:
           collapsible_controls: true
           secondary_info: state
           icon_type: icon
-
 
   - type: custom:bubble-card
     card_type: separator

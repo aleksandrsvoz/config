@@ -109,10 +109,24 @@ cards:
 
   - type: custom:button-card
     template: card_light_color
-    entity: switch.christmast_tree_power
+    entity: switch.socket_cristmas_tree
     variables:
       ulm_card_light_name: " "
       ulm_card_light_icon: mdi:pine-tree
+
+  - type: custom:button-card
+    template: card_light_color
+    entity: switch.socket_living_room_lamp_left
+    variables:
+      ulm_card_light_name: "Левая Лампа"
+      ulm_card_light_icon: mdi:lamp
+
+  - type: custom:button-card
+    template: card_light_color
+    entity: switch.socket_living_room_lamp_right
+    variables:
+      ulm_card_light_name: "Правая Лампа"
+      ulm_card_light_icon: mdi:lamp
 
     ## Main Light
   - type: custom:button-card

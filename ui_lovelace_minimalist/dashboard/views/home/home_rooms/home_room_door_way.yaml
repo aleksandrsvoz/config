@@ -29,7 +29,7 @@ variables:
     tap_action:
       action: toggle
   entity_2:
-    entity_id: switch.light_switch_doorway_left
+    entity_id: switch.light_switch_corridor
     tap_action:
       action: toggle
   entity_3:
@@ -102,7 +102,7 @@ custom_fields:
               - display: "none"
 
         - value: "on"
-          icon: mdi:home-plus
+          icon: mdi:ceiling-light-multiple
           styles:
             card:
               - background-color: "#A3A4FF"
@@ -110,14 +110,14 @@ custom_fields:
               - color: "#424289"
 
         - value: "off"
-          icon: mdi:home-minus-outline
+          icon: mdi:ceiling-light-multiple-outline
           styles:
             card:
               - background-color: "#A3A4FF"
             icon:
               - color: "#424289"
         - value: "unavailable"
-          icon: mdi:home-minus-outline
+          icon: mdi:ceiling-light-multiple-outline
           styles:
             card:
               - background-color: "#A3A4FF"

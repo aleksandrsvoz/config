@@ -1,0 +1,160 @@
+## Outside
+type: "custom:button-card"
+template:
+  - card_room
+name: Улица
+entity: sensor.temperature_garage_temperature
+icon: mdi:home-export-outline
+styles:
+  icon:
+    # Icon color
+    - color: "#597715"
+  card:
+    # Click Ripple color
+    - --mdc-ripple-color: "#597715"
+    - --mdc-ripple-press-opacity: 0.3
+    # Card bacground color
+    - background: "#D1E89C"
+    # Card text color
+    - color: "#597715"
+  img_cell:
+    # Card icon circle color
+    - background-color: "#96CD15"
+tap_action:
+  action: navigate
+  navigation_path: ""
+variables:
+  label_use_temperature: false
+  label_use_brightness: true
+  entity_1:
+    entity_id: switch.light_switch_doorway_left
+    tap_action:
+      action: toggle
+  entity_2:
+    entity_id: switch.water_pump_garden
+    tap_action:
+      action: toggle
+  entity_4:
+    entity_id: binary_sensor.any_camera_motion
+custom_fields:
+  i1:
+    card:
+      type: "custom:button-card"
+      template: >
+        [[[
+          let templates = [ 'widget_icon_room' ];
+          if (variables?.entity_1?.templates?.length) {
+            templates.push(...variables.entity_1.templates);
+          }
+          return templates;
+        ]]]
+      variables: "[[[ return variables?.entity_1; ]]]"
+      state:
+        - operator: "template"
+          value: "[[[ return !variables.entity_1; ]]]"
+          styles:
+            card:
+              - display: "none"
+
+        - value: "on"
+          icon: mdi:lightbulb-on
+          styles:
+            card:
+              - background-color: "#96CD15"
+            icon:
+              - color: "#597715"
+
+        - value: "off"
+          icon: mdi:lightbulb-outline
+          styles:
+            card:
+              - background-color: "#96CD15"
+            icon:
+              - color: "#597715"
+        - value: "unavailable"
+          icon: mdi:lightbulb-outline
+          styles:
+            card:
+              - background-color: "#96CD15"
+            icon:
+              - color: "#597715"
+      entity: "[[[ return variables?.entity_1?.entity_id; ]]]"
+  i2:
+    card:
+      type: "custom:button-card"
+      template: >
+        [[[
+          let templates = [ 'widget_icon_room' ];
+          if (variables?.entity_2?.templates?.length) {
+            templates.push(...variables.entity_2.templates);
+          }
+          return templates;
+        ]]]
+      variables: "[[[ return variables?.entity_2; ]]]"
+      state:
+        - operator: "template"
+          value: "[[[ return !variables.entity_2; ]]]"
+          styles:
+            card:
+              - display: "none"
+
+        - value: "on"
+          icon: mdi:water-pump
+          styles:
+            card:
+              - background-color: "#96CD15"
+            icon:
+              - color: "#597715"
+
+        - value: "off"
+          icon: mdi:water-pump-off
+          styles:
+            card:
+              - background-color: "#96CD15"
+            icon:
+              - color: "#597715"
+        - value: "unavailable"
+          icon: mdi:water-pump-off
+          styles:
+            card:
+              - background-color: "#96CD15"
+            icon:
+              - color: "#597715"
+      entity: "[[[ return variables?.entity_2?.entity_id; ]]]"
+  i4:
+    card:
+      type: "custom:button-card"
+      template: >
+        [[[
+          let templates = [ 'widget_icon_room' ];
+          if (variables?.entity_4?.templates?.length) {
+            templates.push(...variables.entity_4.templates);
+          }
+          return templates;
+        ]]]
+      variables: "[[[ return variables?.entity_4; ]]]"
+      state:
+        - operator: "template"
+          value: "[[[ return !variables.entity_4; ]]]"
+          styles:
+            card:
+              - display: "none"
+
+        - value: "on"
+          icon: mdi:motion-sensor
+          styles:
+            card:
+              - background-color: "#D1E89C"
+            icon:
+              - color: "#597715"
+
+        - value: "off"
+          styles:
+            card:
+              - display: "none"
+
+        - value: "unavailable"
+          styles:
+            card:
+              - display: "none"
+      entity: "[[[ return variables?.entity_4?.entity_id; ]]]"

@@ -45,21 +45,31 @@ night_scene_script:
     action: input_boolean.turn_on
   - action: script.turn_off_everything_2
     data: {}
-  - parallel:
-    - action: script.office_night_light
+  - sequence:
+    - type: turn_on
+      device_id: 0ad8df8921ac33b31d9365b024ba0a63
+      entity_id: 716a713dc4426006d7e8c33c08a5adaf
+      domain: switch
+    - delay:
+        hours: 0
+        minutes: 0
+        seconds: 3
+        milliseconds: 0
+    - action: light.turn_on
+      metadata: {}
+      data:
+        color_temp_kelvin: 2964
+        brightness_pct: 10
+      target:
+        entity_id: light.lamp_bedroom_rgb
+    - action: light.turn_off
+      metadata: {}
       data: {}
-    - sequence:
-      - delay:
-          hours: 0
-          minutes: 0
-          seconds: 20
-      - action: switch.turn_off
-        metadata: {}
-        data: {}
-        target:
-          entity_id: switch.socket_office_table
+      target:
+        entity_id: light.lamp_bedroom_white
   mode: restart
   icon: mdi:weather-night
+  description: ''
 make_noice_alex_phone:
   alias: make_noice_alex_phone
   sequence:
@@ -244,6 +254,13 @@ light_scene_for_tv:
       entity_id:
       - light.lamp_1_living_room_rgb
       - light.lamp_2_living_room_rgb
+  - action: cover.close_cover
+    metadata: {}
+    data: {}
+    target:
+      entity_id:
+      - cover.curtains_living_room_entry
+      - cover.curtains_living_room_veranda_window
   description: ''
   icon: mdi:youtube-tv
 default_light_toilet:
@@ -321,7 +338,7 @@ default_light_office:
         metadata: {}
         data:
           kelvin: 3350
-          brightness_pct: 73
+          brightness_pct: 45
         target:
           entity_id: light.lamp_office_white
   - action: light.turn_on
@@ -457,7 +474,7 @@ default_light_bedroom:
         metadata: {}
         data:
           kelvin: 3350
-          brightness_pct: 73
+          brightness_pct: 70
         target:
           entity_id:
           - light.lamp_bedroom_white
@@ -465,7 +482,7 @@ default_light_bedroom:
     metadata: {}
     data:
       brightness_pct: 100
-      kelvin: 4500
+      kelvin: 3000
     target:
       entity_id:
       - light.lamp_bedroom_rgb
@@ -586,10 +603,36 @@ bedroom_night_light:
   mode: restart
 lock_door:
   sequence:
-  - device_id: 4491a48c7d623f8065437eb7b0ca2705
-    domain: lock
-    entity_id: 71b9065df4bf5c398d2b19e2cfe666f7
-    type: lock
+  - if:
+    - condition: or
+      conditions:
+      - type: is_not_open
+        condition: device
+        device_id: 4491a48c7d623f8065437eb7b0ca2705
+        entity_id: 10520ab450d713aa6a0560cdefa0025d
+        domain: binary_sensor
+      - type: is_not_open
+        condition: device
+        device_id: 4491a48c7d623f8065437eb7b0ca2705
+        entity_id: 1233fe31bc9825afa2194d07e1888283
+        domain: binary_sensor
+    then:
+    - if:
+      - condition: state
+        entity_id: lock.front_door_lock
+        state:
+        - unavailable
+        - unknown
+      then:
+      - device_id: 4491a48c7d623f8065437eb7b0ca2705
+        domain: lock
+        entity_id: f18a469b46401cd261dc47d53636da49
+        type: lock
+      else:
+      - device_id: 4491a48c7d623f8065437eb7b0ca2705
+        domain: lock
+        entity_id: 71b9065df4bf5c398d2b19e2cfe666f7
+        type: lock
   alias: lock_door
   description: ''
   icon: mdi:door-closed-lock
@@ -613,7 +656,7 @@ clean_boiler_room:
     target:
       device_id: bf5e0a69fc36e059d2e9e50b643723ea
     data:
-      segments: 3
+      segments: 8
   alias: clean_boiler_room
   description: ''
 clean_living_room:
@@ -622,7 +665,7 @@ clean_living_room:
     target:
       device_id: bf5e0a69fc36e059d2e9e50b643723ea
     data:
-      segments: 2
+      segments: 4
   alias: clean_living_room
   description: ''
 clean_kitchen:
@@ -631,7 +674,7 @@ clean_kitchen:
     target:
       device_id: bf5e0a69fc36e059d2e9e50b643723ea
     data:
-      segments: 1
+      segments: 5
   alias: clean_kitchen
   description: ''
 clean_toilet:
@@ -640,7 +683,7 @@ clean_toilet:
     target:
       device_id: bf5e0a69fc36e059d2e9e50b643723ea
     data:
-      segments: 7
+      segments: 6
   alias: clean_toilet
   description: ''
   icon: mdi:vacuum
@@ -650,7 +693,7 @@ clean_office:
     target:
       device_id: bf5e0a69fc36e059d2e9e50b643723ea
     data:
-      segments: 4
+      segments: 8
   alias: clean_office
   description: ''
 clean_bedroom:
@@ -659,7 +702,7 @@ clean_bedroom:
     target:
       device_id: bf5e0a69fc36e059d2e9e50b643723ea
     data:
-      segments: 6
+      segments: 1
   alias: clean_bedroom
   description: ''
 clean_play_room:
@@ -668,7 +711,7 @@ clean_play_room:
     target:
       device_id: bf5e0a69fc36e059d2e9e50b643723ea
     data:
-      segments: 8
+      segments: 2
   alias: clean_play_room
   description: ''
 clean_door_way:
@@ -677,7 +720,7 @@ clean_door_way:
     target:
       device_id: bf5e0a69fc36e059d2e9e50b643723ea
     data:
-      segments: 9
+      segments: 7
   alias: clean_door_way
   description: ''
 clean_corridor:
@@ -686,7 +729,7 @@ clean_corridor:
     target:
       device_id: bf5e0a69fc36e059d2e9e50b643723ea
     data:
-      segments: 5
+      segments: 3
   alias: clean_corridor
   description: ''
 clean_full_house:
@@ -839,8 +882,8 @@ turn_off_everything_2:
   - if:
     - type: is_not_occupied
       condition: device
-      device_id: 49b9b95059ecf6e64052222018d39612
-      entity_id: 539d7b288d4055ae57b0aadff46e2353
+      device_id: ab82f28083cd39a1015ce0afdd869d1d
+      entity_id: 29e1fbf95c04b2799050375a9182b620
       domain: binary_sensor
     then:
     - type: turn_off
@@ -850,6 +893,17 @@ turn_off_everything_2:
     - type: turn_off
       device_id: 9f322d6a42df3160e4711615a91ccbaa
       entity_id: 0ce45bf2f566e980e99c7709fd312e4d
+      domain: switch
+  - if:
+    - type: is_no_motion
+      condition: device
+      device_id: 9855f85c9d52aad3e1296f58d27d2d2f
+      entity_id: c939d3536db12ccec82445a0f38e2c64
+      domain: binary_sensor
+    then:
+    - type: turn_off
+      device_id: cf944bc6f717898701f5b679824e71b8
+      entity_id: 7e2ac4d951d748b6ff4096a217e8dc42
       domain: switch
   - if:
     - condition: state
@@ -862,7 +916,6 @@ turn_off_everything_2:
       target:
         entity_id:
         - switch.light_switch_bedroom
-        - switch.light_switch_office
   - action: switch.turn_off
     metadata: {}
     data: {}
@@ -873,17 +926,116 @@ turn_off_everything_2:
       - switch.light_switch_living_room_left
       - switch.light_switch_living_room_center
       - switch.light_switch_corridor
-      - switch.light_switch_kitchen
       - switch.light_switch_living_room_right
       - switch.light_switch_boiler_room
       - switch.light_switch_doorway_right
       - switch.light_switch_doorway_left
+      - switch.socket_garage
+      - switch.water_pump_garden
+      - switch.socket_cristmas_tree
+      - switch.light_switch_office
+      - switch.socket_living_room_lamp_right
+      - switch.socket_living_room_lamp_left
   - action: cover.close_cover
     metadata: {}
     data: {}
     target:
-      label_id: shtory
+      area_id:
+      - play_room
+      - bedroom
+      - office
   alias: Turn Off everything
   mode: restart
   icon: mdi:power
   description: ''
+'1747332323499':
+  sequence:
+  - action: input_boolean.turn_on
+    target:
+      entity_id:
+      - input_boolean.baby_sleep
+    data: {}
+  - if:
+    - condition: state
+      entity_id: sensor.brightness_is_low
+      state: 'True'
+    then:
+    - type: turn_on
+      device_id: 0ad8df8921ac33b31d9365b024ba0a63
+      entity_id: 716a713dc4426006d7e8c33c08a5adaf
+      domain: switch
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 1
+      milliseconds: 0
+  - action: light.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id:
+      - light.lamp_bedroom_white
+  - type: turn_off
+    device_id: 55a71504c8477f2e332f048be9c4b45f
+    entity_id: 0ce2cfd83e0e19a24d621a725b4e1588
+    domain: switch
+  - action: light.turn_on
+    metadata: {}
+    data:
+      color_temp_kelvin: 3036
+      brightness_pct: 35
+    target:
+      entity_id: light.lamp_bedroom_rgb
+  - delay:
+      hours: 1
+      minutes: 0
+      seconds: 0
+      milliseconds: 0
+  - action: input_boolean.turn_off
+    target:
+      entity_id: input_boolean.baby_sleep
+    data: {}
+  alias: baby_sleep
+  description: ''
+  icon: mdi:human-baby-changing-table
+  mode: restart
+make_living_room_warmer:
+  alias: make_living_room_warmer
+  description: ''
+  mode: restart
+  sequence:
+  - action: climate.turn_on
+    target:
+      entity_id: climate.ac_living_room
+  - action: climate.set_hvac_mode
+    data:
+      hvac_mode: heat
+    target:
+      entity_id: climate.ac_living_room
+  - action: climate.set_temperature
+    data:
+      temperature: 27
+    target:
+      entity_id: climate.ac_living_room
+make_bedroom_warmer:
+  alias: make_bedroom_warmer
+  description: ''
+  icon: mdi:air-conditioner
+  mode: restart
+  sequence:
+  - action: climate.turn_on
+    target:
+      entity_id:
+      - climate.ac_bedroom
+  - action: climate.set_hvac_mode
+    data:
+      hvac_mode: heat
+    target:
+      entity_id:
+      - climate.ac_bedroom
+  - action: climate.set_temperature
+    data:
+      temperature: 27
+    target:
+      entity_id:
+      - climate.ac_bedroom

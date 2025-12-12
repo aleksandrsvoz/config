@@ -44,11 +44,11 @@ devices:
   '0xa4c13862621b0122':
     friendly_name: water_pump_power
   '0xa4c1389328fbc285':
-    friendly_name: christmast_tree_power
+    friendly_name: socket_office_table
   '0x28dba7fffe010408':
     friendly_name: motion_kitchen
   '0x0ceff6fffe594c6b':
-    friendly_name: motion_toilet
+    friendly_name: motion_garage
   '0x54ef441000b152f1':
     friendly_name: lamp_toilet
   '0x54ef44100053626f':
@@ -111,8 +111,6 @@ devices:
     friendly_name: temperature_toilet
   '0x84ba20fffecf3174':
     friendly_name: temperature_corridor
-  '0x0cae5ffffec2a31f':
-    friendly_name: motion_garage
   '0xa4c138938ac04d13':
     friendly_name: curtains_living_room_veranda_window
   '0xa4c138c350314be7':
@@ -128,7 +126,7 @@ devices:
   '0x842712fffe7bb113':
     friendly_name: '0x842712fffe7bb113'
   '0x00124b0030d34d67':
-    friendly_name: power_window_gerland
+    friendly_name: socket_garage
   '0x0ceff6fffee555d6':
     friendly_name: motion_boiler_room
   '0xd44867fffe2aa773':
@@ -136,4 +134,23 @@ devices:
   '0xa4c138c25b760d06':
     friendly_name: curtains_office
   '0x00124b0030d359b8':
-    friendly_name: socket_office_table
+    friendly_name: socket_cristmas_tree
+  '0xa4c138b2a6ad106d':
+    friendly_name: brightness
+    debounce_ignore: []
+    homeassistant:
+      name: null
+    filtered_cache: []
+    retain: false
+    filtered_attributes:
+      - linkquality
+  '0x4c5bb3fffe470cba':
+    friendly_name: motion_toilet
+  '0xd44867fffe275ada':
+    friendly_name: door_sensor_living_room
+  '0x187a3efffe399297':
+    friendly_name: water_pump_garden
+  '0xa4c1380775b2ffff':
+    friendly_name: socket_living_room_lamp_right
+  '0xa4c1380750a1ffff':
+    friendly_name: socket_living_room_lamp_left

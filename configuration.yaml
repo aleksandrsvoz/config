@@ -12,6 +12,7 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 sensor: !include sensors.yaml
+binary_sensor: !include binary_sensor.yaml
 
 panel_custom:
   - name: server_state

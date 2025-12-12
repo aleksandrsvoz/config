@@ -1,0 +1,13 @@
+- platform: template
+  sensors:
+    any_camera_motion:
+      friendly_name: "Any Camera Motion"
+      icon_template: mdi:motion-sensor
+      value_template: >
+        {{ [
+            states('binary_sensor.camera_outside_1_motion') == 'on',
+            states('binary_sensor.camera_outside_2_motion') == 'on',
+            states('binary_sensor.camera_outside_3_motion') == 'on',
+            states('binary_sensor.camera_outside_4_motion') == 'on',
+            states('binary_sensor.camera_outside_5_motion') == 'on',
+          ] | select('==', true) | list | count > 0 }}
