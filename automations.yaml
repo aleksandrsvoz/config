@@ -49,18 +49,6 @@
       area_id:
       - play_room
       - office
-  - if:
-    - condition: not
-      conditions:
-      - condition: state
-        entity_id: media_player.main_tv
-        state: 'on'
-    then:
-    - action: cover.open_cover
-      metadata: {}
-      data: {}
-      target:
-        area_id: living_room
   mode: restart
 - id: '1703534667532'
   alias: Scene Come Back Home
@@ -96,34 +84,35 @@
       device_id: 7357f8d05df45291660c6c6e161f1246
       entity_id: fe2183299a222b576ffa37abad2801d2
       domain: switch
-  - type: turn_on
-    device_id: 7357f8d05df45291660c6c6e161f1246
-    entity_id: abd4c4f57d6006a61139995261a5443e
-    domain: switch
   - action: cover.open_cover
     metadata: {}
     data: {}
     target:
       label_id: shtory
+  - action: switch.turn_on
+    metadata: {}
+    target:
+      entity_id:
+      - switch.light_switch_doorway_right
+      - switch.socket_cristmas_tree
+      - switch.socket_living_room_lamp_right
+      - switch.socket_living_room_lamp_left
+    data: {}
   mode: restart
 - id: '1706287849527'
   alias: turn_on_light_in_toulet_on_montion
   description: ''
   triggers:
   - type: occupied
-    device_id: ab82f28083cd39a1015ce0afdd869d1d
-    entity_id: 29e1fbf95c04b2799050375a9182b620
+    device_id: 1fff5945dbd23e85346c625b76024356
+    entity_id: 88c16bd43277874773ecc15e0da3042a
     domain: binary_sensor
     trigger: device
   - type: not_occupied
-    device_id: ab82f28083cd39a1015ce0afdd869d1d
-    entity_id: 29e1fbf95c04b2799050375a9182b620
+    device_id: 1fff5945dbd23e85346c625b76024356
+    entity_id: 88c16bd43277874773ecc15e0da3042a
     domain: binary_sensor
     trigger: device
-    for:
-      hours: 0
-      minutes: 5
-      seconds: 0
   conditions:
   - condition: state
     entity_id: input_boolean.bath_relax_light
@@ -133,8 +122,8 @@
     - conditions:
       - type: is_occupied
         condition: device
-        device_id: ab82f28083cd39a1015ce0afdd869d1d
-        entity_id: 29e1fbf95c04b2799050375a9182b620
+        device_id: 1fff5945dbd23e85346c625b76024356
+        entity_id: 88c16bd43277874773ecc15e0da3042a
         domain: binary_sensor
       sequence:
       - type: turn_on
@@ -144,8 +133,8 @@
     - conditions:
       - type: is_not_occupied
         condition: device
-        device_id: ab82f28083cd39a1015ce0afdd869d1d
-        entity_id: 29e1fbf95c04b2799050375a9182b620
+        device_id: 1fff5945dbd23e85346c625b76024356
+        entity_id: 88c16bd43277874773ecc15e0da3042a
         domain: binary_sensor
       sequence:
       - type: turn_off
@@ -465,7 +454,7 @@
           volume: 5
         message: Протечка под Раковиной на Кухне
       action: notify.mobile_app_alex_phone
-  mode: single
+  mode: restart
 - id: '1734857873011'
   alias: out_of_home
   description: ''
@@ -543,20 +532,6 @@
           minutes: 5
           seconds: 0
   mode: restart
-- id: '1735541535940'
-  alias: office_light_default
-  description: ''
-  triggers:
-  - trigger: state
-    entity_id:
-    - switch.light_switch_office
-    from: 'off'
-    to: 'on'
-  conditions: []
-  actions:
-  - action: script.default_light_office
-    data: {}
-  mode: single
 - id: '1735542507105'
   alias: play_room_default_light
   description: ''
@@ -670,33 +645,24 @@
   alias: motion_kitchen_turn_light
   description: ''
   triggers:
-  - type: motion
-    device_id: 9855f85c9d52aad3e1296f58d27d2d2f
-    entity_id: c939d3536db12ccec82445a0f38e2c64
+  - type: occupied
+    device_id: dfc369a89a5a6dc2d6715f6251671304
+    entity_id: a56e44b4d7a8815a491b9450e1df3659
     domain: binary_sensor
     trigger: device
-  - type: no_motion
-    device_id: 9855f85c9d52aad3e1296f58d27d2d2f
-    entity_id: c939d3536db12ccec82445a0f38e2c64
+  - type: not_occupied
+    device_id: dfc369a89a5a6dc2d6715f6251671304
+    entity_id: a56e44b4d7a8815a491b9450e1df3659
     domain: binary_sensor
     trigger: device
-    for:
-      hours: 0
-      minutes: 4
-      seconds: 0
   conditions: []
   actions:
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 1
-      milliseconds: 0
   - choose:
     - conditions:
-      - type: is_motion
+      - type: is_occupied
         condition: device
-        device_id: 9855f85c9d52aad3e1296f58d27d2d2f
-        entity_id: c939d3536db12ccec82445a0f38e2c64
+        device_id: dfc369a89a5a6dc2d6715f6251671304
+        entity_id: a56e44b4d7a8815a491b9450e1df3659
         domain: binary_sensor
       sequence:
       - type: turn_on
@@ -704,24 +670,65 @@
         entity_id: 7e2ac4d951d748b6ff4096a217e8dc42
         domain: switch
     - conditions:
-      - type: is_no_motion
+      - type: is_not_occupied
         condition: device
-        device_id: 9855f85c9d52aad3e1296f58d27d2d2f
-        entity_id: c939d3536db12ccec82445a0f38e2c64
+        device_id: dfc369a89a5a6dc2d6715f6251671304
+        entity_id: a56e44b4d7a8815a491b9450e1df3659
         domain: binary_sensor
-      - condition: state
-        entity_id: input_boolean.is_night_mode
-        state: 'off'
-      - condition: device
-        device_id: 89a3c1d78b55aab1312ca62de5dc4f36
-        domain: media_player
-        entity_id: b88dc1699ce77f3d4ca01838ca9e0c9c
-        type: is_off
+      - condition: not
+        conditions:
+        - condition: device
+          device_id: 89a3c1d78b55aab1312ca62de5dc4f36
+          domain: media_player
+          entity_id: b88dc1699ce77f3d4ca01838ca9e0c9c
+          type: is_on
       sequence:
       - type: turn_off
         device_id: cf944bc6f717898701f5b679824e71b8
         entity_id: 7e2ac4d951d748b6ff4096a217e8dc42
         domain: switch
+  - choose:
+    - conditions:
+      - type: is_occupied
+        condition: device
+        device_id: dfc369a89a5a6dc2d6715f6251671304
+        entity_id: a56e44b4d7a8815a491b9450e1df3659
+        domain: binary_sensor
+      sequence:
+      - action: switch.turn_on
+        metadata: {}
+        target:
+          entity_id:
+          - switch.socket_living_room_lamp_left
+          - switch.socket_living_room_lamp_right
+          - switch.socket_cristmas_tree
+        data: {}
+    - conditions:
+      - type: is_not_occupied
+        condition: device
+        device_id: dfc369a89a5a6dc2d6715f6251671304
+        entity_id: a56e44b4d7a8815a491b9450e1df3659
+        domain: binary_sensor
+      - condition: not
+        conditions:
+        - condition: device
+          device_id: 89a3c1d78b55aab1312ca62de5dc4f36
+          domain: media_player
+          entity_id: b88dc1699ce77f3d4ca01838ca9e0c9c
+          type: is_on
+      - condition: state
+        entity_id: input_boolean.is_night_mode
+        state:
+        - 'on'
+      sequence:
+      - action: switch.turn_off
+        metadata: {}
+        target:
+          entity_id:
+          - switch.socket_living_room_lamp_right
+          - switch.socket_living_room_lamp_left
+          - switch.socket_cristmas_tree
+        data: {}
   mode: restart
 - id: '1736620150355'
   alias: motion_turn_door_way_light
@@ -813,22 +820,22 @@
         device_id: c1ed251d864d6e697c2841f51b722833
         entity_id: 0120f2489af1f3d8ca5d358ade08d6f7
         domain: binary_sensor
-      - condition: state
-        entity_id: input_boolean.baby_sleep
-        state: 'off'
-      - condition: state
-        entity_id: sensor.brightness_is_low
-        state: 'True'
       sequence:
       - if:
         - condition: state
           entity_id: input_boolean.is_night_mode
           state: 'off'
         then:
-        - type: turn_on
-          device_id: 55a71504c8477f2e332f048be9c4b45f
-          entity_id: 0ce2cfd83e0e19a24d621a725b4e1588
-          domain: switch
+        - if:
+          - condition: state
+            entity_id: binary_sensor.is_too_dark
+            state:
+            - 'on'
+          then:
+          - type: turn_on
+            device_id: 55a71504c8477f2e332f048be9c4b45f
+            entity_id: 0ce2cfd83e0e19a24d621a725b4e1588
+            domain: switch
         else:
         - type: turn_on
           device_id: 7357f8d05df45291660c6c6e161f1246
@@ -861,57 +868,53 @@
   description: ''
   triggers:
   - type: occupied
-    device_id: ec5141e3c652e9a9bda0961b36142085
-    entity_id: 8325e74bf536f71efff9f4c6d257ba8c
+    device_id: d4b7c0c3569d8be4b6174ee0ba8c2a96
+    entity_id: 4630648d11a6cc3ec510ef65b0dcd600
     domain: binary_sensor
     trigger: device
   - type: not_occupied
-    device_id: ec5141e3c652e9a9bda0961b36142085
-    entity_id: 8325e74bf536f71efff9f4c6d257ba8c
+    device_id: d4b7c0c3569d8be4b6174ee0ba8c2a96
+    entity_id: 4630648d11a6cc3ec510ef65b0dcd600
     domain: binary_sensor
     trigger: device
-    for:
-      hours: 0
-      minutes: 5
-      seconds: 0
-  - trigger: sun
-    event: sunset
-    offset: 0
-  - trigger: state
-    entity_id:
-    - sensor.brightness_is_low
-    to: 'on'
-  conditions:
-  - condition: state
-    entity_id: input_boolean.is_night_mode
-    state: 'off'
-  - condition: state
-    entity_id: sensor.brightness_is_low
-    state: 'True'
+  conditions: []
   actions:
   - choose:
     - conditions:
+      - type: is_illuminance
+        condition: device
+        device_id: d4b7c0c3569d8be4b6174ee0ba8c2a96
+        entity_id: 9e9523c624eafb4aeaf4c94ec043e467
+        domain: sensor
+        below: 9
       - type: is_occupied
         condition: device
-        device_id: ec5141e3c652e9a9bda0961b36142085
-        entity_id: 8325e74bf536f71efff9f4c6d257ba8c
+        device_id: d4b7c0c3569d8be4b6174ee0ba8c2a96
+        entity_id: 4630648d11a6cc3ec510ef65b0dcd600
         domain: binary_sensor
       sequence:
-      - type: turn_on
-        device_id: 9fc9345d9a64615c1257c72777350996
-        entity_id: 0da3c9d108505e717fb558c418721ee0
-        domain: switch
+      - action: script.office_lamp_controll
+        metadata: {}
+        data:
+          light_option: turn_on
     - conditions:
-      - type: is_not_occupied
-        condition: device
-        device_id: ec5141e3c652e9a9bda0961b36142085
-        entity_id: 8325e74bf536f71efff9f4c6d257ba8c
-        domain: binary_sensor
+      - condition: and
+        conditions:
+        - type: is_not_occupied
+          condition: device
+          device_id: d4b7c0c3569d8be4b6174ee0ba8c2a96
+          entity_id: 4630648d11a6cc3ec510ef65b0dcd600
+          domain: binary_sensor
+        - type: is_not_occupied
+          condition: device
+          device_id: d4b7c0c3569d8be4b6174ee0ba8c2a96
+          entity_id: 9381673dbde88ede3487ee860f834a20
+          domain: binary_sensor
       sequence:
-      - type: turn_off
-        device_id: 9fc9345d9a64615c1257c72777350996
-        entity_id: 0da3c9d108505e717fb558c418721ee0
-        domain: switch
+      - action: script.office_lamp_controll
+        metadata: {}
+        data:
+          light_option: turn_off
   mode: restart
 - id: '1740134885775'
   alias: motion_turn_light_boiler_room
@@ -1078,3 +1081,55 @@
       entity_id:
       - climate.ac_bedroom
   mode: single
+- id: '1767042842560'
+  alias: office_bed_night_mode
+  description: ''
+  triggers:
+  - type: occupied
+    device_id: d4b7c0c3569d8be4b6174ee0ba8c2a96
+    entity_id: 9381673dbde88ede3487ee860f834a20
+    domain: binary_sensor
+    trigger: device
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
+  conditions:
+  - condition: state
+    entity_id: input_boolean.is_night_mode
+    state:
+    - 'on'
+  actions:
+  - action: cover.set_cover_position
+    metadata: {}
+    target:
+      entity_id: cover.curtains_office
+    data:
+      position: 50
+  - action: switch.turn_off
+    metadata: {}
+    target:
+      entity_id:
+      - switch.socket_office_table
+    data: {}
+  - action: script.office_lamp_controll
+    metadata: {}
+    data:
+      light_option: turn_off
+  mode: single
+- id: '1767102778519'
+  alias: office_light_switch_controll
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: 9fc9345d9a64615c1257c72777350996
+    type: action
+    subtype: single
+    trigger: device
+  conditions: []
+  actions:
+  - action: script.office_lamp_controll
+    metadata: {}
+    data:
+      light_option: toggle
+  mode: restart

@@ -1,42 +1,15 @@
 version: 4
 homeassistant:
   enabled: true
-advanced:
-  network_key:
-    - 171
-    - 78
-    - 57
-    - 112
-    - 111
-    - 183
-    - 92
-    - 99
-    - 43
-    - 124
-    - 228
-    - 19
-    - 188
-    - 234
-    - 207
-    - 110
-  pan_id: 42324
-  ext_pan_id:
-    - 176
-    - 76
-    - 32
-    - 237
-    - 255
-    - 114
-    - 147
-    - 105
 mqtt:
   server: mqtt://core-mosquitto:1883
   user: addons
   password: Pie5seiGo7wahdaiteojut4ehei2Daeroesh7pi2aochair2Goo6eik8eiZoh6ie
 serial:
-  port: tcp://192.168.86.250:6638
-  baudrate: 115200
-  adapter: zstack
+  port: /dev/serial/by-id/usb-Nabu_Casa_ZBT-2_DCB4D90E7270-if00
+  adapter: ember
+  baudrate: 460800
+  rtscts: true
 frontend:
   enabled: true
   port: 8099
@@ -54,7 +27,7 @@ devices:
   '0x54ef44100053626f':
     friendly_name: light_switch_living_room
   '0x54ef441000b15118':
-    friendly_name: lamp_office
+    friendly_name: lamp_play_room
   '0x54ef4410004c302e':
     friendly_name: light_switch_play_room
   '0x54ef441000b11828':
@@ -62,9 +35,10 @@ devices:
   '0x54ef4410004c2ddb':
     friendly_name: light_switch_bedroom
   '0x54ef441000b15a58':
-    friendly_name: lamp_play_room
+    friendly_name: lamp_office
   '0x54ef44100053668b':
     friendly_name: light_switch_office
+    state_action: true
   '0x54ef441000b14f4f':
     friendly_name: lamp_2_living_room
   '0x54ef441000b1091e':
@@ -135,17 +109,8 @@ devices:
     friendly_name: curtains_office
   '0x00124b0030d359b8':
     friendly_name: socket_cristmas_tree
-  '0xa4c138b2a6ad106d':
-    friendly_name: brightness
-    debounce_ignore: []
-    homeassistant:
-      name: null
-    filtered_cache: []
-    retain: false
-    filtered_attributes:
-      - linkquality
   '0x4c5bb3fffe470cba':
-    friendly_name: motion_toilet
+    friendly_name: motion_toilet_old
   '0xd44867fffe275ada':
     friendly_name: door_sensor_living_room
   '0x187a3efffe399297':

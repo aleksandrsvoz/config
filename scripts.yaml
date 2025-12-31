@@ -308,48 +308,6 @@ default_light_toilet:
       - light.lamp_toilet_rgb
   description: ''
   icon: mdi:light-recessed
-default_light_office:
-  alias: default_light_office
-  sequence:
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 0
-      milliseconds: 100
-  - choose:
-    - conditions:
-      - condition: state
-        entity_id: input_boolean.is_night_mode
-        state: 'on'
-      sequence:
-      - action: light.turn_on
-        metadata: {}
-        data:
-          kelvin: 3350
-          brightness_pct: 15
-        target:
-          entity_id: light.lamp_office_white
-    - conditions:
-      - condition: state
-        entity_id: input_boolean.is_night_mode
-        state: 'off'
-      sequence:
-      - action: light.turn_on
-        metadata: {}
-        data:
-          kelvin: 3350
-          brightness_pct: 45
-        target:
-          entity_id: light.lamp_office_white
-  - action: light.turn_on
-    metadata: {}
-    data:
-      brightness_pct: 100
-      kelvin: 2000
-    target:
-      entity_id: light.lamp_office_rgb
-  description: ''
-  icon: mdi:light-recessed
 default_light_play_room:
   alias: default_light_play_room
   sequence:
@@ -516,91 +474,6 @@ scene_default_living_room_light:
     data: {}
   description: ''
   icon: mdi:lightbulb-group
-bedroom_night_light:
-  alias: bedroom_night_light
-  sequence:
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 1
-      milliseconds: 0
-  - type: turn_on
-    device_id: 0ad8df8921ac33b31d9365b024ba0a63
-    entity_id: 716a713dc4426006d7e8c33c08a5adaf
-    domain: switch
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 5
-      milliseconds: 0
-  - repeat:
-      sequence:
-      - action: light.turn_on
-        metadata: {}
-        data:
-          brightness_step_pct: -1
-        target:
-          entity_id: light.lamp_bedroom_white
-      - delay:
-          hours: 0
-          minutes: 0
-          seconds: 3
-      count: 70
-  - action: light.turn_off
-    metadata: {}
-    data: {}
-    target:
-      entity_id: light.lamp_bedroom_white
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 5
-      milliseconds: 0
-  - action: light.turn_on
-    metadata: {}
-    data:
-      brightness_pct: 100
-      rgb_color:
-      - 255
-      - 204
-      - 94
-    target:
-      entity_id: light.lamp_bedroom_rgb
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 5
-      milliseconds: 0
-  - repeat:
-      sequence:
-      - action: light.turn_on
-        metadata: {}
-        data:
-          brightness_step_pct: -1
-          kelvin: 2000
-        target:
-          entity_id:
-          - light.lamp_bedroom_rgb
-      - delay:
-          hours: 0
-          minutes: 0
-          seconds: 4
-      count: 80
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 5
-      milliseconds: 0
-  - action: light.turn_on
-    metadata: {}
-    data:
-      kelvin: 2000
-      brightness_pct: 1
-    target:
-      entity_id: light.lamp_bedroom_rgb
-  description: ''
-  icon: mdi:lightbulb-night
-  mode: restart
 lock_door:
   sequence:
   - if:
@@ -777,106 +650,6 @@ unknown:
   alias: Камера Баня
   description: ''
   mode: restart
-office_night_light:
-  sequence:
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 1
-      milliseconds: 0
-  - type: turn_on
-    device_id: 9fc9345d9a64615c1257c72777350996
-    entity_id: 0da3c9d108505e717fb558c418721ee0
-    domain: switch
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 5
-      milliseconds: 0
-  - repeat:
-      sequence:
-      - action: light.turn_on
-        metadata: {}
-        data:
-          brightness_step_pct: -1
-        target:
-          entity_id: light.lamp_office_white
-      - delay:
-          hours: 0
-          minutes: 0
-          seconds: 2
-      count: 15
-  - action: light.turn_off
-    metadata: {}
-    data: {}
-    target:
-      entity_id: light.lamp_office_white
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 5
-      milliseconds: 0
-  - action: light.turn_on
-    metadata: {}
-    data:
-      brightness_pct: 100
-      rgb_color:
-      - 255
-      - 204
-      - 94
-    target:
-      entity_id:
-      - light.lamp_office_rgb
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 5
-      milliseconds: 0
-  - repeat:
-      sequence:
-      - action: light.turn_on
-        metadata: {}
-        data:
-          rgb_color:
-          - 255
-          - 204
-          - 94
-          brightness_step_pct: -1
-        target:
-          entity_id:
-          - light.lamp_office_rgb
-      - delay:
-          hours: 0
-          minutes: 0
-          seconds: 4
-      count: 82
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 5
-      milliseconds: 0
-  - action: light.turn_on
-    metadata: {}
-    data:
-      brightness_pct: 1
-      rgb_color:
-      - 255
-      - 204
-      - 94
-    target:
-      entity_id:
-      - light.lamp_office_rgb
-  - wait_for_trigger:
-    - trigger: time
-      at: 04:30:00
-  - type: turn_off
-    device_id: 9fc9345d9a64615c1257c72777350996
-    entity_id: 0da3c9d108505e717fb558c418721ee0
-    domain: switch
-  alias: office_night_light
-  description: ''
-  icon: mdi:lightbulb-night
-  mode: restart
 turn_off_everything_2:
   sequence:
   - if:
@@ -922,7 +695,6 @@ turn_off_everything_2:
     target:
       entity_id:
       - switch.light_switch_garage
-      - switch.light_switch_play_room
       - switch.light_switch_living_room_left
       - switch.light_switch_living_room_center
       - switch.light_switch_corridor
@@ -931,11 +703,10 @@ turn_off_everything_2:
       - switch.light_switch_doorway_right
       - switch.light_switch_doorway_left
       - switch.socket_garage
-      - switch.water_pump_garden
       - switch.socket_cristmas_tree
-      - switch.light_switch_office
       - switch.socket_living_room_lamp_right
       - switch.socket_living_room_lamp_left
+      - switch.light_switch_play_room
   - action: cover.close_cover
     metadata: {}
     data: {}
@@ -944,61 +715,14 @@ turn_off_everything_2:
       - play_room
       - bedroom
       - office
+  - action: script.office_lamp_controll
+    metadata: {}
+    data:
+      light_option: turn_off
   alias: Turn Off everything
   mode: restart
   icon: mdi:power
   description: ''
-'1747332323499':
-  sequence:
-  - action: input_boolean.turn_on
-    target:
-      entity_id:
-      - input_boolean.baby_sleep
-    data: {}
-  - if:
-    - condition: state
-      entity_id: sensor.brightness_is_low
-      state: 'True'
-    then:
-    - type: turn_on
-      device_id: 0ad8df8921ac33b31d9365b024ba0a63
-      entity_id: 716a713dc4426006d7e8c33c08a5adaf
-      domain: switch
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 1
-      milliseconds: 0
-  - action: light.turn_off
-    metadata: {}
-    data: {}
-    target:
-      entity_id:
-      - light.lamp_bedroom_white
-  - type: turn_off
-    device_id: 55a71504c8477f2e332f048be9c4b45f
-    entity_id: 0ce2cfd83e0e19a24d621a725b4e1588
-    domain: switch
-  - action: light.turn_on
-    metadata: {}
-    data:
-      color_temp_kelvin: 3036
-      brightness_pct: 35
-    target:
-      entity_id: light.lamp_bedroom_rgb
-  - delay:
-      hours: 1
-      minutes: 0
-      seconds: 0
-      milliseconds: 0
-  - action: input_boolean.turn_off
-    target:
-      entity_id: input_boolean.baby_sleep
-    data: {}
-  alias: baby_sleep
-  description: ''
-  icon: mdi:human-baby-changing-table
-  mode: restart
 make_living_room_warmer:
   alias: make_living_room_warmer
   description: ''
@@ -1039,3 +763,80 @@ make_bedroom_warmer:
     target:
       entity_id:
       - climate.ac_bedroom
+office_lamp_controll:
+  sequence:
+  - choose:
+    - conditions:
+      - condition: or
+        conditions:
+        - condition: template
+          value_template: '{{ light_option == ''turn_on'' }}'
+        - condition: and
+          conditions:
+          - condition: template
+            value_template: '{{ light_option == ''toggle'' }}'
+          - condition: state
+            entity_id: light.office_full_lamp
+            state:
+            - 'off'
+      sequence:
+      - if:
+        - condition: device
+          type: is_off
+          device_id: 9fc9345d9a64615c1257c72777350996
+          entity_id: 0da3c9d108505e717fb558c418721ee0
+          domain: switch
+        then:
+        - type: turn_on
+          device_id: 9fc9345d9a64615c1257c72777350996
+          entity_id: 0da3c9d108505e717fb558c418721ee0
+          domain: switch
+      - choose:
+        - conditions:
+          - condition: state
+            entity_id: input_boolean.is_night_mode
+            state: 'on'
+          sequence:
+          - action: light.turn_off
+            target:
+              entity_id: light.lamp_office_white
+        - conditions:
+          - condition: state
+            entity_id: input_boolean.is_night_mode
+            state: 'off'
+          sequence:
+          - action: light.turn_on
+            target:
+              entity_id: light.lamp_office_white
+            data:
+              color_temp_kelvin: 3300
+              transition: 3
+              brightness_pct: 45
+      - action: light.turn_on
+        target:
+          entity_id: light.lamp_office_rgb
+        data:
+          color_temp_kelvin: 2000
+          transition: 3
+          brightness_pct: 100
+    default:
+    - action: light.turn_off
+      target:
+        area_id: office
+    enabled: true
+  alias: office_lamp_controll
+  description: ''
+  icon: mdi:light-recessed
+  fields:
+    light_option:
+      name: option
+      required: true
+      selector:
+        select:
+          multiple: false
+          options:
+          - turn_on
+          - turn_off
+          - toggle
+      default: toggle
+  mode: restart

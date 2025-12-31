@@ -4,7 +4,7 @@ cards:
     template: chip_mdi_icon_state
     variables:
       ulm_chip_mdi_icon_state_icon: mdi:lightbulb
-      ulm_chip_mdi_icon_state_entity: sensor.count_lights_on
+      ulm_chip_mdi_icon_state_entity: sensor.total_lights_count
       ulm_chip_mdi_icon_state_icon_color: orange
 
   - type: "custom:button-card"

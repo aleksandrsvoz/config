@@ -1,0 +1,37 @@
+- binary_sensor:
+    - name: Any Camera Motion
+      unique_id: any_camera_motion
+      icon: mdi:motion-sensor
+      state: >-
+        {{ is_state('binary_sensor.camera_outside_1_motion', 'on')
+           or is_state('binary_sensor.camera_outside_2_motion', 'on')
+           or is_state('binary_sensor.camera_outside_3_motion', 'on')
+           or is_state('binary_sensor.camera_outside_4_motion', 'on')
+           or is_state('binary_sensor.camera_outside_5_motion', 'on') }}
+
+    - name: is_too_dark
+      unique_id: is_too_dark
+      state: >-
+        {% set toilet_lux = states('sensor.motion_toilet_illuminance') | float(0) %}
+        {% set lr_lux = states('sensor.motion_living_room_illuminance') | float(0) %}
+
+        {% set toilet_light_on = is_state('switch.light_switch_toilet_right', 'on') %}
+
+        {% set lr1_on = is_state('switch.light_switch_living_room_left', 'on') %}
+        {% set lr2_on = is_state('switch.light_switch_living_room_center', 'on') %}
+        {% set lr3_on = is_state('switch.light_switch_living_room_right', 'on') %}
+        {% set lr4_on = is_state('switch.light_switch_kitchen', 'on') %}
+        {% set any_lr_on = lr1_on or lr2_on or lr3_on or lr4_on %}
+        {% set all_lr_off = not any_lr_on %}
+
+        {% set h = now().hour %}
+        {% set dark_hours = (h >= 16) or (h < 7) %}
+
+        {% set toilet_enough = (not toilet_light_on) or (toilet_lux >= 40) %}
+        {% set living_room_enough = (not all_lr_off) or (lr_lux >= 40) %}
+
+        {% if dark_hours %}
+          {{ toilet_light_on or any_lr_on }}
+        {% else %}
+          {{ toilet_enough and living_room_enough }}
+        {% endif %}

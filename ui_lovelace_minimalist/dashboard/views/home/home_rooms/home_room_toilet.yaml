@@ -38,7 +38,7 @@ variables:
     tap_action:
       action: toggle
   entity_4:
-    entity_id: binary_sensor.motion_toilet_occupancy
+    entity_id: binary_sensor.motion_toilet_zone_occupancy
 custom_fields:
   i1:
     card:

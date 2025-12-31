@@ -11,8 +11,7 @@ frontend:
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
-sensor: !include sensors.yaml
-binary_sensor: !include binary_sensor.yaml
+template: !include_dir_merge_list templates
 
 panel_custom:
   - name: server_state

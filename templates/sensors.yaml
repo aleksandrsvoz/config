@@ -1,0 +1,20 @@
+- sensor:
+    - name: Total Lights Count
+      unique_id: count_lights_on
+      icon: mdi:lightbulb
+      state: >-
+        {{ [
+            is_state('switch.light_switch_doorway_left', 'on'),
+            is_state('switch.light_switch_doorway_right', 'on'),
+            is_state('switch.light_switch_boiler_room', 'on'),
+            is_state('switch.light_switch_corridor', 'on'),
+            is_state('switch.light_switch_living_room_center', 'on'),
+            is_state('switch.light_switch_living_room_left', 'on'),
+            is_state('switch.light_switch_living_room_right', 'on'),
+            is_state('switch.light_switch_kitchen', 'on'),
+            is_state('switch.light_switch_toilet_right', 'on'),
+            is_state('switch.light_switch_office', 'on'),
+            is_state('switch.light_switch_playroom', 'on'),
+            is_state('switch.light_switch_bedroom', 'on'),
+            is_state('switch.light_switch_garage', 'on')
+          ] | select('eq', true) | list | count }}
