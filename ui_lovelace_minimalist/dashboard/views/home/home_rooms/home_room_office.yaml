@@ -29,8 +29,10 @@ variables:
   entity_1:
     entity_id: light.office_full_lamp
     tap_action:
-      action: automation.trigger
-      entity_id: automation.office_light_switch_controll
+      action: call-service
+      service: script.office_lamp_controll
+      service_data:
+        light_option: toggle
     hold_action:
       action: navigate
       navigation_path: "#light_office_pop_up"

@@ -829,7 +829,7 @@ office_lamp_controll:
   icon: mdi:light-recessed
   fields:
     light_option:
-      name: option
+      name: light_option
       required: true
       selector:
         select:
