@@ -489,6 +489,11 @@ lock_door:
         device_id: 4491a48c7d623f8065437eb7b0ca2705
         entity_id: 1233fe31bc9825afa2194d07e1888283
         domain: binary_sensor
+    - type: is_not_open
+      condition: device
+      device_id: 4491a48c7d623f8065437eb7b0ca2705
+      entity_id: 10520ab450d713aa6a0560cdefa0025d
+      domain: binary_sensor
     then:
     - if:
       - condition: state
@@ -655,18 +660,18 @@ turn_off_everything_2:
   - if:
     - type: is_not_occupied
       condition: device
-      device_id: ab82f28083cd39a1015ce0afdd869d1d
-      entity_id: 29e1fbf95c04b2799050375a9182b620
+      device_id: 1fff5945dbd23e85346c625b76024356
+      entity_id: e8a22af2a20624c8fdea43d1e1d5c232
       domain: binary_sensor
     then:
     - type: turn_off
       device_id: 9f322d6a42df3160e4711615a91ccbaa
-      entity_id: a821db613e5d5c12247c1255f2e13a1f
-      domain: switch
-    - type: turn_off
-      device_id: 9f322d6a42df3160e4711615a91ccbaa
       entity_id: 0ce45bf2f566e980e99c7709fd312e4d
       domain: switch
+    - action: script.toilet_lamp_controll
+      metadata: {}
+      data:
+        light_option: turn_off
   - if:
     - type: is_no_motion
       condition: device
@@ -802,8 +807,8 @@ office_lamp_controll:
               entity_id: light.lamp_office_white
             data:
               color_temp_kelvin: 3300
-              transition: 3
-              brightness_pct: 45
+              brightness_step_pct: 50
+              transition: 2
         - conditions:
           - condition: state
             entity_id: input_boolean.is_night_mode
@@ -813,20 +818,21 @@ office_lamp_controll:
             target:
               entity_id: light.lamp_office_white
             data:
-              color_temp_kelvin: 2000
-              transition: 3
+              color_temp_kelvin: 3000
               brightness_pct: 5
+              transition: 2
       - action: light.turn_on
         target:
           entity_id: light.lamp_office_rgb
         data:
           color_temp_kelvin: 2000
-          transition: 3
           brightness_pct: 100
+          transition: 6
     default:
     - action: light.turn_off
       target:
         area_id: office
+      data: {}
     enabled: true
   alias: office_lamp_controll
   description: ''
@@ -858,3 +864,118 @@ test:
     option: flow2
   alias: test
   description: ''
+toggle_door_lock_2:
+  sequence:
+  - choose:
+    - conditions:
+      - condition: device
+        device_id: 4491a48c7d623f8065437eb7b0ca2705
+        domain: lock
+        entity_id: 71b9065df4bf5c398d2b19e2cfe666f7
+        type: is_unlocked
+      sequence:
+      - action: script.lock_door
+        metadata: {}
+        data: {}
+    - conditions:
+      - condition: device
+        device_id: 4491a48c7d623f8065437eb7b0ca2705
+        domain: lock
+        entity_id: 71b9065df4bf5c398d2b19e2cfe666f7
+        type: is_locked
+      sequence:
+      - device_id: 4491a48c7d623f8065437eb7b0ca2705
+        domain: lock
+        entity_id: 71b9065df4bf5c398d2b19e2cfe666f7
+        type: unlock
+  alias: toggle_door_lock
+  description: ''
+  icon: mdi:door-closed-lock
+  mode: restart
+toilet_lamp_controll:
+  sequence:
+  - choose:
+    - conditions:
+      - condition: or
+        conditions:
+        - condition: template
+          value_template: '{{ light_option == ''turn_on'' }}'
+        - condition: and
+          conditions:
+          - condition: template
+            value_template: '{{ light_option == ''toggle'' }}'
+          - condition: state
+            entity_id: light.toilet_full_lamp
+            state:
+            - 'off'
+      sequence:
+      - if:
+        - condition: device
+          type: is_off
+          device_id: 9f322d6a42df3160e4711615a91ccbaa
+          entity_id: a821db613e5d5c12247c1255f2e13a1f
+          domain: switch
+        then:
+        - type: turn_on
+          device_id: 9f322d6a42df3160e4711615a91ccbaa
+          entity_id: a821db613e5d5c12247c1255f2e13a1f
+          domain: switch
+      - choose:
+        - conditions:
+          - condition: state
+            entity_id: input_boolean.is_night_mode
+            state: 'off'
+          sequence:
+          - action: light.turn_on
+            target:
+              entity_id:
+              - light.lamp_toilet_white
+            data:
+              color_temp_kelvin: 5004
+              brightness_step_pct: 100
+              transition: 2
+        - conditions:
+          - condition: state
+            entity_id: input_boolean.is_night_mode
+            state: 'on'
+          sequence:
+          - action: light.turn_on
+            target:
+              entity_id:
+              - light.lamp_toilet_white
+            data:
+              color_temp_kelvin: 3001
+              brightness_pct: 5
+              transition: 2
+      - action: light.turn_on
+        target:
+          entity_id:
+          - light.lamp_toilet_rgb
+        data:
+          color_temp_kelvin: 2000
+          transition: 6
+          brightness_pct: 100
+    default:
+    - action: light.turn_off
+      target:
+        area_id:
+        - toilet_room
+      data:
+        transition: 3
+    enabled: true
+  alias: toilet_lamp_controll
+  description: ''
+  icon: mdi:light-recessed
+  fields:
+    light_option:
+      name: light_option
+      required: true
+      selector:
+        select:
+          multiple: false
+          options:
+          - turn_on
+          - turn_off
+          - toggle
+      default: toggle
+  mode: restart

@@ -126,10 +126,10 @@
         entity_id: 88c16bd43277874773ecc15e0da3042a
         domain: binary_sensor
       sequence:
-      - type: turn_on
-        device_id: 9f322d6a42df3160e4711615a91ccbaa
-        entity_id: a821db613e5d5c12247c1255f2e13a1f
-        domain: switch
+      - action: script.toilet_lamp_controll
+        metadata: {}
+        data:
+          light_option: turn_on
     - conditions:
       - type: is_not_occupied
         condition: device
@@ -139,12 +139,12 @@
       sequence:
       - type: turn_off
         device_id: 9f322d6a42df3160e4711615a91ccbaa
-        entity_id: a821db613e5d5c12247c1255f2e13a1f
-        domain: switch
-      - type: turn_off
-        device_id: 9f322d6a42df3160e4711615a91ccbaa
         entity_id: 0ce45bf2f566e980e99c7709fd312e4d
         domain: switch
+      - action: script.toilet_lamp_controll
+        metadata: {}
+        data:
+          light_option: turn_off
   mode: restart
 - id: '1728054560141'
   alias: camera_outside_1_signalization
@@ -1129,6 +1129,22 @@
   conditions: []
   actions:
   - action: script.office_lamp_controll
+    metadata: {}
+    data:
+      light_option: toggle
+  mode: restart
+- id: '1767557360179'
+  alias: toilet_light_switch_controll
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: 9f322d6a42df3160e4711615a91ccbaa
+    type: action
+    subtype: single_right
+    trigger: device
+  conditions: []
+  actions:
+  - action: script.toilet_lamp_controll
     metadata: {}
     data:
       light_option: toggle

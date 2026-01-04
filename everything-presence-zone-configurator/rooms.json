@@ -373,8 +373,9 @@
         "type": "regular",
         "x": -1400,
         "y": -100,
-        "width": 2800,
-        "height": 3600
+        "width": 2600,
+        "height": 3600,
+        "enabled": true
       },
       {
         "id": "Zone 2",
@@ -382,7 +383,8 @@
         "x": 1500,
         "y": -100,
         "width": 2100,
-        "height": 3600
+        "height": 3600,
+        "enabled": true
       }
     ],
     "entityMappings": {

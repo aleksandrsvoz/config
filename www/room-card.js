@@ -5,6 +5,7 @@ const THEMES = {
   red: { mainBg: "#FDE6E1", accentBg: "#FFC6AC", text: "#AB2E00" },
   green: { mainBg: "#BDE5D8", accentBg: "#75C7AC", text: "#395144" },
   blue: { mainBg: "#9DF6F2", accentBg: "#4FCAC4", text: "#286764" },
+  purple: { mainBg: "#D5D6FF", accentBg: "#A3A4FF", text: "#286764" },
   yellow: { mainBg: "#F3F4B6", accentBg: "#D3D342", text: "#645510" },
 };
 
