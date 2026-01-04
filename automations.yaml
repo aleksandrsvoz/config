@@ -886,7 +886,7 @@
         device_id: d4b7c0c3569d8be4b6174ee0ba8c2a96
         entity_id: 9e9523c624eafb4aeaf4c94ec043e467
         domain: sensor
-        below: 9
+        below: 4
       - type: is_occupied
         condition: device
         device_id: d4b7c0c3569d8be4b6174ee0ba8c2a96
@@ -1092,8 +1092,8 @@
     trigger: device
     for:
       hours: 0
-      minutes: 1
-      seconds: 0
+      minutes: 0
+      seconds: 5
   conditions:
   - condition: state
     entity_id: input_boolean.is_night_mode

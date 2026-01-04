@@ -795,14 +795,6 @@ office_lamp_controll:
         - conditions:
           - condition: state
             entity_id: input_boolean.is_night_mode
-            state: 'on'
-          sequence:
-          - action: light.turn_off
-            target:
-              entity_id: light.lamp_office_white
-        - conditions:
-          - condition: state
-            entity_id: input_boolean.is_night_mode
             state: 'off'
           sequence:
           - action: light.turn_on
@@ -812,6 +804,18 @@ office_lamp_controll:
               color_temp_kelvin: 3300
               transition: 3
               brightness_pct: 45
+        - conditions:
+          - condition: state
+            entity_id: input_boolean.is_night_mode
+            state: 'on'
+          sequence:
+          - action: light.turn_on
+            target:
+              entity_id: light.lamp_office_white
+            data:
+              color_temp_kelvin: 2000
+              transition: 3
+              brightness_pct: 5
       - action: light.turn_on
         target:
           entity_id: light.lamp_office_rgb
@@ -840,3 +844,17 @@ office_lamp_controll:
           - toggle
       default: toggle
   mode: restart
+test:
+  sequence:
+  - device_id: 21a39157d522f3abb071c01e5e57599d
+    domain: select
+    entity_id: f2334d7f732e1858d0e9a8271844e99d
+    type: select_option
+    option: flow2
+  - device_id: 317e14b6021c0049a42401b1acd573d1
+    domain: select
+    entity_id: 5cb41469295eb6d5eb5256b7e870e078
+    type: select_option
+    option: flow2
+  alias: test
+  description: ''
